@@ -1,10 +1,10 @@
-# 📚 Semester 6 Module Summaries
+#  Semester 6 Module Summaries
 
 A collection of HTML-based study summaries created to review and consolidate the key concepts covered during the semester. Each summary is designed to provide a clear, structured, and concise overview of important topics, making revision faster and more efficient.
 
 ---
 
-## 🎯 Purpose
+##  Purpose
 
 This repository serves as a personal knowledge base and revision resource. The main goal is to transform course materials into easy-to-read HTML pages that can be accessed directly from any browser, anytime.
 
@@ -16,7 +16,7 @@ It helps to:
 
 ---
 
-## 📂 Contents
+##  Contents
 
 This repository includes:
 - Module summaries organized by subject
@@ -28,7 +28,7 @@ This repository includes:
 
 ---
 
-## 🛠 Technologies Used
+##  Technologies Used
 
 - HTML5  
 - CSS3 (optional styling for better readability)  
@@ -36,7 +36,7 @@ This repository includes:
 
 ---
 
-## 🚀 Usage
+##  Usage
 
 To use this repository:
 
