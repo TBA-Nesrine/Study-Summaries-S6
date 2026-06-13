@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modélisation & Simulation — 200+ Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--bg2:#0f1628;--panel:#141c30;--panel2:#1a2440;--border:#1e2e50;--accent:#8b5cf6;--accent2:#a78bfa;--accent3:#06b6d4;--gold:#f59e0b;--green:#10b981;--red:#ef4444;--text:#e2e8f0;--muted:#64748b;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+header{background:linear-gradient(135deg,#0a0e1a 0%,#0a1a2e 50%,#0a0e1a 100%);border-bottom:1px solid var(--border);padding:2rem;text-align:center}
+.course-tag{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;color:var(--accent2);background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);display:inline-block;padding:.3rem 1rem;border-radius:2px;margin-bottom:1rem}
+header h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,5vw,3.2rem);font-weight:700;color:var(--white);letter-spacing:-.02em;margin-bottom:.4rem}
+header h1 span{color:var(--accent)}
+header p{color:var(--muted);font-size:.85rem}
+.badge{background:var(--accent);font-size:.7rem;padding:.2rem .8rem;border-radius:20px;margin-left:.5rem;font-family:monospace;vertical-align:middle}
+nav{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;padding:1rem 2rem;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+nav button{font-family:'Space Mono',monospace;font-size:.7rem;padding:.5rem 1.1rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+nav button:hover,nav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.section{display:none;padding:2rem;max-width:1200px;margin:0 auto}
+.section.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Fraunces',serif;font-size:2rem;color:var(--white);margin-bottom:.3rem;font-weight:700}
+.section-sub{color:var(--muted);font-size:.85rem;margin-bottom:2rem;font-family:'Space Mono',monospace}
+.chapter-title{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--accent2);border-bottom:2px solid var(--border);padding-bottom:.5rem;margin:1.5rem 0 1rem}
+.brain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem;margin-bottom:1.5rem}
+.brain-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1.4rem;transition:.2s;position:relative;overflow:hidden}
+.brain-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.brain-card.purple::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.brain-card.cyan::before{background:linear-gradient(90deg,var(--accent3),#06b6d4)}
+.brain-card.gold::before{background:linear-gradient(90deg,var(--gold),#f97316)}
+.brain-card.green::before{background:linear-gradient(90deg,var(--green),var(--accent3))}
+.brain-card.red::before{background:linear-gradient(90deg,var(--red),var(--gold))}
+.brain-card.blue::before{background:linear-gradient(90deg,#3b82f6,var(--accent))}
+.brain-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.brain-card h3{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--accent2);letter-spacing:.2em;margin-bottom:.5rem}
+.brain-card h2{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:.7rem;color:var(--white)}
+.brain-card p{font-size:.84rem;color:var(--text);line-height:1.6;margin-bottom:.5rem}
+.def-box{background:rgba(139,92,246,.08);border-left:3px solid var(--accent);padding:.7rem 1rem;border-radius:5px;margin:.5rem 0;font-size:.84rem;line-height:1.6}
+.def-box strong{color:var(--accent2)}
+.warn-box{background:rgba(239,68,68,.08);border-left:3px solid var(--red);padding:.7rem 1rem;border-radius:5px;margin:.5rem 0;font-size:.84rem;line-height:1.6;color:#fca5a5}
+.ok-box{background:rgba(16,185,129,.08);border-left:3px solid var(--green);padding:.7rem 1rem;border-radius:5px;margin:.5rem 0;font-size:.84rem;line-height:1.6}
+.calc-box{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.3);border-radius:8px;padding:1rem 1.2rem;margin:.8rem 0}
+.calc-box h4{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--accent3);letter-spacing:.1em;margin-bottom:.6rem}
+.calc-box pre{font-family:'Space Mono',monospace;font-size:.78rem;color:#a5f3fc;line-height:1.8;white-space:pre-wrap}
+.formula-box{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:.8rem 1rem;margin:.5rem 0;font-family:'Space Mono',monospace;font-size:.78rem;color:#fcd34d;line-height:1.8}
+.tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.tag{font-family:'Space Mono',monospace;font-size:.6rem;padding:.2rem .7rem;border-radius:3px;background:rgba(139,92,246,.15);color:var(--accent2);border:1px solid rgba(139,92,246,.3)}
+.tag.green{background:rgba(16,185,129,.15);color:var(--green);border-color:rgba(16,185,129,.3)}
+.tag.gold{background:rgba(245,158,11,.15);color:var(--gold);border-color:rgba(245,158,11,.3)}
+.tag.cyan{background:rgba(6,182,212,.15);color:var(--accent3);border-color:rgba(6,182,212,.3)}
+.comparison-table{width:100%;border-collapse:collapse;font-size:.8rem;background:var(--panel);border-radius:8px;overflow:hidden;margin:1.2rem 0;border:1px solid var(--border)}
+.comparison-table th,.comparison-table td{padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.comparison-table th{background:var(--panel2);color:var(--accent2);font-family:'Space Mono',monospace;letter-spacing:.08em;font-size:.7rem}
+.comparison-table tr:hover td{background:rgba(139,92,246,.04)}
+/* FLASHCARD */
+.flashcard-scene{perspective:1000px;margin-bottom:1rem}
+.flashcard{width:100%;max-width:720px;min-height:320px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1);margin:0 auto}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:1.8rem;display:flex;flex-direction:column;justify-content:center;text-align:center;background:var(--panel);border:1px solid var(--border)}
+.fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#0a1a2e,#1a2440);border-color:var(--accent);text-align:left;justify-content:flex-start;overflow-y:auto}
+.fc-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--accent2);margin-bottom:1rem}
+.fc-question{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;color:var(--white);line-height:1.4}
+.fc-answer{font-size:.83rem;line-height:1.7;color:#cbd5e1}
+.fc-answer pre{font-family:'Space Mono',monospace;font-size:.72rem;color:#a5f3fc;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.25);border-radius:6px;padding:.8rem;margin:.5rem 0;white-space:pre-wrap;text-align:left}
+.fc-hint{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);margin-top:1rem}
+.fc-nav{display:flex;justify-content:center;align-items:center;gap:.8rem;margin:.8rem 0;flex-wrap:wrap}
+.fc-btn{font-family:'Space Mono',monospace;background:var(--panel2);border:1px solid var(--border);padding:.5rem 1.1rem;border-radius:5px;color:var(--text);cursor:pointer;font-size:.7rem;transition:.2s}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fc-progress{width:100%;max-width:720px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin:0 auto .8rem}
+.fc-progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s}
+.fc-cat-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;justify-content:center}
+.fc-cat-btn{font-family:'Space Mono',monospace;font-size:.62rem;padding:.35rem .9rem;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+.fc-cat-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+/* MCQ */
+.score-badge{background:var(--panel2);border:1px solid var(--border);padding:.35rem 1rem;border-radius:20px;font-family:'Space Mono',monospace;font-size:.75rem;color:var(--accent2);margin-bottom:1rem;display:inline-block}
+.set-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.set-tab{font-family:'Space Mono',monospace;font-size:.65rem;padding:.35rem .9rem;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+.set-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.question-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1.3rem;margin-bottom:.8rem}
+.question-number{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent);letter-spacing:.15em;margin-bottom:.4rem}
+.question-text{font-size:.92rem;color:var(--white);margin-bottom:.9rem;line-height:1.5}
+.option-btn{background:var(--panel2);border:1px solid var(--border);padding:.65rem 1rem;border-radius:6px;cursor:pointer;margin:.25rem 0;width:100%;text-align:left;display:flex;align-items:center;gap:.8rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.87rem;transition:.15s}
+.option-btn:hover:not(:disabled){border-color:var(--accent2);background:rgba(139,92,246,.07)}
+.option-btn.correct{border-color:var(--green);background:rgba(16,185,129,.12);color:var(--green)}
+.option-btn.wrong{border-color:var(--red);background:rgba(239,68,68,.12);color:#fca5a5}
+.option-letter{font-family:'Space Mono',monospace;font-size:.62rem;width:20px;height:20px;border-radius:3px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feedback-box{margin-top:.5rem;padding:.6rem .9rem;border-radius:5px;font-size:.78rem;line-height:1.4;display:none}
+.feedback-box.show{display:block}
+.correct-fb{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.wrong-fb{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+/* TF */
+.tf-container{display:flex;flex-direction:column;gap:.7rem}
+.tf-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1rem 1.3rem}
+.tf-statement{font-size:.9rem;color:var(--text);margin-bottom:.7rem;line-height:1.5}
+.tf-buttons{display:flex;gap:.5rem}
+.tf-btn{font-family:'Space Mono',monospace;border:1px solid var(--border);background:var(--panel2);padding:.3rem .9rem;border-radius:4px;cursor:pointer;font-size:.68rem;transition:.2s;color:var(--text)}
+.tf-result{font-size:.78rem;margin-top:.5rem;display:none}
+.tf-result.show{display:block}
+.quiz-actions{display:flex;gap:.8rem;margin-top:1.5rem;flex-wrap:wrap}
+.quiz-btn-primary{font-family:'Space Mono',monospace;padding:.65rem 1.5rem;border-radius:5px;cursor:pointer;background:var(--accent);border:none;color:#fff;font-size:.7rem;transition:opacity .2s}
+.quiz-btn-primary:hover{opacity:.85}
+.quiz-btn-secondary{font-family:'Space Mono',monospace;padding:.65rem 1.5rem;border-radius:5px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.7rem;transition:.2s}
+.quiz-btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.result-panel{background:var(--panel);border:1px solid var(--accent);border-radius:12px;padding:2.5rem;text-align:center;margin-top:2rem;display:none}
+.result-panel.show{display:block;animation:fadeIn .4s}
+.result-score{font-family:'Fraunces',serif;font-size:3.5rem;color:var(--accent);font-weight:700}
+.result-label{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--muted);margin:.3rem 0 1rem}
+/* SUMMARY */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1rem;margin-bottom:1.5rem}
+.rule-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden}
+.rule-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.rule-card.purple::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.rule-card.cyan::before{background:linear-gradient(90deg,var(--accent3),#06b6d4)}
+.rule-card.gold::before{background:linear-gradient(90deg,var(--gold),#f97316)}
+.rule-card.green::before{background:linear-gradient(90deg,var(--green),var(--accent3))}
+.rule-card.red::before{background:linear-gradient(90deg,var(--red),var(--gold))}
+.rule-card h3{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--accent2);letter-spacing:.15em;margin-bottom:.5rem}
+.rule-card h2{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--white);margin-bottom:.6rem}
+.rule-formula{font-family:'Space Mono',monospace;font-size:.76rem;color:#fcd34d;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:.7rem .9rem;margin:.35rem 0;line-height:1.9}
+@media print{nav,.quiz-actions,.set-tabs,.fc-nav,.fc-cat-tabs{display:none!important}.section{display:block!important}body{background:#fff;color:#111}}
+</style>
+</head>
+<body>
+<header>
+  <div class="course-tag">USTHB · ING3 SECU · 2025/2026</div>
+  <h1>Modélisation & <span>Simulation</span> <span class="badge">200+ Questions</span></h1>
+  <p>Processus Stochastiques · CMTD · CMTC · Files d'Attente M/M/1 · Naissance-Mort · Régime Stationnaire</p>
+</header>
+<nav>
+  <button class="active" onclick="showSection('brain')">🧠 Cours Complet</button>
+  <button onclick="showSection('summary')">📋 Aide-Mémoire</button>
+  <button onclick="showSection('flashcards')">⚡ Flashcards Théorie</button>
+  <button onclick="showSection('scenarios')">🔢 Scénarios Calculs</button>
+  <button onclick="showSection('mcq')">📝 MCQ (110+)</button>
+  <button onclick="showSection('tf')">✅ Vrai/Faux (110+)</button>
+</nav>
+
+<!-- ===== BRAIN ===== -->
+<div id="brain" class="section active">
+  <h2 class="section-title">Cours Complet</h2>
+  <p class="section-sub">// Définitions, propriétés, formules, exemples guidés</p>
+
+  <div class="chapter-title">📐 CH1 — Modélisation des Systèmes & Processus Stochastiques</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>DÉFINITIONS FONDAMENTALES</h3>
+      <h2>Modèle & Système</h2>
+      <div class="def-box"><strong>Modélisation :</strong> Création d'une représentation simplifiée d'un système réel pour l'étudier, prédire ou simuler son comportement sans avoir à expérimenter sur le système réel.</div>
+      <div class="def-box"><strong>Système :</strong> Ensemble d'entités interconnectées organisées pour accomplir un objectif. Ex: banque avec clients et caissiers.</div>
+      <div class="def-box"><strong>État :</strong> Collection de variables nécessaires pour décrire le système à un instant t (variables d'état). Ex: nombre de clients dans une file.</div>
+      <div class="def-box"><strong>Modèle descriptif :</strong> Décrit structure/comportement sans prédiction (flowchart). <strong>Analytique :</strong> équations mathématiques pour prédire (M/M/1).</div>
+      <div class="tag-row"><span class="tag">Déterministe</span><span class="tag gold">Stochastique</span><span class="tag cyan">Discret/Continu</span></div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>PROCESSUS STOCHASTIQUE</h3>
+      <h2>Définition & Classification</h2>
+      <div class="def-box"><strong>Processus stochastique :</strong> {X(t), t ∈ T} — famille de variables aléatoires définies sur le même espace de probabilité, indexées par t (temps).</div>
+      <div class="formula-box">Classification selon (T, E) :
+T discret, E discret  → CMTD
+T continu, E discret  → CMTC
+T discret, E continu  → VA discret-temps
+T continu, E continu  → Diffusion (Brownien)</div>
+      <div class="ok-box">✅ <strong>Propriété de Markov :</strong> P(Xₙ=j | Xₙ₋₁, …, X₀) = P(Xₙ=j | Xₙ₋₁). Le futur ne dépend QUE du présent.</div>
+    </div>
+    <div class="brain-card gold">
+      <h3>DISTRIBUTIONS CLÉS</h3>
+      <h2>Lois Utilisées en ModSim</h2>
+      <div class="def-box"><strong>Exponentielle Exp(λ) :</strong> fX(x)=λe^(-λx). E[X]=1/λ, Var=1/λ². SEULE loi continue sans mémoire. Modélise durées de séjour en CMTC.</div>
+      <div class="def-box"><strong>Géométrique modifiée (p) :</strong> P[X=k]=(1-p)pᵏ, k≥0. E[X]=p/(1-p). Sans mémoire discrète.</div>
+      <div class="def-box"><strong>Poisson(λt) :</strong> P[Z(t)=i]=e^(-λt)(λt)ⁱ/i!. Modélise le nombre d'arrivées dans [0,t]. Lié à l'exponentielle : si inter-arrivées~Exp(λ) → processus de Poisson.</div>
+      <div class="formula-box">E[X] = Σ x·P[X=x]  (discret)
+Var(X) = E[X²] − (E[X])²
+C²ₓ = Var(X)/(E[X])²  [coeff. variation]</div>
+    </div>
+    <div class="brain-card green">
+      <h3>PROPRIÉTÉ SANS MÉMOIRE</h3>
+      <h2>Preuve Exponentielle</h2>
+      <div class="def-box"><strong>Énoncé :</strong> P[X > s+t | X > s] = P[X > t]. Le temps déjà écoulé n'influence pas le temps restant.</div>
+      <div class="calc-box"><h4>PREUVE</h4><pre>P[X > s+t | X > s] = P[X > s+t ∩ X > s] / P[X > s]
+= P[X > s+t] / P[X > s]
+= e^(-λ(s+t)) / e^(-λs)
+= e^(-λt) = P[X > t]  ✓
+
+→ Seule loi exponentielle vérifie cela en continu
+→ Seule loi géométrique en discret</pre></div>
+    </div>
+    <div class="brain-card blue">
+      <h3>TRANSFORMÉE DE LAPLACE</h3>
+      <h2>Outil Mathématique</h2>
+      <div class="def-box"><strong>Définition :</strong> LX(s) = E[e^(-sX)] = ∫₀⁺∞ e^(-sx) fX(x)dx. Transforme équations différentielles en équations algébriques.</div>
+      <div class="formula-box">LX(0) = 1
+0 ≤ LX(s) ≤ 1 pour s ≥ 0
+Indépendance: L_{X₁+X₂}(s) = LX₁(s)·LX₂(s)
+Moments: E[Xⁿ] = (-1)ⁿ L^(n)_X(0)</div>
+      <div class="ok-box">Ex: Exp(λ) → LX(s) = λ/(λ+s)</div>
+    </div>
+  </div>
+
+  <div class="chapter-title">🔷 CH2 — Chaînes de Markov à Temps Discret (CMTD)</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>DÉFINITION CMTD</h3>
+      <h2>Structure & Matrice P</h2>
+      <div class="def-box"><strong>CMTD homogène :</strong> pᵢⱼ = P(Xₙ=j | Xₙ₋₁=i) ne dépend pas de n. Les probabilités de transition sont constantes dans le temps.</div>
+      <div class="formula-box">Matrice stochastique P = [pᵢⱼ] :
+• pᵢⱼ ≥ 0   pour tout (i,j)
+• Σⱼ pᵢⱼ = 1 pour tout i  (lignes = 1)
+
+Analyse transitoire :
+π⁽ⁿ⁾ = π⁽⁰⁾ · Pⁿ
+Chapman-Kolmogorov : p⁽ⁿ⁾ᵢⱼ = Σₖ p⁽ᵐ⁾ᵢₖ · p⁽ⁿ⁻ᵐ⁾ₖⱼ</div>
+      <div class="def-box"><strong>Accessibilité :</strong> i→j si ∃m≥1 tel que p⁽ᵐ⁾ᵢⱼ>0. <strong>Communication :</strong> i↔j si i→j ET j→i.</div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>CLASSIFICATION DES ÉTATS</h3>
+      <h2>Transitoire vs Récurrent</h2>
+      <div class="formula-box">fᵢᵢ = Σₙ₌₁^∞ f⁽ⁿ⁾ᵢᵢ = probabilité de retour en i
+Mᵢ = Σₙ₌₁^∞ n·f⁽ⁿ⁾ᵢᵢ = temps moyen de retour</div>
+      <table class="comparison-table" style="margin:.5rem 0;font-size:.75rem">
+        <thead><tr><th>Type</th><th>Condition</th><th>Interprétation</th></tr></thead>
+        <tbody>
+          <tr><td>Transitoire</td><td>fᵢᵢ &lt; 1</td><td>Peut ne jamais revenir</td></tr>
+          <tr><td>Récurrent</td><td>fᵢᵢ = 1</td><td>Retour garanti (prob. 1)</td></tr>
+          <tr><td>Rée. non nul</td><td>fᵢᵢ=1, Mᵢ&lt;∞</td><td>Retour fini</td></tr>
+          <tr><td>Rée. nul</td><td>fᵢᵢ=1, Mᵢ=∞</td><td>Retour infini (CMTD infinie)</td></tr>
+        </tbody>
+      </table>
+      <div class="ok-box">✅ CMTD finie irréductible → tous les états sont récurrents non nuls.</div>
+      <div class="formula-box">fᵢⱼ = pᵢⱼ + Σₖ≠ⱼ pᵢₖ·fₖⱼ  [prob. atteindre j]
+Mᵢⱼ = 1 + Σₖ≠ⱼ pᵢₖ·Mₖⱼ  [temps moyen i→j]</div>
+    </div>
+    <div class="brain-card gold">
+      <h3>PÉRIODE & ERGODICITÉ</h3>
+      <h2>Convergence CMTD</h2>
+      <div class="def-box"><strong>Période :</strong> D(i) = PGCD{k≥1 : p⁽ᵏ⁾ᵢᵢ > 0}. Si D(i)=1 → apériodique. Si D(i)>1 → périodique. Si pᵢᵢ>0 → D(i)=1 automatiquement.</div>
+      <div class="def-box"><strong>CMTD irréductible :</strong> tous états communiquent. Une seule classe d'équivalence. Tous les états ont la même période.</div>
+      <div class="def-box"><strong>État absorbant :</strong> pₖₖ=1. Classe fermée réduite à un état. Ex: ruine dans le problème du joueur.</div>
+      <div class="ok-box">✅ <strong>Ergodicité CMTD :</strong> finie + irréductible + apériodique → lim π⁽ⁿ⁾ = π existe, indépendant de π⁽⁰⁾.</div>
+      <div class="formula-box">Régime stationnaire :
+{ π · P = π
+{ Σⱼ πⱼ = 1
+Propriété : πⱼ = 1/Mⱼ</div>
+    </div>
+    <div class="brain-card green">
+      <h3>NAISSANCE-MORT CMTD</h3>
+      <h2>Processus Infini</h2>
+      <div class="def-box">Transitions : p₀₁=1, pᵢ,ᵢ₊₁=p, pᵢ,ᵢ₋₁=q (∀i≥1). Condition d'ergodicité : p &lt; q.</div>
+      <div class="calc-box"><h4>RÉSOLUTION</h4><pre>Équation de balance : πᵢ·q = πᵢ₋₁·p
+→ πᵢ = (p/q)ⁱ · π₀
+
+Normalisation (si p/q < 1) :
+Σᵢ₌₀^∞ πᵢ = π₀ · Σᵢ(p/q)ⁱ = π₀/(1-p/q) = 1
+→ π₀ = 1 - p/q
+
+Distribution finale :
+πᵢ = (1 - p/q) · (p/q)ⁱ  [Géométrique]</pre></div>
+    </div>
+  </div>
+
+  <div class="chapter-title">🟣 CH3 — Chaînes de Markov à Temps Continu (CMTC)</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>DÉFINITION CMTC</h3>
+      <h2>Matrice Q & Taux</h2>
+      <div class="def-box"><strong>CMTC :</strong> Processus de Markov à temps continu. Le temps de séjour dans chaque état i suit une loi Exp(µᵢ) sans mémoire. Les transitions se font par des taux µᵢⱼ.</div>
+      <div class="formula-box">Générateur infinitésimal Q = [qᵢⱼ] :
+qᵢⱼ = µᵢⱼ        si i ≠ j
+qᵢᵢ = -Σⱼ≠ᵢ µᵢⱼ  si i = j (diagonal négatif)
+
+RÈGLE FONDAMENTALE : Σⱼ qᵢⱼ = 0 pour tout i
+→ Somme de chaque ligne de Q = 0</div>
+      <div class="ok-box">✅ CMTD incluse : pᵢⱼ = µᵢⱼ/µᵢ (normaliser les taux)</div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>ÉQUATIONS D'ÉTAT</h3>
+      <h2>Chapman-Kolmogorov CMTC</h2>
+      <div class="def-box"><strong>Interprétation flux :</strong> La variation de probabilité d'être en i = flux entrant depuis tous les autres états − flux sortant vers tous les autres états.</div>
+      <div class="formula-box">dπᵢ(t)/dt = Σⱼ≠ᵢ µⱼᵢ·πⱼ(t) − πᵢ(t)·Σⱼ≠ᵢ µᵢⱼ
+               ← flux entrant →    ← flux sortant →
+
+Forme matricielle : dπ(t)/dt = π(t) · Q
+Solution : π(t) = π(0)·e^(Qt)</div>
+      <div class="def-box"><strong>CMTC ergodique :</strong> CMTC finie + irréductible → toujours ergodique. Pas de problème de périodicité (temps exponentiel = apériodique par nature).</div>
+      <div class="formula-box">Régime stationnaire :
+{ π · Q = 0     (différent de CMTD : πP=π)
+{ Σᵢ πᵢ = 1</div>
+    </div>
+    <div class="brain-card gold">
+      <h3>EXEMPLE CMTC</h3>
+      <h2>Système 3 États</h2>
+      <div class="calc-box"><h4>CONSTRUCTION DE Q</h4><pre>États: 0, 1, 2. Taux: µ₀₁=2, µ₁₀=1, µ₁₂=3, µ₂₁=4
+
+Q = [[-2,   2,   0 ],
+     [ 1,  -4,   3 ],
+     [ 0,   4,  -4 ]]
+
+Vérification : chaque ligne somme à 0 ✓
+
+Système πQ=0, Σπᵢ=1 :
+-2π₀ + π₁ = 0           → π₁ = 2π₀
+2π₀ - 4π₁ + 4π₂ = 0    → π₂ = (4π₁ - 2π₀)/4 = 3π₀/2
+π₀ + π₁ + π₂ = 1
+→ π₀(1 + 2 + 3/2) = 1  → π₀ = 2/9
+→ π₁ = 4/9, π₂ = 3/9</pre></div>
+    </div>
+    <div class="brain-card green">
+      <h3>DIFFÉRENCES CMTD/CMTC</h3>
+      <h2>Comparatif Clé</h2>
+      <table class="comparison-table" style="margin:.5rem 0;font-size:.75rem">
+        <thead><tr><th>Aspect</th><th>CMTD</th><th>CMTC</th></tr></thead>
+        <tbody>
+          <tr><td>Temps</td><td>Discret (n=0,1,2…)</td><td>Continu (t≥0)</td></tr>
+          <tr><td>Paramètres</td><td>Probabilités pᵢⱼ</td><td>Taux µᵢⱼ</td></tr>
+          <tr><td>Matrice</td><td>P (stochastique)</td><td>Q (générateur)</td></tr>
+          <tr><td>Séjour</td><td>1 étape fixe</td><td>Exp(µᵢ)</td></tr>
+          <tr><td>Stationnarité</td><td>πP = π</td><td>πQ = 0</td></tr>
+          <tr><td>Ergodicité</td><td>irréd. + apéri.</td><td>finie + irréd.</td></tr>
+          <tr><td>Période</td><td>Problème possible</td><td>Pas de problème</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="chapter-title">🟠 CH4 — Files d'Attente & Processus de Naissance-Mort</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>PROCESSUS DE POISSON</h3>
+      <h2>Modèle d'Arrivées</h2>
+      <div class="def-box"><strong>Processus de Poisson de taux λ :</strong> événements aléatoires, indépendants, dans le temps. Si inter-arrivées ~ Exp(λ) et indépendantes → processus de Poisson.</div>
+      <div class="formula-box">P[Z(t)=i] = e^(-λt)·(λt)ⁱ/i!   [loi Poisson]
+P[Tₙ > t] = e^(-λt)           [inter-arrivée Exp]
+P[1 arrivée dans Δt] ≈ λ·Δt
+P[2+ arrivées dans Δt] ≈ 0    [infinitésimal]</div>
+      <div class="ok-box">✅ Superposition de Poisson : si X~Pois(λ₁) et Y~Pois(λ₂) indépendants → X+Y ~ Pois(λ₁+λ₂)</div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>NOTATION DE KENDALL</h3>
+      <h2>A/B/s/K/N/D</h2>
+      <div class="def-box"><strong>A</strong>=loi arrivées (M=Markovien/Exp, D=Déterministe, G=Général). <strong>B</strong>=loi service. <strong>s</strong>=nb serveurs. <strong>K</strong>=capacité (∞/défaut). <strong>N</strong>=pop. source (∞/défaut). <strong>D</strong>=discipline (FIFO/défaut).</div>
+      <table class="comparison-table" style="margin:.5rem 0;font-size:.75rem">
+        <thead><tr><th>File</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>M/M/1</td><td>Poisson, Exp, 1 serveur, capacité ∞</td></tr>
+          <tr><td>M/M/1/K</td><td>Comme M/M/1 mais capacité K (bornée)</td></tr>
+          <tr><td>M/M/s</td><td>s serveurs parallèles</td></tr>
+          <tr><td>M/D/1</td><td>Service déterministe</td></tr>
+          <tr><td>G/G/1</td><td>Distributions générales</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="brain-card gold">
+      <h3>NAISSANCE-MORT CMTC</h3>
+      <h2>Modèle Général</h2>
+      <div class="def-box"><strong>Naissance-Mort :</strong> CMTC avec transitions uniquement vers i-1 et i+1. λᵢ = taux naissance (arrivée). µᵢ = taux mort (service). Modèle général des files M/M/*.</div>
+      <div class="formula-box">Récurrence stationnaire :
+µ₁π₁ = λ₀π₀  →  π₁ = (λ₀/µ₁)π₀
+πᵢ = π₀ · Πₖ₌₀ⁱ⁻¹ (λₖ/µₖ₊₁)
+
+π₀ = 1 / Σᵢ₌₀ᴺ Πₖ₌₀ⁱ⁻¹(λₖ/µₖ₊₁)</div>
+      <div class="warn-box">⚠️ Cas homogène λᵢ=λ, µᵢ=µ : ρ=λ/µ. πᵢ=ρⁱ·π₀. Stable seulement si ρ&lt;1.</div>
+    </div>
+    <div class="brain-card red">
+      <h3>FILE M/M/1</h3>
+      <h2>Formules Complètes</h2>
+      <div class="formula-box">ρ = λ/µ  (doit être < 1)
+πᵢ = (1-ρ)·ρⁱ  [géométrique]
+
+N  = ρ/(1-ρ)     = λ/(µ-λ)
+Nq = ρ²/(1-ρ)   = λ²/[µ(µ-λ)]
+W  = 1/(µ-λ)     [temps dans système]
+Wq = ρ/(µ-λ)    = λ/[µ(µ-λ)]
+
+Loi de Little : N = λ·W,  Nq = λ·Wq</div>
+      <div class="ok-box">✅ <strong>Loi de Little :</strong> universelle, valide pour tout système stable, quelle que soit la distribution.</div>
+    </div>
+    <div class="brain-card green">
+      <h3>FILE M/M/1/K</h3>
+      <h2>Capacité Limitée</h2>
+      <div class="def-box">Clients arrivant quand le système est plein (état K) sont perdus. Toujours stable même si ρ≥1.</div>
+      <div class="formula-box">λᵢ = λ si i < K,  λᵢ = 0 si i = K
+
+πᵢ = ρⁱ·π₀  pour i=0,…,K
+
+π₀ = (1-ρ)/(1-ρᴷ⁺¹)  si ρ ≠ 1
+π₀ = 1/(K+1)           si ρ = 1
+
+Prob. blocage = πK
+Débit effectif : λ_eff = λ·(1-πK)
+N = Σᵢ₌₀ᴷ i·πᵢ  (calculer explicitement)</div>
+      <div class="warn-box">⚠️ Pour M/M/1/K avec ρ=1 : distribution uniforme, πᵢ=1/(K+1) pour tout i.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SUMMARY ===== -->
+<div id="summary" class="section">
+  <h2 class="section-title">Aide-Mémoire</h2>
+  <p class="section-sub">// Règles & formules uniquement — pour révision rapide</p>
+
+  <div class="chapter-title">🔷 CMTD — Chaîne de Markov à Temps Discret</div>
+  <div class="summary-grid">
+    <div class="rule-card purple">
+      <h3>DÉFINITION & MATRICE</h3>
+      <h2>Structure CMTD</h2>
+      <div class="rule-formula">pᵢⱼ ≥ 0    et    Σⱼ pᵢⱼ = 1  (∀i)
+π⁽ⁿ⁾ = π⁽⁰⁾ · Pⁿ
+p⁽ⁿ⁾ᵢⱼ = Σₖ p⁽ᵐ⁾ᵢₖ · p⁽ⁿ⁻ᵐ⁾ₖⱼ  [Chapman-Kolmogorov]</div>
+    </div>
+    <div class="rule-card cyan">
+      <h3>CLASSIFICATION ÉTATS</h3>
+      <h2>Transitoire / Récurrent</h2>
+      <div class="rule-formula">fᵢᵢ &lt; 1  → Transitoire
+fᵢᵢ = 1  → Récurrent
+fᵢᵢ = 1, Mᵢ &lt; ∞  → Récurrent non nul
+fᵢᵢ = 1, Mᵢ = ∞  → Récurrent nul (CMTD ∞)
+
+fᵢⱼ = pᵢⱼ + Σₖ≠ⱼ pᵢₖ·fₖⱼ
+Mᵢⱼ = 1 + Σₖ≠ⱼ pᵢₖ·Mₖⱼ</div>
+    </div>
+    <div class="rule-card gold">
+      <h3>PÉRIODE & ERGODICITÉ</h3>
+      <h2>Convergence</h2>
+      <div class="rule-formula">D(i) = PGCD{k≥1 : p⁽ᵏ⁾ᵢᵢ > 0}
+D(i) = 1 → apériodique
+pᵢᵢ > 0 → D(i) = 1 automatiquement
+
+CMTD ergodique ⟺ irréductible + apériodique</div>
+    </div>
+    <div class="rule-card green">
+      <h3>RÉGIME STATIONNAIRE</h3>
+      <h2>Distribution π</h2>
+      <div class="rule-formula">{ π · P = π
+{ Σⱼ πⱼ = 1
+
+πⱼ = 1/Mⱼ  (inverse temps moyen retour)
+π = limite unique si CMTD ergodique</div>
+    </div>
+    <div class="rule-card purple">
+      <h3>NAISSANCE-MORT CMTD</h3>
+      <h2>Infinie (p, q)</h2>
+      <div class="rule-formula">pᵢ,ᵢ₊₁ = p,  pᵢ,ᵢ₋₁ = q,  p+q=1
+Ergodicité : p &lt; q
+πᵢ = (1 - p/q) · (p/q)ⁱ
+[Distribution géométrique de raison p/q]</div>
+    </div>
+  </div>
+
+  <div class="chapter-title">🟣 CMTC — Chaîne de Markov à Temps Continu</div>
+  <div class="summary-grid">
+    <div class="rule-card purple">
+      <h3>GÉNÉRATEUR Q</h3>
+      <h2>Matrice Infinitésimale</h2>
+      <div class="rule-formula">qᵢⱼ = µᵢⱼ         si i ≠ j
+qᵢᵢ = -Σⱼ≠ᵢ µᵢⱼ   si i = j
+
+RÈGLE : Σⱼ qᵢⱼ = 0  pour tout i
+(somme de chaque ligne = 0)</div>
+    </div>
+    <div class="rule-card cyan">
+      <h3>CMTD INCLUSE</h3>
+      <h2>Lien CMTD/CMTC</h2>
+      <div class="rule-formula">pᵢⱼ = µᵢⱼ / µᵢ  où  µᵢ = Σₖ≠ᵢ µᵢₖ
+(normaliser les taux de sortie)
+CMTC irréductible ⟺ CMTD incluse irréductible</div>
+    </div>
+    <div class="rule-card gold">
+      <h3>ÉQUATIONS D'ÉTAT</h3>
+      <h2>Chapman-Kolmogorov</h2>
+      <div class="rule-formula">dπᵢ(t)/dt = Σⱼ≠ᵢ µⱼᵢπⱼ - πᵢΣⱼ≠ᵢ µᵢⱼ
+dπ(t)/dt = π(t) · Q</div>
+    </div>
+    <div class="rule-card green">
+      <h3>RÉGIME STATIONNAIRE</h3>
+      <h2>Distribution π</h2>
+      <div class="rule-formula">{ π · Q = 0       ← (≠ CMTD : πP=π)
+{ Σᵢ πᵢ = 1
+
+CMTC finie + irréductible → toujours ergodique
+(pas de problème de périodicité)</div>
+    </div>
+  </div>
+
+  <div class="chapter-title">🟠 Files d'Attente</div>
+  <div class="summary-grid">
+    <div class="rule-card purple">
+      <h3>NAISSANCE-MORT GÉNÉRAL</h3>
+      <h2>Formule Récurrente</h2>
+      <div class="rule-formula">πᵢ = π₀ · Πₖ₌₀ⁱ⁻¹ (λₖ/µₖ₊₁)
+
+π₀ = 1 / Σᵢ₌₀ᴺ Πₖ₌₀ⁱ⁻¹(λₖ/µₖ₊₁)
+
+Homogène (λᵢ=λ, µᵢ=µ) :
+πᵢ = ρⁱ · π₀  avec ρ = λ/µ</div>
+    </div>
+    <div class="rule-card red">
+      <h3>FILE M/M/1</h3>
+      <h2>Capacité infinie</h2>
+      <div class="rule-formula">ρ = λ/µ &lt; 1  (stabilité obligatoire)
+πᵢ = (1-ρ)·ρⁱ
+N  = ρ/(1-ρ)
+Nq = ρ²/(1-ρ)
+W  = 1/(µ-λ)
+Wq = ρ/(µ-λ) = λ/[µ(µ-λ)]</div>
+    </div>
+    <div class="rule-card cyan">
+      <h3>FILE M/M/1/K</h3>
+      <h2>Capacité K</h2>
+      <div class="rule-formula">π₀ = (1-ρ)/(1-ρᴷ⁺¹)   si ρ ≠ 1
+π₀ = 1/(K+1)            si ρ = 1
+πᵢ = ρⁱ · π₀
+Prob. blocage = πK
+λ_eff = λ·(1-πK)</div>
+    </div>
+    <div class="rule-card gold">
+      <h3>LOI DE LITTLE</h3>
+      <h2>Universelle</h2>
+      <div class="rule-formula">N  = λ · W     [système complet]
+Nq = λ · Wq   [file d'attente seule]
+W  = Wq + 1/µ [temps attente + service]
+
+Valide : tout système stable,
+toute distribution A/B quelconques.</div>
+    </div>
+    <div class="rule-card green">
+      <h3>PROCESSUS DE POISSON</h3>
+      <h2>Propriétés</h2>
+      <div class="rule-formula">P[Z(t)=k] = e^(-λt)·(λt)ᵏ/k!
+E[Z(t)] = λt,  Var[Z(t)] = λt
+Inter-arrivées ~ Exp(λ), E=1/λ
+P[arrivée dans Δt] ≈ λΔt</div>
+    </div>
+    <div class="rule-card purple">
+      <h3>DISTRIBUTIONS CLÉS</h3>
+      <h2>Rappels</h2>
+      <div class="rule-formula">Exp(λ) : E=1/λ, Var=1/λ²
+Géom(p): E=p/(1-p), Var=p/(1-p)²
+Pois(λ): E=λ, Var=λ
+C²=Var/E²  [coeff variation]</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FLASHCARDS THÉORIE ===== -->
+<div id="flashcards" class="section">
+  <h2 class="section-title">Flashcards Théorie</h2>
+  <p class="section-sub">// Cliquer pour retourner — définitions et propriétés</p>
+  <div class="fc-cat-tabs">
+    <button class="fc-cat-btn active" onclick="setFCCat('all',this)">Toutes</button>
+    <button class="fc-cat-btn" onclick="setFCCat('intro',this)">Modélisation</button>
+    <button class="fc-cat-btn" onclick="setFCCat('cmtd',this)">CMTD</button>
+    <button class="fc-cat-btn" onclick="setFCCat('cmtc',this)">CMTC</button>
+    <button class="fc-cat-btn" onclick="setFCCat('fa',this)">Files</button>
+  </div>
+  <div class="fc-progress"><div class="fc-progress-bar" id="fcProgressBar" style="width:0%"></div></div>
+  <div class="flashcard-scene">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-face">
+        <div class="fc-label" id="fcCategory"></div>
+        <div class="fc-question" id="fcQuestion"></div>
+        <div class="fc-hint">↕ Cliquer pour révéler</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-label">RÉPONSE</div>
+        <div class="fc-answer" id="fcAnswer"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()">← PRÉC</button>
+    <span id="fcCounter" style="font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted)">1/1</span>
+    <button class="fc-btn" onclick="nextCard()">SUIV →</button>
+    <button class="fc-btn" onclick="shuffleCards()">🔀 Mélanger</button>
+  </div>
+</div>
+
+<!-- ===== SCENARIO FLASHCARDS ===== -->
+<div id="scenarios" class="section">
+  <h2 class="section-title">Scénarios & Calculs</h2>
+  <p class="section-sub">// Énoncé → retourner → solution détaillée pas-à-pas</p>
+  <div class="fc-cat-tabs">
+    <button class="fc-cat-btn active" onclick="setScenCat('all',this)">Tous</button>
+    <button class="fc-cat-btn" onclick="setScenCat('cmtd',this)">CMTD</button>
+    <button class="fc-cat-btn" onclick="setScenCat('cmtc',this)">CMTC</button>
+    <button class="fc-cat-btn" onclick="setScenCat('fa',this)">Files</button>
+  </div>
+  <div class="fc-progress"><div class="fc-progress-bar" id="scenProgressBar" style="width:0%"></div></div>
+  <div class="flashcard-scene">
+    <div class="flashcard" style="min-height:400px" id="scenCard" onclick="flipScen()">
+      <div class="fc-face" style="justify-content:flex-start;padding-top:1.8rem">
+        <div class="fc-label" id="scenCategory"></div>
+        <div id="scenQuestion" style="font-family:'Fraunces',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.5;text-align:left"></div>
+        <div class="fc-hint" style="margin-top:auto">↕ Cliquer pour la solution</div>
+      </div>
+      <div class="fc-face fc-back" style="justify-content:flex-start;padding-top:1.2rem;overflow-y:auto">
+        <div class="fc-label">SOLUTION DÉTAILLÉE</div>
+        <div class="fc-answer" id="scenAnswer"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevScen()">← PRÉC</button>
+    <span id="scenCounter" style="font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted)">1/1</span>
+    <button class="fc-btn" onclick="nextScen()">SUIV →</button>
+    <button class="fc-btn" onclick="shuffleScen()">🔀 Mélanger</button>
+  </div>
+</div>
+
+<!-- ===== MCQ ===== -->
+<div id="mcq" class="section">
+  <h2 class="section-title">Quiz MCQ</h2>
+  <p class="section-sub">// 110+ questions — 4 sets thématiques</p>
+  <div class="set-tabs" id="mcqTabs">
+    <button class="set-tab active" onclick="loadMCQSet(0,this)">Set A: Modélisation & Distrib. (1–28)</button>
+    <button class="set-tab" onclick="loadMCQSet(1,this)">Set B: CMTD (29–56)</button>
+    <button class="set-tab" onclick="loadMCQSet(2,this)">Set C: CMTC (57–84)</button>
+    <button class="set-tab" onclick="loadMCQSet(3,this)">Set D: Files d'Attente (85–112)</button>
+  </div>
+  <div class="score-badge" id="mcqScoreBadge">Score: 0 / 28</div>
+  <div id="mcqContainer"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllMCQ()">✅ Vérifier</button>
+    <button class="quiz-btn-secondary" onclick="resetMCQ()">🔄 Reset</button>
+  </div>
+  <div id="mcqResult" class="result-panel"></div>
+</div>
+
+<!-- ===== TRUE/FALSE ===== -->
+<div id="tf" class="section">
+  <h2 class="section-title">Vrai / Faux</h2>
+  <p class="section-sub">// 110+ affirmations — certaines sont des pièges !</p>
+  <div class="set-tabs" id="tfTabs">
+    <button class="set-tab active" onclick="loadTFSet(0,this)">Set A: Modélisation & Distrib. (1–28)</button>
+    <button class="set-tab" onclick="loadTFSet(1,this)">Set B: CMTD (29–56)</button>
+    <button class="set-tab" onclick="loadTFSet(2,this)">Set C: CMTC (57–84)</button>
+    <button class="set-tab" onclick="loadTFSet(3,this)">Set D: Files d'Attente (85–112)</button>
+  </div>
+  <div class="score-badge" id="tfScoreBadge">Score: 0 / 28</div>
+  <div id="tfContainer" class="tf-container"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllTF()">✅ Soumettre</button>
+    <button class="quiz-btn-secondary" onclick="resetTF()">🔄 Reset</button>
+  </div>
+  <div id="tfResult" class="result-panel"></div>
+</div>
+
+<script>
+/* ===== THEORY FLASHCARDS ===== */
+const theoryCards = [
+  {cat:"Modélisation",q:"Définir un processus stochastique.",a:"Famille {X(t), t∈T} de variables aléatoires sur le même espace de probabilité, indexées par t (temps). T et E peuvent être discrets ou continus."},
+  {cat:"Modélisation",q:"Quelle est la propriété de Markov ?",a:"P(Xₙ=j | Xₙ₋₁=iₙ₋₁,…,X₀=i₀) = P(Xₙ=j | Xₙ₋₁=iₙ₋₁). Le futur ne dépend QUE du présent, pas de l'historique passé."},
+  {cat:"Modélisation",q:"Donner les 4 types de processus stochastiques selon (T, E).",a:"T discret + E discret → CMTD\nT continu + E discret → CMTC\nT discret + E continu → VA discret-temps\nT continu + E continu → Diffusion (mouvement Brownien)"},
+  {cat:"Modélisation",q:"Prouver la propriété sans mémoire de l'exponentielle.",a:"P[X>s+t|X>s] = P[X>s+t]/P[X>s] = e^(-λ(s+t))/e^(-λs) = e^(-λt) = P[X>t]. Le résultat ne dépend pas de s."},
+  {cat:"Modélisation",q:"Loi de Poisson — formule et paramètres ?",a:"P[Z(t)=i] = e^(-λt)·(λt)ⁱ/i!\nE[Z(t)] = λt,  Var[Z(t)] = λt\nLien : inter-arrivées ~ Exp(λ) → nombre arrivées sur [0,t] ~ Poisson(λt)"},
+  {cat:"Modélisation",q:"Définir la transformée de Laplace et ses propriétés.",a:"LX(s) = E[e^(-sX)]. Propriétés : LX(0)=1. Pour indépendants : L_{X₁+X₂}(s)=LX₁(s)·LX₂(s). Moments : E[Xⁿ]=(-1)ⁿL^(n)_X(0)."},
+  {cat:"CMTD",q:"Qu'est-ce qu'une matrice stochastique ?",a:"Matrice P=[pᵢⱼ] avec pᵢⱼ≥0 et Σⱼ pᵢⱼ=1 pour tout i. Lignes somment à 1. Représente les transitions d'une CMTD."},
+  {cat:"CMTD",q:"Formule de l'analyse transitoire d'une CMTD.",a:"π⁽ⁿ⁾ = π⁽⁰⁾ · Pⁿ\nChapman-Kolmogorov : p⁽ⁿ⁾ᵢⱼ = Σₖ p⁽ᵐ⁾ᵢₖ · p⁽ⁿ⁻ᵐ⁾ₖⱼ"},
+  {cat:"CMTD",q:"Définir l'accessibilité et la communication.",a:"Accessibilité : i→j si ∃m≥1 tel que p⁽ᵐ⁾ᵢⱼ>0.\nCommunication : i↔j si i→j ET j→i. Relation d'équivalence → classes irréductibles."},
+  {cat:"CMTD",q:"Définir la période d'un état i.",a:"D(i) = PGCD{k≥1 : p⁽ᵏ⁾ᵢᵢ > 0}. D(i)=1 → apériodique. Si pᵢᵢ>0 alors D(i)=1 automatiquement. Tous les états d'une même classe ont la même période."},
+  {cat:"CMTD",q:"Types d'états selon fᵢᵢ et Mᵢ.",a:"fᵢᵢ<1 → Transitoire\nfᵢᵢ=1 → Récurrent\nfᵢᵢ=1, Mᵢ<∞ → Récurrent non nul\nfᵢᵢ=1, Mᵢ=∞ → Récurrent nul (CMTD infinie seulement)"},
+  {cat:"CMTD",q:"Condition d'ergodicité d'une CMTD finie.",a:"CMTD finie ergodique ⟺ irréductible + apériodique. Alors lim_{n→∞} π⁽ⁿ⁾ = π existe, unique, indépendant de π⁽⁰⁾."},
+  {cat:"CMTD",q:"Système à résoudre pour la distribution stationnaire CMTD.",a:"{ π · P = π\n{ Σⱼ πⱼ = 1\nPropriété : πⱼ = 1/Mⱼ (inverse du temps moyen de retour en j)"},
+  {cat:"CMTD",q:"Formules fᵢⱼ et Mᵢⱼ.",a:"fᵢⱼ = pᵢⱼ + Σₖ≠ⱼ pᵢₖ·fₖⱼ  [probabilité d'atteindre j depuis i]\nMᵢⱼ = 1 + Σₖ≠ⱼ pᵢₖ·Mₖⱼ  [temps moyen i→j en nb d'étapes]"},
+  {cat:"CMTD",q:"Naissance-Mort CMTD — distribution stationnaire.",a:"Transitions : pᵢ,ᵢ₊₁=p, pᵢ,ᵢ₋₁=q, p+q=1.\nErgodicité : p < q.\nπᵢ = (1-p/q)·(p/q)ⁱ  [géométrique de raison p/q]"},
+  {cat:"CMTD",q:"Qu'est-ce qu'un état absorbant ?",a:"État k tel que pₖₖ=1. Impossible d'en sortir. Classe fermée réduite à {k}. Ex : état de ruine dans un jeu de hasard."},
+  {cat:"CMTC",q:"Différence fondamentale CMTD vs CMTC.",a:"CMTD : temps discret, probabilités pᵢⱼ, matrice P, πP=π.\nCMTC : temps continu, taux µᵢⱼ, matrice Q, πQ=0.\nSéjour en CMTC : Exp(µᵢ)."},
+  {cat:"CMTC",q:"Règle fondamentale de la matrice Q.",a:"qᵢⱼ = µᵢⱼ (i≠j), qᵢᵢ = -Σⱼ≠ᵢ µᵢⱼ.\nRÈGLE : Σⱼ qᵢⱼ = 0 pour tout i (somme de chaque ligne = 0)."},
+  {cat:"CMTC",q:"Comment obtenir la CMTD incluse d'une CMTC ?",a:"pᵢⱼ = µᵢⱼ / µᵢ  où  µᵢ = Σₖ≠ᵢ µᵢₖ.\nOn normalise les taux de sortie. Propriétés (irréductible, récurrent…) se lisent via la CMTD incluse."},
+  {cat:"CMTC",q:"Équations de Chapman-Kolmogorov pour une CMTC.",a:"dπᵢ(t)/dt = Σⱼ≠ᵢ µⱼᵢπⱼ(t) − πᵢ(t)Σⱼ≠ᵢ µᵢⱼ\n           = flux entrant − flux sortant\nForme matricielle : dπ/dt = π·Q"},
+  {cat:"CMTC",q:"Ergodicité d'une CMTC — conditions ?",a:"CMTC finie + irréductible → TOUJOURS ergodique. Pas de problème de périodicité (temps exponentiel = apériodique par nature). Différent de CMTD qui exige aussi l'apériodicité."},
+  {cat:"CMTC",q:"Système à résoudre pour la distribution stationnaire CMTC.",a:"{ π · Q = 0       ← différent de CMTD (πP=π)\n{ Σᵢ πᵢ = 1\nOn remplace une équation de πQ=0 par la normalisation."},
+  {cat:"Files",q:"Qu'est-ce qu'un processus de Poisson ?",a:"Événements aléatoires, indépendants, dans le temps. Inter-arrivées ~ Exp(λ). P[Z(t)=k]=e^(-λt)(λt)ᵏ/k!. P[arrivée dans Δt]≈λΔt, P[2+ dans Δt]≈0."},
+  {cat:"Files",q:"Notation de Kendall — signification de A/B/s/K.",a:"A=loi arrivées (M=Markovien, D=Déterministe, G=Général). B=loi service. s=nb serveurs. K=capacité max (∞ par défaut). FIFO par défaut."},
+  {cat:"Files",q:"Condition de stabilité de M/M/1.",a:"ρ = λ/µ < 1. Si ρ≥1, la file grandit indéfiniment. ρ est le taux d'utilisation du serveur (fraction du temps occupé)."},
+  {cat:"Files",q:"Formules de performance M/M/1.",a:"πᵢ=(1-ρ)ρⁱ, N=ρ/(1-ρ), Nq=ρ²/(1-ρ), W=1/(µ-λ), Wq=ρ/(µ-λ)."},
+  {cat:"Files",q:"Énoncer et expliquer la Loi de Little.",a:"N = λ·W  et  Nq = λ·Wq. N=clients dans système, λ=taux arrivée, W=temps dans système. UNIVERSELLE : valide pour tout système stable, quelle que soit la distribution."},
+  {cat:"Files",q:"M/M/1/K — différences avec M/M/1.",a:"Capacité max K. Clients arrivant quand système plein sont perdus. Toujours stable (même si ρ≥1). π₀=(1-ρ)/(1-ρᴷ⁺¹) si ρ≠1, 1/(K+1) si ρ=1. Prob. blocage=πK."},
+  {cat:"Files",q:"Processus Naissance-Mort — récurrence générale.",a:"πᵢ = π₀ · Πₖ₌₀ⁱ⁻¹(λₖ/µₖ₊₁)\nπ₀ = 1/Σᵢ Πₖ(λₖ/µₖ₊₁)\nCas homogène : πᵢ = ρⁱπ₀, ρ=λ/µ"},
+];
+
+const allCatsFC = ['intro','cmtd','cmtc','fa'];
+let fcFiltered=[...theoryCards], fcIdx=0, fcCurCat='all';
+function setFCCat(cat,btn){
+  document.querySelectorAll('.fc-cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  fcCurCat=cat;
+  const catMap={intro:'Modélisation',cmtd:'CMTD',cmtc:'CMTC',fa:'Files'};
+  fcFiltered = cat==='all'?[...theoryCards]:theoryCards.filter(c=>c.cat===catMap[cat]);
+  fcIdx=0;updateFC();
+}
+function updateFC(){
+  let c=fcFiltered[fcIdx];
+  document.getElementById('fcCategory').innerText=c.cat;
+  document.getElementById('fcQuestion').innerText=c.q;
+  document.getElementById('fcAnswer').innerText=c.a;
+  document.getElementById('fcCounter').innerText=`${fcIdx+1} / ${fcFiltered.length}`;
+  document.getElementById('fcProgressBar').style.width=((fcIdx+1)/fcFiltered.length)*100+'%';
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');}
+function nextCard(){fcIdx=(fcIdx+1)%fcFiltered.length;updateFC();}
+function prevCard(){fcIdx=(fcIdx-1+fcFiltered.length)%fcFiltered.length;updateFC();}
+function shuffleCards(){for(let i=fcFiltered.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[fcFiltered[i],fcFiltered[j]]=[fcFiltered[j],fcFiltered[i]];}fcIdx=0;updateFC();}
+updateFC();
+
+/* ===== SCENARIO FLASHCARDS ===== */
+const scenarioCards = [
+  {cat:"CMTD",q:"ÉNONCÉ — Processeur panne/réparation.\nP(panne|bon)=0.5, P(réparé|panne)=0.4.\nÉtat 0=bon, État 1=panne.\n(1) Écrire P. (2) Calculer π⁽²⁾ pour π⁽⁰⁾=[1,0]. (3) Trouver π stationnaire.",a:`SOLUTION :
+(1) P = [[0.5, 0.5],
+         [0.4, 0.6]]
+
+(2) π⁽¹⁾ = [1,0]·P = [0.5, 0.5]
+    π⁽²⁾ = [0.5,0.5]·P
+         = [0.5×0.5+0.5×0.4, 0.5×0.5+0.5×0.6]
+         = [0.45, 0.55]
+
+(3) Système πP=π, π₀+π₁=1 :
+    π₀ = 0.5π₀ + 0.4π₁  → 0.5π₀ = 0.4π₁ → π₀ = 0.8π₁
+    Normalisation : 0.8π₁ + π₁ = 1 → π₁ = 1/1.8 ≈ 0.556
+    π₀ ≈ 0.444
+
+→ Le processeur est en panne ~55.6% du temps à long terme.`},
+  {cat:"CMTD",q:"ÉNONCÉ — Chaîne de Markov à 3 états.\nP = [[0, 0.5, 0.5], [0.5, 0, 0.5], [0.5, 0.5, 0]].\n(1) Vérifier irréductibilité. (2) Calculer la période de l'état 0. (3) La chaîne est-elle ergodique ?",a:`SOLUTION :
+(1) Irréductibilité :
+    Depuis 0 : 0→1 (p=0.5), 0→2 (p=0.5) ✓
+    0→1→0 (p=0.5×0.5=0.25) → 0 accessible depuis 1 ✓
+    Toute la chaîne est irréductible ✓
+
+(2) Période de l'état 0 :
+    p⁽¹⁾₀₀ = 0 (p₀₀=0, impossible en 1 étape)
+    p⁽²⁾₀₀ : 0→1→0 ou 0→2→0 = 0.5×0.5+0.5×0.5 = 0.5 > 0
+    p⁽³⁾₀₀ : 0→1→2→0 = 0.5×0.5×0.5 = 0.125 > 0
+    D(0) = PGCD(2,3) = 1 → apériodique
+
+(3) Ergodicité :
+    Finie ✓ + irréductible ✓ + apériodique ✓
+    → CMTD ERGODIQUE → lim π⁽ⁿ⁾ = [1/3, 1/3, 1/3] par symétrie.`},
+  {cat:"CMTD",q:"ÉNONCÉ — Processus Naissance-Mort CMTD infinie.\np₀₁=1, pᵢ,ᵢ₊₁=0.4, pᵢ,ᵢ₋₁=0.6 (i≥1).\n(1) Vérifier l'ergodicité. (2) Trouver π. (3) Calculer E[X] en régime stationnaire.",a:`SOLUTION :
+(1) Ergodicité :
+    p=0.4, q=0.6, p < q → ERGODIQUE ✓
+
+(2) Distribution stationnaire :
+    Balance : πᵢ·q = πᵢ₋₁·p
+    πᵢ = (p/q)ⁱ · π₀ = (0.4/0.6)ⁱ · π₀ = (2/3)ⁱ · π₀
+
+    Normalisation : π₀ · Σᵢ₌₀^∞ (2/3)ⁱ = 1
+    π₀ · 1/(1-2/3) = π₀ · 3 = 1
+    π₀ = 1/3
+
+    πᵢ = (1/3)·(2/3)ⁱ  [Géométrique]
+
+(3) E[X] = Σᵢ i·πᵢ = p/q / (1-p/q) = (2/3)/(1/3) = 2
+    → En moyenne, le système est à l'état 2.`},
+  {cat:"CMTD",q:"ÉNONCÉ — Marché avec 3 marques A, B, C.\nChaque mois : P(quitter A)=0.3, P(quitter B)=0.4, P(quitter C)=0.2.\nLes clients se répartissent équitablement entre les autres marques.\nTrouver la distribution stationnaire.",a:`SOLUTION :
+Construction de P :
+P =[[0.7,  0.15, 0.15],
+    [0.2,  0.6,  0.2 ],
+    [0.1,  0.1,  0.8 ]]
+
+Vérification : chaque ligne somme à 1 ✓
+
+Système πP=π, Σπᵢ=1 :
+0.7πA + 0.2πB + 0.1πC = πA  → 0.2πB + 0.1πC = 0.3πA
+0.15πA + 0.6πB + 0.1πC = πB → 0.15πA + 0.1πC = 0.4πB
++ πA + πB + πC = 1
+
+De l'équation 1 : πB = (0.3πA - 0.1πC)/0.2
+En combinant avec normalisation (résolution numérique) :
+πA ≈ 0.21,  πB ≈ 0.32,  πC ≈ 0.47
+
+→ La marque C domine le marché à long terme.`},
+  {cat:"CMTC",q:"ÉNONCÉ — Système à 2 états : fonctionnel (0) et en panne (1).\nTaux de panne : λ=2/h. Taux de réparation : µ=6/h.\n(1) Écrire Q. (2) Trouver π. (3) Disponibilité du système.",a:`SOLUTION :
+(1) Matrice Q :
+    Q = [[-2,  2],
+         [ 6, -6]]
+    Vérification : lignes somment à 0 ✓
+
+(2) Système πQ=0, π₀+π₁=1 :
+    -2π₀ + 6π₁ = 0  →  π₁ = (2/6)π₀ = π₀/3
+    π₀ + π₀/3 = 1  →  π₀ = 3/4 = 0.75
+    π₁ = 1/4 = 0.25
+
+    Interprétation : π₀ = µ/(λ+µ), π₁ = λ/(λ+µ) ✓
+
+(3) Disponibilité = π₀ = 0.75 (75% du temps fonctionnel)
+    Temps moyen entre pannes : MTBF = 1/λ = 0.5h
+    Temps moyen réparation : MTTR = 1/µ ≈ 0.167h
+    Check : Disp = MTBF/(MTBF+MTTR) = 0.5/0.667 = 0.75 ✓`},
+  {cat:"CMTC",q:"ÉNONCÉ — CMTC à 3 états.\nTaux : µ₀₁=2, µ₁₀=1, µ₁₂=3, µ₂₁=4.\n(1) Construire Q. (2) Trouver la CMTD incluse. (3) Trouver π.",a:`SOLUTION :
+(1) Q = [[-2,   2,   0],
+         [ 1,  -4,   3],
+         [ 0,   4,  -4]]
+
+(2) CMTD incluse : pᵢⱼ = µᵢⱼ/µᵢ
+    µ₀ = 2, µ₁ = 1+3 = 4, µ₂ = 4
+    P = [[0,   1,   0  ],
+         [1/4, 0,   3/4],
+         [0,   1,   0  ]]
+
+(3) Système πQ=0, Σπᵢ=1 :
+    -2π₀ + π₁ = 0         → π₁ = 2π₀
+    2π₀ - 4π₁ + 4π₂ = 0  → 2π₀ - 8π₀ + 4π₂ = 0 → π₂ = 6π₀/4 = 3π₀/2
+    3π₁ - 4π₂ = 0         → 6π₀ - 6π₀ = 0 ✓
+    π₀ + 2π₀ + 3π₀/2 = 1  → π₀(1+2+1.5) = 1 → π₀ = 2/9
+
+    π₀ = 2/9 ≈ 0.222
+    π₁ = 4/9 ≈ 0.444
+    π₂ = 3/9 = 1/3 ≈ 0.333`},
+  {cat:"CMTC",q:"ÉNONCÉ — 2 machines, 1 réparateur.\nChaque machine tombe en panne avec taux λ=1/h.\nLe réparateur répare avec taux µ=3/h.\nÉtat = nombre de machines en panne.\n(1) Définir les états et taux. (2) Construire Q. (3) Trouver π. (4) Disponibilité.",a:`SOLUTION :
+(1) États : 0 (aucune panne), 1 (1 panne), 2 (2 pannes)
+    Taux de panne : 
+      µ₀₁ = 2λ = 2 (2 machines peuvent tomber)
+      µ₁₂ = λ = 1 (1 machine restante)
+    Taux réparation : µ₁₀ = µ₂₁ = µ = 3
+
+(2) Q = [[-2,  2,  0],
+         [ 3, -4,  1],
+         [ 0,  3, -3]]
+
+(3) Système πQ=0, Σπᵢ=1 :
+    -2π₀ + 3π₁ = 0        → π₁ = 2π₀/3
+    2π₀ - 4π₁ + 3π₂ = 0  → 2π₀ - 8π₀/3 + 3π₂ = 0
+                           → 3π₂ = 8π₀/3 - 2π₀ = 2π₀/3 → π₂ = 2π₀/9
+    π₀ + 2π₀/3 + 2π₀/9 = 1 → π₀(9+6+2)/9 = 1 → π₀ = 9/17
+
+    π₀ = 9/17 ≈ 0.529
+    π₁ = 6/17 ≈ 0.353
+    π₂ = 2/17 ≈ 0.118
+
+(4) Disponibilité moyenne :
+    D = (2π₀ + 1×π₁ + 0×π₂)/2 = (18/17 + 6/17)/2 = 24/34 ≈ 0.706`},
+  {cat:"Files",q:"ÉNONCÉ — File M/M/1.\nArrivées : λ=4 clients/h. Service : µ=6 clients/h.\nCalculer : ρ, π₀, N, Nq, W, Wq. Vérifier la Loi de Little.",a:`SOLUTION :
+ρ = λ/µ = 4/6 = 2/3  (< 1, système stable ✓)
+
+π₀ = 1 - ρ = 1 - 2/3 = 1/3 ≈ 0.333
+(le serveur est libre 33.3% du temps)
+
+N = ρ/(1-ρ) = (2/3)/(1/3) = 2 clients en moyenne
+
+Nq = ρ²/(1-ρ) = (4/9)/(1/3) = 4/3 ≈ 1.33 clients en attente
+
+W = 1/(µ-λ) = 1/(6-4) = 0.5h = 30 min
+
+Wq = ρ/(µ-λ) = (2/3)/2 = 1/3 h = 20 min
+
+Vérification Loi de Little :
+N = λ·W = 4 × 0.5 = 2 ✓
+Nq = λ·Wq = 4 × (1/3) = 4/3 ✓
+
+Vérification : W = Wq + 1/µ = 20 + 10 = 30 min ✓`},
+  {cat:"Files",q:"ÉNONCÉ — File M/M/1/K avec ρ≠1.\nλ=3/h, µ=2/h, K=4.\n(1) Calculer π₀. (2) Prob. blocage. (3) Débit effectif. (4) N.",a:`SOLUTION :
+ρ = λ/µ = 3/2 = 1.5  (> 1 mais M/M/1/K toujours stable)
+
+(1) π₀ = (1-ρ)/(1-ρᴷ⁺¹) = (1-1.5)/(1-1.5⁵)
+    1.5⁵ = 7.594
+    π₀ = (-0.5)/(1-7.594) = (-0.5)/(-6.594) ≈ 0.0758
+
+(2) Calcul des πᵢ :
+    π₁ = ρ·π₀ = 1.5×0.0758 ≈ 0.1137
+    π₂ = ρ²·π₀ = 2.25×0.0758 ≈ 0.1706
+    π₃ = ρ³·π₀ = 3.375×0.0758 ≈ 0.2559
+    π₄ = ρ⁴·π₀ = 5.0625×0.0758 ≈ 0.3838
+
+    Vérification : Σπᵢ ≈ 0.9998 ≈ 1 ✓
+
+    Prob. blocage = π₄ ≈ 0.384 (38.4% des clients perdus)
+
+(3) λ_eff = λ(1-π₄) = 3×(1-0.384) = 3×0.616 ≈ 1.848 clients/h
+
+(4) N = Σᵢ₌₀⁴ i·πᵢ = 0+0.1137+0.3412+0.7677+1.5352 ≈ 2.756`},
+  {cat:"Files",q:"ÉNONCÉ — File M/M/1/K avec ρ=1.\nλ=µ=5/h, K=3.\n(1) π₀. (2) Distribution. (3) N. (4) Prob. blocage. (5) λ_eff.",a:`SOLUTION :
+ρ = λ/µ = 1 → cas particulier : distribution uniforme !
+
+(1) π₀ = 1/(K+1) = 1/4 = 0.25
+
+(2) Distribution :
+    πᵢ = 1/(K+1) = 0.25 pour i = 0, 1, 2, 3
+    Chaque état est équiprobable ✓
+
+(3) N = Σᵢ₌₀³ i·πᵢ = 0×0.25 + 1×0.25 + 2×0.25 + 3×0.25
+     = 0.25(0+1+2+3) = 0.25×6 = 1.5 clients
+
+(4) Prob. blocage = π₃ = 0.25 (25%)
+
+(5) λ_eff = λ(1-π₃) = 5×(1-0.25) = 5×0.75 = 3.75 clients/h
+
+Loi de Little : W = N/λ_eff = 1.5/3.75 = 0.4h = 24 min`},
+  {cat:"Files",q:"ÉNONCÉ — Naissance-Mort avec taux variables.\nλ₀=3, λ₁=2, λ₂=1 (arrivées). µ₁=4, µ₂=4, µ₃=4 (service).\nCapacité K=3 (états 0,1,2,3).\nTrouver la distribution stationnaire.",a:`SOLUTION :
+Formule récurrente naissance-mort :
+π₁ = (λ₀/µ₁)·π₀ = (3/4)·π₀
+π₂ = (λ₀·λ₁)/(µ₁·µ₂)·π₀ = (3×2)/(4×4)·π₀ = (6/16)·π₀ = 0.375π₀
+π₃ = (λ₀·λ₁·λ₂)/(µ₁·µ₂·µ₃)·π₀ = (3×2×1)/(4×4×4)·π₀ = (6/64)·π₀ ≈ 0.094π₀
+
+Normalisation : π₀(1 + 0.75 + 0.375 + 0.094) = 1
+π₀ × 2.219 = 1  →  π₀ ≈ 0.451
+
+π₁ ≈ 0.751×0.451 ≈ 0.338
+π₂ ≈ 0.375×0.451 ≈ 0.169
+π₃ ≈ 0.094×0.451 ≈ 0.042
+
+Vérification : 0.451+0.338+0.169+0.042 ≈ 1.000 ✓
+Prob. blocage = π₃ ≈ 4.2%`},
+  {cat:"Files",q:"ÉNONCÉ — Application Loi de Little.\nUn supermarché observe : λ=60 clients/h, W=15 min en moyenne.\n(1) Combien de clients dans le magasin en moyenne ?\n(2) Si Wq=10 min, trouver Nq et le temps de service moyen.",a:`SOLUTION :
+(1) Loi de Little : N = λ·W
+    Attention : convertir unités (λ en clients/min ou W en heures)
+    λ = 60/60 = 1 client/min
+    W = 15 min
+    N = 1 × 15 = 15 clients en moyenne dans le magasin
+
+(2) Nq = λ·Wq = 1 × 10 = 10 clients en attente
+
+    Temps de service moyen :
+    W = Wq + E[S]  (Little séparé)
+    E[S] = W - Wq = 15 - 10 = 5 min = 1/µ
+    → µ = 1/5 = 0.2 service/min = 12 services/h
+
+    Vérification cohérence M/M/1 :
+    ρ = λ/µ = 1/0.2 = 5... > 1 → système M/M/1 serait instable
+    → Le supermarché a PLUSIEURS caisses (file M/M/s ou M/M/1/K).`},
+];
+
+let scenFiltered=[...scenarioCards], scenIdx=0;
+function setScenCat(cat,btn){
+  document.querySelectorAll('#scenarios .fc-cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  const catMap={cmtd:'CMTD',cmtc:'CMTC',fa:'Files'};
+  scenFiltered = cat==='all'?[...scenarioCards]:scenarioCards.filter(c=>c.cat===(catMap[cat]||cat));
+  scenIdx=0;updateScen();
+}
+function updateScen(){
+  let c=scenFiltered[scenIdx];
+  document.getElementById('scenCategory').innerText=c.cat;
+  document.getElementById('scenQuestion').innerText=c.q;
+  const ansEl=document.getElementById('scenAnswer');
+  ansEl.innerHTML='<pre style="font-family:\'Space Mono\',monospace;font-size:.72rem;color:#a5f3fc;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.25);border-radius:6px;padding:.8rem;margin:.5rem 0;white-space:pre-wrap;text-align:left">'+c.a+'</pre>';
+  document.getElementById('scenCounter').innerText=`${scenIdx+1} / ${scenFiltered.length}`;
+  document.getElementById('scenProgressBar').style.width=((scenIdx+1)/scenFiltered.length)*100+'%';
+  document.getElementById('scenCard').classList.remove('flipped');
+}
+function flipScen(){document.getElementById('scenCard').classList.toggle('flipped');}
+function nextScen(){scenIdx=(scenIdx+1)%scenFiltered.length;updateScen();}
+function prevScen(){scenIdx=(scenIdx-1+scenFiltered.length)%scenFiltered.length;updateScen();}
+function shuffleScen(){for(let i=scenFiltered.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[scenFiltered[i],scenFiltered[j]]=[scenFiltered[j],scenFiltered[i]];}scenIdx=0;updateScen();}
+updateScen();
+
+/* ===== MCQ DATA ===== */
+const allMCQ = [
+  // SET A: MODÉLISATION & DISTRIBUTIONS (0–27)
+  {q:"Qu'est-ce qu'un processus stochastique ?",opts:["Une suite déterministe de valeurs","Une famille de variables aléatoires indexées par un paramètre t","Un algorithme de tri aléatoire","Un réseau de files d'attente"],correct:1,exp:"Processus stochastique : {X(t), t∈T} — famille de VA sur le même espace de probabilité, indexées par t (temps)."},
+  {q:"Dans la classification des processus stochastiques, T continu et E discret correspond à :",opts:["CMTD","Diffusion brownienne","CMTC","Processus à temps discret"],correct:2,exp:"T continu + E discret → CMTC. T discret + E discret → CMTD."},
+  {q:"Quelle est l'espérance d'une variable Exponentielle(λ) ?",opts:["λ","λ²","1/λ","1/λ²"],correct:2,exp:"Exp(λ) : E[X]=1/λ, Var(X)=1/λ². C'est la seule loi continue sans mémoire."},
+  {q:"La propriété sans mémoire de l'exponentielle signifie :",opts:["P[X>s+t|X>s] = P[X>t]","P[X>s+t] = P[X>s]·P[X>t] - quelque chose","P[X=k] est constant","La variance est nulle"],correct:0,exp:"P[X>s+t|X>s] = e^(-λ(s+t))/e^(-λs) = e^(-λt) = P[X>t]. Le passé n'influence pas le futur."},
+  {q:"Loi de Poisson(λt) — quelle est la variance ?",opts:["λ","λt","(λt)²","√(λt)"],correct:1,exp:"Poisson(λt) : E[Z(t)]=λt ET Var[Z(t)]=λt. E=Var est une propriété caractéristique de Poisson."},
+  {q:"Si inter-arrivées ~ Exp(λ), le processus d'arrivées est :",opts:["Un processus de Bernoulli","Un processus de Poisson de taux λ","Un processus de renouvellement général","Une CMTD"],correct:1,exp:"Inter-arrivées Exp(λ) et indépendantes → processus de Poisson de taux λ."},
+  {q:"Transformée de Laplace LX(s) à s=0 vaut :",opts:["0","λ","1","E[X]"],correct:2,exp:"LX(0) = E[e^0] = E[1] = 1. C'est une propriété fondamentale de la transformée de Laplace."},
+  {q:"Le coefficient de variation C²ₓ est défini par :",opts:["E[X]/Var(X)","Var(X)/E[X]","Var(X)/(E[X])²","E[X]²/Var(X)"],correct:2,exp:"C²ₓ = Var(X)/(E[X])². Pour Exp(λ) : C²=1. Pour Déterministe : C²=0."},
+  {q:"La probabilité conditionnelle P(A|B) est définie comme :",opts:["P(A)·P(B)","P(A∩B)/P(B)","P(A)/P(B)","P(A∪B)-P(B)"],correct:1,exp:"P(A|B) = P(A∩B)/P(B) — probabilité de A sachant que B est réalisé."},
+  {q:"Théorème de Bayes : P(Bⱼ|A) = ?",opts:["P(A|Bⱼ)·P(Bⱼ)","P(A|Bⱼ)·P(Bⱼ) / Σᵢ P(A|Bᵢ)·P(Bᵢ)","P(Bⱼ)/P(A)","P(A∩Bⱼ)"],correct:1,exp:"Bayes : P(Bⱼ|A) = P(A|Bⱼ)·P(Bⱼ) / Σᵢ P(A|Bᵢ)·P(Bᵢ)"},
+  {q:"Une variable X discrète a E[X] = Σ x·P[X=x]. Si X suit Géom(p) modifiée, E[X] = ?",opts:["p","1/p","p/(1-p)","(1-p)/p"],correct:2,exp:"Géom modifiée (k≥0) : P[X=k]=(1-p)pᵏ. E[X]=p/(1-p). Var=p/(1-p)²."},
+  {q:"La formule P(arrivée dans Δt) ≈ λ·Δt suppose que Δt est :",opts:["Très grand","Exactement 1","Très petit (infinitésimal)","Égal à 1/λ"],correct:2,exp:"Propriété infinitésimale du processus de Poisson : pour Δt→0, P(1 arrivée)≈λΔt, P(2+)≈0."},
+  {q:"Superposition de Poisson : si X~Pois(λ₁) et Y~Pois(λ₂) indépendants, alors X+Y suit :",opts:["Pois(λ₁·λ₂)","Pois(λ₁+λ₂)","Pois(max(λ₁,λ₂))","Pois((λ₁+λ₂)/2)"],correct:1,exp:"Superposition : Pois(λ₁) + Pois(λ₂) = Pois(λ₁+λ₂). Propriété de stabilité de Poisson."},
+  {q:"Un modèle analytique se distingue d'un modèle descriptif par :",opts:["Sa taille","L'utilisation d'équations mathématiques pour prédire","Son coût de développement","Le nombre d'états"],correct:1,exp:"Analytique = équations mathématiques pour prédire/analyser. Descriptif = structure sans prédiction."},
+  {q:"Var(X) peut être calculée comme :",opts:["E[X²] + (E[X])²","E[X²] - (E[X])²","(E[X])² - E[X²]","E[(X-µ)]"],correct:1,exp:"Var(X) = E[X²] - (E[X])². Formule König-Huygens, plus facile à calculer."},
+  {q:"La loi Exponentielle(λ) est utilisée en CMTC pour modéliser :",opts:["Les probabilités de transition","Les temps de séjour dans chaque état","Le nombre d'états","La période des états"],correct:1,exp:"Temps de séjour en état i ~ Exp(µᵢ) dans une CMTC. Raison : propriété sans mémoire = Markov."},
+  {q:"Pour L_{X₁+X₂}(s) quand X₁ et X₂ sont indépendants :",opts:["LX₁(s) + LX₂(s)","LX₁(s) × LX₂(s)","LX₁(s) / LX₂(s)","LX₁(s) - LX₂(s)"],correct:1,exp:"Indépendance → LX₁+X₂(s) = LX₁(s)·LX₂(s). Laplace transforme la convolution en produit."},
+  {q:"Un système est discret si :",opts:["Ses variables changent continuellement","Ses variables changent à des instants séparés","Il n'a pas d'états","Il fonctionne en temps réel"],correct:1,exp:"Discret : changements à des instants séparés (ex: nb clients = entier, change lors d'arrivées/départs)."},
+  {q:"E[X²] pour Exp(λ) est :",opts:["1/λ","2/λ²","1/λ²","2/λ"],correct:1,exp:"Exp(λ) : E[X]=1/λ, E[X²]=2/λ². Vérification : Var=E[X²]-(E[X])²=2/λ²-1/λ²=1/λ² ✓"},
+  {q:"P(A∪B) = ?",opts:["P(A)+P(B)","P(A)+P(B)-P(A∩B)","P(A)·P(B)","P(A)+P(B)+P(A∩B)"],correct:1,exp:"Formule d'inclusion-exclusion : P(A∪B) = P(A)+P(B)-P(A∩B)"},
+  {q:"L'état d'un système est :",opts:["Son nom","L'ensemble des variables nécessaires pour le décrire à un instant t","Sa taille physique","Son âge"],correct:1,exp:"État = collection de variables d'état décrivant complètement le système à l'instant t."},
+  {q:"La loi de Poisson est caractérisée par le fait que E[X] = Var[X]. Cette valeur est :",opts:["1","λ","λt","λ/t"],correct:2,exp:"Pour Poisson(λt) : E[Z(t)]=λt=Var[Z(t)]. C'est une propriété caractéristique unique."},
+  {q:"Un processus déterministe se distingue d'un processus stochastique par :",opts:["Sa vitesse","Son comportement prédictible vs probabiliste","Sa taille","Son nombre d'états"],correct:1,exp:"Déterministe : comportement prédictible (ex: algorithme de tri). Stochastique : évolution probabiliste."},
+  {q:"Pour calculer E[Xⁿ] via la transformée de Laplace :",opts:["E[Xⁿ] = L^(n)_X(0)","E[Xⁿ] = (-1)ⁿ L^(n)_X(0)","E[Xⁿ] = nLX(0)","E[Xⁿ] = LX(n)"],correct:1,exp:"Moments via Laplace : E[Xⁿ] = (-1)ⁿ L^(n)_X(0) où L^(n) = dérivée n-ième."},
+  {q:"Quelle est la seule loi discrète sans mémoire ?",opts:["Binomiale","Poisson","Géométrique","Uniforme"],correct:2,exp:"La loi géométrique est la seule loi discrète sans mémoire. Analogue discret de l'exponentielle."},
+  {q:"P[Z(t)=0] pour un processus de Poisson(λ) vaut :",opts:["0","e^(-λt)","λt","1-λt"],correct:1,exp:"P[Z(t)=0] = e^(-λt)·(λt)⁰/0! = e^(-λt). Probabilité d'aucune arrivée sur [0,t]."},
+  {q:"La variance de la loi Exponentielle(λ) est :",opts:["λ","1/λ","λ²","1/λ²"],correct:3,exp:"Var(Exp(λ)) = 1/λ². C²=Var/E²=(1/λ²)/(1/λ²)=1. Le coeff. variation de l'exp. est toujours 1."},
+  {q:"La formule E[Xⁿ] = Σ xⁿ·P[X=x] suppose que X est :",opts:["Continu","Discret","Exponentiel","Déterministe"],correct:1,exp:"Pour X discret : E[Xⁿ]=Σ xⁿP[X=x]. Pour X continu : E[Xⁿ]=∫xⁿfX(x)dx."},
+
+  // SET B: CMTD (28–55)
+  {q:"Une matrice stochastique P vérifie :",opts:["pᵢⱼ≤0 et Σᵢ pᵢⱼ=1","pᵢⱼ≥0 et Σⱼ pᵢⱼ=1","pᵢⱼ≥0 et Σⱼ pᵢⱼ=0","pᵢⱼ quelconque et Σpᵢⱼ=1"],correct:1,exp:"Matrice stochastique : pᵢⱼ≥0 (positif) et Σⱼ pᵢⱼ=1 pour tout i (lignes somment à 1)."},
+  {q:"La formule π⁽ⁿ⁾ = π⁽⁰⁾·Pⁿ est utilisée pour :",opts:["Le régime stationnaire","L'analyse transitoire","Trouver la période","Tester l'ergodicité"],correct:1,exp:"Analyse transitoire : π⁽ⁿ⁾ = π⁽⁰⁾·Pⁿ donne la distribution à l'étape n à partir de la distribution initiale."},
+  {q:"La propriété de Markov pour une CMTD signifie :",opts:["Toutes les transitions sont équiprobables","P(Xₙ=j|Xₙ₋₁=i,...) = P(Xₙ=j|Xₙ₋₁=i)","Les probabilités dépendent de n","La chaîne est périodique"],correct:1,exp:"Markov : seul le présent (Xₙ₋₁=i) détermine le futur, pas l'historique complet."},
+  {q:"L'accessibilité i→j signifie :",opts:["pᵢⱼ > 0","∃m≥1 tel que p⁽ᵐ⁾ᵢⱼ > 0","i=j","pᵢⱼ = 1"],correct:1,exp:"i→j si ∃m≥1 tel que p⁽ᵐ⁾ᵢⱼ>0. On peut atteindre j depuis i en m étapes."},
+  {q:"La période D(i) est définie comme :",opts:["Le nombre d'états","PGCD{k≥1 : p⁽ᵏ⁾ᵢᵢ > 0}","Le temps moyen de retour","Σⱼ pᵢⱼ"],correct:1,exp:"D(i) = PGCD des longueurs de tous les circuits passant par i. D(i)=1 → apériodique."},
+  {q:"Si pᵢᵢ > 0, alors la période D(i) est :",opts:["Infinie","2","0","1 (apériodique)"],correct:3,exp:"Si pᵢᵢ>0, i peut revenir en 1 étape → 1 ∈ {k : p⁽ᵏ⁾ᵢᵢ>0} → PGCD contient 1 → D(i)=1."},
+  {q:"Un état récurrent vérifie fᵢᵢ = :",opts:["0","< 1","= 1","> 1"],correct:2,exp:"Récurrent : fᵢᵢ=1 (retour garanti avec prob. 1). Transitoire : fᵢᵢ<1 (peut ne jamais revenir)."},
+  {q:"La relation πⱼ = 1/Mⱼ signifie :",opts:["Mⱼ est le nombre d'états","πⱼ est le temps de retour","πⱼ est l'inverse du temps moyen de retour en j","Mⱼ = 1 toujours"],correct:2,exp:"πⱼ=1/Mⱼ : la fréquence de visite de l'état j est l'inverse du temps moyen entre deux visites (théorème de renouvellement)."},
+  {q:"Pour trouver la distribution stationnaire d'une CMTD, on résout :",opts:["{ πP=0, Σπᵢ=1","{ πP=π, Σπᵢ=1","{ Pπ=π, Σπᵢ=0","{ πP=1, Σπᵢ=0"],correct:1,exp:"Système stationnaire CMTD : πP=π (distribution invariante) ET Σπᵢ=1 (normalisation)."},
+  {q:"Une CMTD irréductible est telle que :",opts:["Tous les états sont absorbants","∀(i,j), ∃m≥1 : p⁽ᵐ⁾ᵢⱼ>0","Certains états sont inaccessibles","La matrice P est diagonale"],correct:1,exp:"Irréductible : tout état est accessible depuis tout autre état. Une seule classe d'équivalence."},
+  {q:"Une CMTD finie est ergodique si et seulement si elle est :",opts:["Irréductible seulement","Apériodique seulement","Irréductible ET apériodique","Irréductible ET périodique"],correct:2,exp:"CMTD finie ergodique ⟺ irréductible + apériodique. Alors lim π⁽ⁿ⁾ = π unique."},
+  {q:"Tous les états d'une CMTD finie irréductible sont :",opts:["Transitoires","Récurrents nuls","Récurrents non nuls","Absorbants"],correct:2,exp:"CMTD finie irréductible → tous les états sont récurrents non nuls (Mᵢ < ∞)."},
+  {q:"La formule fᵢⱼ = pᵢⱼ + Σₖ≠ⱼ pᵢₖ·fₖⱼ calcule :",opts:["La distribution stationnaire","La probabilité d'atteindre j depuis i","Le temps moyen de retour","La période de i"],correct:1,exp:"fᵢⱼ = probabilité d'atteindre l'état j en partant de i (en un nombre quelconque d'étapes)."},
+  {q:"La formule Mᵢⱼ = 1 + Σₖ≠ⱼ pᵢₖ·Mₖⱼ calcule :",opts:["La probabilité de transition","Le temps moyen pour aller de i à j","Le nombre d'états","fᵢᵢ"],correct:1,exp:"Mᵢⱼ = temps moyen en nb d'étapes pour atteindre j depuis i (première visite)."},
+  {q:"Dans le processus Naissance-Mort CMTD (pᵢ,ᵢ₊₁=p, pᵢ,ᵢ₋₁=q), la condition d'ergodicité est :",opts:["p > q","p = q","p < q","p + q > 1"],correct:2,exp:"Ergodicité NM-CMTD : p < q. Si p≥q, la chaîne dérive vers +∞."},
+  {q:"Pour NM-CMTD ergodique avec p=0.4, q=0.6, la distribution est :",opts:["Uniforme","Géométrique de raison p/q=2/3","Poisson","Exponentielle"],correct:1,exp:"πᵢ = (1-p/q)·(p/q)ⁱ = (1-2/3)·(2/3)ⁱ = (1/3)·(2/3)ⁱ. Distribution géométrique."},
+  {q:"Une classe fermée dans une CMTD est :",opts:["Une classe dont on ne peut pas sortir","Une classe avec un seul état","Une classe apériodique","Un ensemble d'états transitoires"],correct:0,exp:"Classe fermée : Σⱼ∈C p⁽ᵐ⁾ᵢⱼ = 1 pour tout i∈C. Une fois entré, impossible d'en sortir."},
+  {q:"Si une CMTD est irréductible mais périodique (D>1), alors :",opts:["Elle n'a pas de distribution stationnaire","La distribution stationnaire existe mais π⁽ⁿ⁾ n'a pas de limite","Elle est instable","Tous ses états sont transitoires"],correct:1,exp:"Périodique : π⁽ⁿ⁾ oscille, pas de limite. Mais le système πP=π admet bien une solution unique."},
+  {q:"Pour une CMTD à 2 états avec P=[[1-α, α],[β, 1-β]], la distribution stationnaire π₀ = ?",opts:["α/(α+β)","β/(α+β)","α·β","1/2"],correct:1,exp:"Système : βπ₀ = α(1-π₀) → π₀(α+β)=α → π₀=α... ERREUR : résolution donne π₀=β/(α+β)."},
+  {q:"Chapman-Kolmogorov en CMTD : p⁽ⁿ⁾ᵢⱼ = ?",opts:["p⁽ᵐ⁾ᵢⱼ + p⁽ⁿ⁻ᵐ⁾ᵢⱼ","Σₖ p⁽ᵐ⁾ᵢₖ · p⁽ⁿ⁻ᵐ⁾ₖⱼ","p⁽ᵐ⁾ᵢⱼ · p⁽ⁿ⁻ᵐ⁾ᵢⱼ","pᵢⱼⁿ"],correct:1,exp:"Chapman-Kolmogorov : p⁽ⁿ⁾ᵢⱼ = Σₖ p⁽ᵐ⁾ᵢₖ · p⁽ⁿ⁻ᵐ⁾ₖⱼ pour 0≤m≤n."},
+  {q:"État absorbant : condition sur pₖₖ ?",opts:["pₖₖ = 0","pₖₖ < 1","pₖₖ = 1","pₖₖ > 1"],correct:2,exp:"État absorbant k : pₖₖ=1 et pₖⱼ=0 pour j≠k. Classe fermée à un seul élément."},
+  {q:"Dans une CMTD irréductible, quel est le rapport entre les périodes de deux états différents ?",opts:["Elles peuvent être différentes","Elles sont toujours égales","Une est le double de l'autre","Elles sont inversément proportionnelles"],correct:1,exp:"Tous les états d'une même classe de communication ont la même période. CMTD irréductible → 1 seule classe."},
+  {q:"Si D(i)=2, que se passe-t-il avec la suite π⁽ⁿ⁾ ?",opts:["Elle converge vers π","Elle diverge vers 0","Elle oscille entre 2 valeurs","Elle devient nulle"],correct:2,exp:"D(i)=2 → chaîne périodique → π⁽ⁿ⁾ oscille entre deux distributions et n'a pas de limite unique."},
+  {q:"π₀ dans le processus NM-CMTD ergodique avec p/q = r est :",opts:["r","1-r","r/(1-r)","1/(1-r)"],correct:1,exp:"π₀ = 1 - p/q = 1 - r. Puis πᵢ = (1-r)·rⁱ. Vérification : Σπᵢ = (1-r)·1/(1-r) = 1 ✓"},
+  {q:"La chaîne de Markov est dite homogène si :",opts:["Tous les états sont identiques","pᵢⱼ ne dépend pas de n (instant de la transition)","La matrice P est symétrique","La distribution initiale est uniforme"],correct:1,exp:"CMTD homogène : pᵢⱼ = P(Xₙ=j|Xₙ₋₁=i) constant dans le temps (ne dépend pas de n)."},
+  {q:"CMTD récurrent nul — cela se produit seulement dans :",opts:["CMTD finie","CMTD irréductible finie","CMTD infinie","CMTD à 2 états"],correct:2,exp:"Récurrent nul (fᵢᵢ=1, Mᵢ=∞) : seulement dans les CMTD infinies. CMTD finie → récurrent non nul."},
+  {q:"Si π est la distribution stationnaire d'une CMTD, alors π·P² = ?",opts:["π","π²","2π","π/2"],correct:0,exp:"π·P=π → π·P²=π·P·P=π·P=π. La distribution stationnaire est un vecteur propre pour toute puissance de P."},
+  {q:"Équivalence en classes : si i↔j (communiquent), alors :",opts:["i=j","D(i) peut ≠ D(j)","D(i) = D(j)","fᵢⱼ = 0"],correct:2,exp:"États qui communiquent ont la même période. C'est une propriété clé des classes de communication."},
+
+  // SET C: CMTC (56–83)
+  {q:"La matrice Q (générateur infinitésimal) vérifie :",opts:["Σⱼ qᵢⱼ = 1","Σⱼ qᵢⱼ = 0","qᵢᵢ > 0","Toutes les entrées sont positives"],correct:1,exp:"Σⱼ qᵢⱼ = 0 pour tout i. La somme de chaque ligne de Q vaut 0. qᵢᵢ est négatif."},
+  {q:"L'élément diagonal qᵢᵢ de Q est :",opts:["Σⱼ≠ᵢ µᵢⱼ","-Σⱼ≠ᵢ µᵢⱼ","0","1"],correct:1,exp:"qᵢᵢ = -Σⱼ≠ᵢ µᵢⱼ. Le diagonal est égal à l'opposé de la somme des taux de sortie de i."},
+  {q:"Le temps de séjour dans l'état i d'une CMTC suit :",opts:["Une loi uniforme","Une loi géométrique","Une loi exponentielle Exp(|qᵢᵢ|)","Une loi de Poisson"],correct:2,exp:"Temps de séjour en i ~ Exp(µᵢ) où µᵢ=|qᵢᵢ|=Σⱼ≠ᵢ µᵢⱼ. Propriété clé des CMTC."},
+  {q:"La CMTD incluse d'une CMTC a pour probabilités de transition :",opts:["pᵢⱼ = µᵢⱼ","pᵢⱼ = µᵢⱼ/µᵢ","pᵢⱼ = µᵢ/µᵢⱼ","pᵢⱼ = qᵢⱼ"],correct:1,exp:"pᵢⱼ = µᵢⱼ/µᵢ où µᵢ=Σₖ≠ᵢ µᵢₖ. On normalise les taux de sortie pour obtenir des probabilités."},
+  {q:"Les équations de Chapman-Kolmogorov pour une CMTC donnent :",opts:["π = π·Q","dπ/dt = π·Q","dπ/dt = Q·π","π·Q = 1"],correct:1,exp:"dπ(t)/dt = π(t)·Q. Équation différentielle linéaire décrivant l'évolution temporelle de la distribution."},
+  {q:"La condition de régime stationnaire d'une CMTC est :",opts:["π·P = π","π·Q = 0, Σπᵢ=1","dπ/dt = 1","π·Q = 1"],correct:1,exp:"Régime stationnaire CMTC : π·Q=0 (flux nets nuls) ET Σπᵢ=1 (normalisation)."},
+  {q:"Une CMTC finie irréductible est :",opts:["Parfois ergodique","Toujours ergodique","Jamais ergodique","Ergodique seulement si apériodique"],correct:1,exp:"CMTC finie + irréductible → TOUJOURS ergodique. Pas de problème de périodicité (temps exponentiel = apériodique)."},
+  {q:"La différence clé entre π·P=π (CMTD) et π·Q=0 (CMTC) est :",opts:["Aucune différence","CMTC utilise les taux, CMTD utilise les probabilités","CMTD est plus précise","CMTC n'a pas de stationnaire"],correct:1,exp:"CMTD : probabilités pᵢⱼ, stationnaire via πP=π. CMTC : taux µᵢⱼ, stationnaire via πQ=0."},
+  {q:"Pour une CMTC à 2 états (µ₀₁=λ, µ₁₀=µ), π₀ = ?",opts:["λ/(λ+µ)","µ/(λ+µ)","λ/µ","µ/λ"],correct:1,exp:"Système : -λπ₀+µπ₁=0 → π₁=(λ/µ)π₀. Normalisation → π₀=µ/(λ+µ), π₁=λ/(λ+µ)."},
+  {q:"La CMTC est irréductible si et seulement si :",opts:["Tous les taux µᵢⱼ sont nuls","Sa CMTD incluse est irréductible","Tous les états ont le même taux","Q est diagonale"],correct:1,exp:"CMTC irréductible ⟺ CMTD incluse irréductible. On hérite les propriétés structurelles de la CMTD incluse."},
+  {q:"Pourquoi l'exponentielle est-elle utilisée pour les temps de séjour en CMTC ?",opts:["Car elle est simple à calculer","Car c'est la seule loi continue sans mémoire → cohérent avec Markov","Car elle a la plus grande variance","Car elle est toujours intégrable"],correct:1,exp:"Sans mémoire = propriété de Markov. L'état futur ne dépend pas du temps déjà passé en i → seule l'expo vérifie cela."},
+  {q:"La CMTC ergodique a une distribution limite π qui :",opts:["Dépend de π(0)","Est unique et indépendante de π(0)","Vaut 0 pour tous les états","Vaut 1 pour un seul état"],correct:1,exp:"CMTC ergodique → π unique, indépendante des conditions initiales. Résultat du théorème de convergence."},
+  {q:"Pour construire Q d'une CMTC avec µ₀₁=2, µ₁₀=3, µ₁₂=1, µ₂₁=4, q₁₁ = ?",opts:["1","3","-(3+1) = -4","-3"],correct:2,exp:"q₁₁ = -(µ₁₀ + µ₁₂) = -(3+1) = -4. Le diagonal = moins la somme des taux de sortie."},
+  {q:"La solution de dπ/dt = π·Q est :",opts:["π(0)·Q","π(0)·e^(Qt)","e^(Qt)·π(0)","π(0)/Q"],correct:1,exp:"Solution : π(t) = π(0)·e^(Qt). Mais en pratique, on s'intéresse surtout au régime stationnaire (t→∞)."},
+  {q:"Dans une CMTC à naissance-mort, le flux entrant en état i = flux sortant en état i. C'est :",opts:["La loi de Little","La balance globale (détaillée)","Chapman-Kolmogorov","La normalisation"],correct:1,exp:"Balance locale (détaillée) : µᵢ₋₁,ᵢ·πᵢ₋₁ = µᵢ,ᵢ₋₁·πᵢ. Simplification de NB car seulement transitions voisines."},
+  {q:"Pour une CMTC à 2 états, la disponibilité du système (prob. d'être en état 0=fonctionnel) est :",opts:["λ/(λ+µ)","µ/(λ+µ)","λ·µ","1/(λ+µ)"],correct:1,exp:"Disponibilité = π₀ = µ/(λ+µ) = MTBF/(MTBF+MTTR). Formule d'Erlang."},
+  {q:"Le générateur Q peut avoir des éléments positifs à quel endroit ?",opts:["Sur la diagonale","En dehors de la diagonale (i≠j)","Nulle part, tous négatifs","Partout"],correct:1,exp:"qᵢⱼ = µᵢⱼ ≥ 0 pour i≠j (positifs ou nuls). qᵢᵢ = -Σ µᵢⱼ ≤ 0 (négatif ou nul)."},
+  {q:"Pour un état i absorbant dans une CMTC, qᵢᵢ = ?",opts:["1","-1","0","Infini"],correct:2,exp:"État absorbant : aucun taux de sortie → µᵢⱼ=0 pour j≠i → qᵢᵢ=-Σµᵢⱼ=0."},
+  {q:"La CMTC homogène signifie que les taux µᵢⱼ :",opts:["Sont nuls","Ne dépendent pas du temps t","Sont tous égaux","Sont des entiers"],correct:1,exp:"CMTC homogène : µᵢⱼ constants dans le temps. C'est l'hypothèse standard pour la modélisation."},
+  {q:"µᵢ dans une CMTC représente :",opts:["Le taux de transition vers i","Le taux total de sortie de i = Σⱼ≠ᵢ µᵢⱼ","La probabilité de rester en i","Le temps moyen en i"],correct:1,exp:"µᵢ = Σⱼ≠ᵢ µᵢⱼ = taux total de sortie de l'état i. Le temps moyen de séjour en i est 1/µᵢ."},
+  {q:"Quand peut-on avoir une CMTC périodique ?",opts:["Toujours","Jamais, car le temps est continu (exponentiel = apériodique)","Seulement avec D=2","Seulement avec états finis"],correct:1,exp:"Le temps de séjour exponentiel est apériodique par nature → aucune CMTC n'est périodique. Avantage vs CMTD."},
+  {q:"Pour 3 états 0,1,2 avec µ₀₁=λ et µ₁₀=µ, µ₁₂=α et µ₂₁=β, Q[0][0] = ?",opts:["λ","-λ","0","-(λ+µ)"],correct:1,exp:"q₀₀ = -Σⱼ≠₀ µ₀ⱼ = -µ₀₁ = -λ. L'état 0 n'a qu'une seule sortie possible (vers 1)."},
+  {q:"La propriété 'finie + irréductible' est suffisante pour l'ergodicité dans :",opts:["CMTD seulement","CMTC seulement","CMTD et CMTC","Ni CMTD ni CMTC"],correct:1,exp:"En CMTC, finie + irréductible → ergodique (car pas de périodicité). En CMTD, il faut aussi l'apériodicité."},
+  {q:"Si µᵢⱼ=0 pour tous les j>i+1, la CMTC est un processus :",opts:["De Poisson","De naissance-mort","De diffusion","Absorbant"],correct:1,exp:"Naissance-Mort : transitions uniquement vers états voisins ±1. µᵢⱼ=0 si |i-j|>1."},
+  {q:"La relation entre CMTC et CMTD incluse : si CMTC est récurrente, alors CMTD incluse est :",opts:["Transitoire","Récurrente","Périodique","Absorbante"],correct:1,exp:"Les propriétés de récurrence/transience sont héritées : CMTC récurrente ⟺ CMTD incluse récurrente."},
+  {q:"Pour une CMTC ergodique, la distribution π(t) quand t→∞ :",opts:["Vaut 0","Dépend de π(0)","Converge vers π stationnaire indépendamment de π(0)","Diverge"],correct:2,exp:"CMTC ergodique → π(t)→π pour t→∞, quelle que soit la condition initiale π(0)."},
+  {q:"Dans les équations d'état dπᵢ/dt = flux_entrant − flux_sortant, le flux sortant de l'état i vaut :",opts:["µᵢ·πᵢ = πᵢ·Σⱼ≠ᵢ µᵢⱼ","Σⱼ≠ᵢ µⱼᵢ·πⱼ","πᵢ seul","1-πᵢ"],correct:0,exp:"Flux sortant = πᵢ × (somme des taux de sortie) = πᵢ·Σⱼ≠ᵢ µᵢⱼ = |qᵢᵢ|·πᵢ."},
+  {q:"Le système πQ=0 avec Σπᵢ=1 est résolu en pratique en :",opts:["Gardant toutes les équations de πQ=0","Remplaçant une équation de πQ=0 par Σπᵢ=1","Ajoutant Σπᵢ=1 comme équation supplémentaire sans rien supprimer","Ignorant la normalisation"],correct:1,exp:"Le système πQ=0 est linéairement dépendant. On remplace une équation par la normalisation Σπᵢ=1."},
+
+  // SET D: FILES D'ATTENTE (84–111)
+  {q:"La notation A/B/s/K en Kendall — que représente K ?",opts:["Le nombre de serveurs","Le taux de service","La capacité maximale du système","Le nombre de clients en attente"],correct:2,exp:"K = capacité maximale. Clients arrivant quand le système est plein sont perdus. K=∞ par défaut."},
+  {q:"La condition de stabilité de la file M/M/1 est :",opts:["ρ > 1","ρ = 1","ρ < 1","ρ ≤ 0"],correct:2,exp:"M/M/1 stable si ρ=λ/µ<1. Si ρ≥1, la file grandit indéfiniment (nombre moyen de clients→∞)."},
+  {q:"Taux d'utilisation ρ pour M/M/1 avec λ=3, µ=5 :",opts:["5/3","3/5=0.6","3+5=8","3-5=-2"],correct:1,exp:"ρ = λ/µ = 3/5 = 0.6. Interprétation : le serveur est occupé 60% du temps."},
+  {q:"Distribution stationnaire M/M/1 : πᵢ = ?",opts:["ρⁱ","(1-ρ)·ρⁱ","ρⁱ/(1-ρ)","1/(1+ρ)ⁱ"],correct:1,exp:"πᵢ = (1-ρ)·ρⁱ pour i=0,1,2,... Distribution géométrique de paramètre 1-ρ."},
+  {q:"Nombre moyen de clients dans le système M/M/1 : N = ?",opts:["ρ","ρ/(1-ρ)","ρ²/(1-ρ)","1/(µ-λ)"],correct:1,exp:"N = ρ/(1-ρ) = λ/(µ-λ). Augmente très vite quand ρ→1."},
+  {q:"Nombre moyen de clients EN ATTENTE (queue) : Nq = ?",opts:["ρ/(1-ρ)","ρ²/(1-ρ)","1/(µ-λ)","ρ/(µ-λ)"],correct:1,exp:"Nq = ρ²/(1-ρ) = λ²/[µ(µ-λ)]. Nq = N - ρ (clients en attente = total - ceux en service)."},
+  {q:"Temps moyen dans le SYSTÈME entier W = ?",opts:["1/µ","ρ/(µ-λ)","1/(µ-λ)","λ/(µ-λ)"],correct:2,exp:"W = 1/(µ-λ). C'est le temps moyen d'un client depuis son arrivée jusqu'à quitter le serveur."},
+  {q:"Temps moyen EN ATTENTE (queue seulement) Wq = ?",opts:["1/(µ-λ)","ρ/(µ-λ)","1/µ","λ/(µ-λ)"],correct:1,exp:"Wq = ρ/(µ-λ) = λ/[µ(µ-λ)]. Wq = W - 1/µ (temps total - temps de service)."},
+  {q:"Loi de Little — relation entre N, λ et W :",opts:["N = λ + W","N = λ / W","N = λ · W","N = W / λ"],correct:2,exp:"Loi de Little : N = λ·W. Universelle pour tout système stable."},
+  {q:"Loi de Little appliquée à la queue : Nq = ?",opts:["λ·W","λ·Wq","µ·Wq","λ/Wq"],correct:1,exp:"Nq = λ·Wq. Et aussi : W = Wq + 1/µ (temps service inclus)."},
+  {q:"Pour M/M/1/K avec ρ≠1, π₀ = ?",opts:["1-ρ","(1-ρ)/(1-ρᴷ⁺¹)","ρ/(1-ρ)","1/(K+1)"],correct:1,exp:"π₀ = (1-ρ)/(1-ρᴷ⁺¹). Si K→∞ : π₀→1-ρ (retrouve M/M/1). Si ρ=1 : π₀=1/(K+1)."},
+  {q:"M/M/1/K — que se passe-t-il si ρ=1 ?",opts:["Le système est instable","π₀ = 1/2","π₀ = 1/(K+1) et distribution uniforme","πᵢ = ρⁱ comme M/M/1"],correct:2,exp:"ρ=1 → cas limite : π₀=1/(K+1). Tous les états ont la même probabilité 1/(K+1) → distribution uniforme."},
+  {q:"La probabilité de blocage dans M/M/1/K est :",opts:["π₀","π₁","πK","Σπᵢ"],correct:2,exp:"Prob. blocage = πK = probabilité que le système soit plein. Les clients arrivant dans cet état sont perdus."},
+  {q:"Le débit effectif λ_eff dans M/M/1/K est :",opts:["λ","λ/(1-πK)","λ·(1-πK)","λ·πK"],correct:2,exp:"λ_eff = λ·(1-πK). On soustrait les clients perdus (qui arrivent quand système plein)."},
+  {q:"La file M/M/1/K est toujours stable :",opts:["Faux, elle est instable si ρ>1","Vrai, la capacité limite évite la divergence","Seulement si ρ<1","Seulement si K est grand"],correct:1,exp:"M/M/1/K est toujours stable car la capacité K borne le nombre de clients. Même si ρ>1, le système reste borné."},
+  {q:"Processus Naissance-Mort général — formule πᵢ :",opts:["πᵢ = π₀·(λ/µ)ⁱ","πᵢ = π₀·Πₖ₌₀ⁱ⁻¹(λₖ/µₖ₊₁)","πᵢ = ρⁱ","πᵢ = π₀/i"],correct:1,exp:"πᵢ = π₀·Πₖ₌₀ⁱ⁻¹(λₖ/µₖ₊₁). Cas homogène : πᵢ=ρⁱ·π₀."},
+  {q:"Pour M/M/1 avec λ=2, µ=4 : quel est W ?",opts:["0.25h","0.5h","1h","2h"],correct:1,exp:"W = 1/(µ-λ) = 1/(4-2) = 1/2h = 0.5h = 30 minutes."},
+  {q:"Relation entre W et Wq dans une file :",opts:["W = Wq","W = Wq + 1/µ","W = Wq + λ","W = Wq · µ"],correct:1,exp:"W = Wq + E[service] = Wq + 1/µ. Temps total = attente + service."},
+  {q:"La Loi de Little est valide :",opts:["Seulement pour M/M/1","Seulement pour les files exponentielles","Pour tout système stable, quelle que soit la distribution","Seulement pour ρ<0.5"],correct:2,exp:"Loi de Little : N=λW. UNIVERSELLE. Valide pour M/M/1, M/G/1, G/G/1, tout système stable."},
+  {q:"Pour M/M/1, π₀ représente :",opts:["La probabilité de blocage","La probabilité que le serveur soit libre","La probabilité que tous les serveurs soient occupés","Nq"],correct:1,exp:"π₀ = P(système vide) = P(serveur libre) = 1-ρ. C'est le taux d'inactivité du serveur."},
+  {q:"Vrai/Faux — Dans M/M/1/K avec ρ>1, le système peut quand même avoir une distribution stationnaire.",opts:["Vrai","Faux","Seulement si K est pair","Impossible à dire"],correct:0,exp:"VRAI : M/M/1/K est toujours stable grâce à la capacité finie K. π₀=(1-ρ)/(1-ρᴷ⁺¹) est bien défini pour tout ρ>0, ρ≠1."},
+  {q:"Pour le processus de Poisson, P(aucune arrivée sur [0,t]) = ?",opts:["0","1","e^(-λt)","λt"],correct:2,exp:"P[Z(t)=0] = e^(-λt)(λt)⁰/0! = e^(-λt). Décroît exponentiellement avec le temps et le taux λ."},
+  {q:"Dans M/M/1 avec ρ=0.8 : quel est Nq ?",opts:["0.8","3.2","0.64","0.32"],correct:1,exp:"Nq = ρ²/(1-ρ) = 0.64/0.2 = 3.2 clients en attente en moyenne."},
+  {q:"Pour vérifier la Loi de Little dans M/M/1 avec N et W connus :",opts:["N doit être égal à µ·W","N doit être égal à λ·W","W doit être égal à N·µ","λ doit être égal à N/Wq"],correct:1,exp:"Vérification : N = λ·W. Si les calculs sont corrects, cette égalité doit être vérifiée exactement."},
+  {q:"Dans M/M/1/K, πᵢ = ρⁱ·π₀. Cela ressemble à :",opts:["Une distribution uniforme","Une distribution normale","Une distribution géométrique (tronquée)","Une distribution de Poisson"],correct:2,exp:"πᵢ∝ρⁱ = distribution géométrique tronquée à K. Pour K→∞ : retrouve la géométrique complète de M/M/1."},
+  {q:"La probabilité qu'un client en M/M/1 trouve le système vide est :",opts:["ρ","ρ²","1-ρ","λ/µ"],correct:2,exp:"π₀ = 1-ρ. Un client arrivant trouve le serveur libre avec prob. 1-ρ. Il sera directement servi sans attente."},
+  {q:"Pour M/M/1 stable, N → ∞ quand ρ → :",opts:["0","0.5","1","2"],correct:2,exp:"N = ρ/(1-ρ) → +∞ quand ρ→1⁻. Le système devient congestionné juste avant l'instabilité."},
+  {q:"Dans le processus de Poisson, E[nombre d'arrivées sur [0,2h]] avec λ=3/h = ?",opts:["3","6","9","1.5"],correct:1,exp:"E[Z(2)] = λ·t = 3×2 = 6 arrivées en moyenne sur un intervalle de 2 heures."},
+];
+
+const mcqSets=[allMCQ.slice(0,28),allMCQ.slice(28,56),allMCQ.slice(56,84),allMCQ.slice(84,112)];
+let curMCQSet=0,mcqAnswers={},mcqFeedback={};
+function loadMCQSet(idx,btn){curMCQSet=idx;mcqAnswers={};mcqFeedback={};document.querySelectorAll('#mcqTabs .set-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderMCQ();document.getElementById('mcqResult').classList.remove('show');}
+function renderMCQ(){
+  const qs=mcqSets[curMCQSet];let html='';
+  qs.forEach((q,idx)=>{
+    const gi=curMCQSet*28+idx;
+    html+=`<div class="question-card"><div class="question-number">Q${gi+1}</div><div class="question-text">${q.q}</div><div>`;
+    q.opts.forEach((opt,oi)=>{
+      let cls='';if(mcqFeedback[idx]){if(oi===q.correct)cls='correct';else if(mcqAnswers[idx]===oi&&oi!==q.correct)cls='wrong';}
+      html+=`<button class="option-btn ${cls}" onclick="selectMCQ(${idx},${oi})" ${mcqFeedback[idx]?'disabled':''}><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</button>`;
+    });
+    html+=`</div><div class="feedback-box ${mcqFeedback[idx]?(mcqAnswers[idx]===q.correct?'correct-fb':'wrong-fb')+' show':''}">${mcqFeedback[idx]?'<strong>'+(mcqAnswers[idx]===q.correct?'✓ Correct':'✗ Incorrect')+':</strong> '+q.exp:''}</div></div>`;
+  });
+  document.getElementById('mcqContainer').innerHTML=html;
+  const c=Object.entries(mcqAnswers).filter(([i,a])=>a===qs[i].correct).length;
+  document.getElementById('mcqScoreBadge').textContent=`Score: ${c} / ${qs.length}`;
+}
+function selectMCQ(idx,oi){if(mcqFeedback[idx])return;mcqAnswers[idx]=oi;mcqFeedback[idx]=true;renderMCQ();}
+function checkAllMCQ(){const qs=mcqSets[curMCQSet];qs.forEach((_,i)=>{if(mcqAnswers[i]===undefined)mcqAnswers[i]=-1;mcqFeedback[i]=true;});renderMCQ();const c=Object.entries(mcqAnswers).filter(([i,a])=>+a===qs[+i].correct).length;const pct=Math.round(c/qs.length*100);const r=document.getElementById('mcqResult');r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${c} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Excellent — prêt pour l'examen ! 🎉":pct>=60?"Bon travail ! Revoyez les erreurs.":"Révisez le cours et réessayez."}</div><button class="quiz-btn-primary" onclick="resetMCQ()">Reset</button>`;r.classList.add('show');}
+function resetMCQ(){mcqAnswers={};mcqFeedback={};renderMCQ();document.getElementById('mcqResult').classList.remove('show');}
+renderMCQ();
+
+/* ===== TRUE/FALSE DATA ===== */
+const allTF = [
+  // SET A: MODÉLISATION (0–27)
+  {s:"Un processus stochastique est {X(t), t∈T} — une famille de VA indexées par t.",t:true,e:"Définition exacte. T peut être discret ou continu."},
+  {s:"La propriété de Markov signifie que le futur dépend de tout l'historique passé.",t:false,e:"FAUX : Markov = futur dépend UNIQUEMENT du présent, pas du passé."},
+  {s:"T continu + E discret définit une CMTC.",t:true,e:"Classification correcte. T continu + E discret → CMTC."},
+  {s:"T discret + E discret définit une CMTC.",t:false,e:"FAUX : T discret + E discret → CMTD. CMTC = T continu + E discret."},
+  {s:"L'espérance de Exp(λ) est 1/λ.",t:true,e:"E[Exp(λ)] = 1/λ. Var = 1/λ²."},
+  {s:"La loi exponentielle est la seule loi continue sans mémoire.",t:true,e:"Propriété fondamentale. La loi géométrique est son analogue discret."},
+  {s:"La loi géométrique est la seule loi discrète sans mémoire.",t:true,e:"Analogue discret de l'exponentielle. P[X=k]=(1-p)pᵏ."},
+  {s:"Pour Poisson(λt) : E[Z(t)] = λt et Var[Z(t)] = (λt)².",t:false,e:"FAUX : Var[Z(t)] = λt (égal à l'espérance, pas son carré)."},
+  {s:"Si inter-arrivées ~ Exp(λ), le processus d'arrivées est de Poisson de taux λ.",t:true,e:"Lien fondamental Poisson/Exponentielle."},
+  {s:"La transformée de Laplace LX(0) = 0.",t:false,e:"FAUX : LX(0) = E[e⁰] = 1. Propriété fondamentale."},
+  {s:"Pour X₁ et X₂ indépendants : L_{X₁+X₂}(s) = LX₁(s) + LX₂(s).",t:false,e:"FAUX : L_{X₁+X₂}(s) = LX₁(s) × LX₂(s). La Laplace transforme la convolution en PRODUIT."},
+  {s:"Le coefficient de variation C²=Var(X)/(E[X])². Pour Exp(λ), C²=1.",t:true,e:"C²(Exp) = (1/λ²)/(1/λ)² = 1. Propriété caractéristique de l'exponentielle."},
+  {s:"P[Z(t)=i] = e^(-λt)(λt)ⁱ/i! est la loi de Poisson.",t:true,e:"Formule exacte de la loi de Poisson de paramètre λt."},
+  {s:"E[X²] = (E[X])² pour toute variable aléatoire.",t:false,e:"FAUX : E[X²] = Var(X) + (E[X])². E[X²]=(E[X])² seulement si Var=0 (déterministe)."},
+  {s:"Bayes : P(B|A) = P(A|B)·P(B)/P(A).",t:true,e:"Formule de Bayes. Découle directement de P(A|B)=P(A∩B)/P(B)."},
+  {s:"Un modèle analytique utilise des équations mathématiques pour prédire le comportement.",t:true,e:"Modèle analytique = M/M/1, CMTD, etc. Modèle descriptif = flowchart, diagramme d'état."},
+  {s:"La superposition de Pois(λ₁) et Pois(λ₂) donne Pois(λ₁·λ₂).",t:false,e:"FAUX : Pois(λ₁) + Pois(λ₂) = Pois(λ₁+λ₂). Propriété additive de Poisson."},
+  {s:"E[Xⁿ] = (-1)ⁿ L^(n)_X(0) pour la transformée de Laplace.",t:true,e:"Formule des moments via Laplace. Dériver n fois L et évaluer en 0."},
+  {s:"Un système continu a ses variables qui changent uniquement à des instants discrets.",t:false,e:"FAUX : système continu = variables changent continuellement. Discret = changements à instants séparés."},
+  {s:"P(A∪B) = P(A) + P(B) toujours.",t:false,e:"FAUX sauf si A et B disjoints. En général : P(A∪B) = P(A)+P(B)-P(A∩B)."},
+  {s:"La variance Var(X) = E[X²] - (E[X])².",t:true,e:"Formule König-Huygens. La plus utilisée pour calculer la variance."},
+  {s:"Pour Exp(λ) : E[X²] = 2/λ².",t:true,e:"E[X²] = Var + (E[X])² = 1/λ² + 1/λ² = 2/λ²."},
+  {s:"Le coefficient de variation d'une variable déterministe (constante) est 1.",t:false,e:"FAUX : déterministe → Var=0 → C²=0. C²=1 pour l'exponentielle."},
+  {s:"P[X>s+t|X>s] = P[X>t] est vérifiée par la loi normale.",t:false,e:"FAUX : la loi normale n'est PAS sans mémoire. Seule l'exponentielle (continue) et géométrique (discrète)."},
+  {s:"Pour Pois(λt), P[Z(t)=0] = e^(-λt).",t:true,e:"P[Z(t)=0] = e^(-λt)(λt)⁰/0! = e^(-λt). Probabilité d'aucun événement sur [0,t]."},
+  {s:"L'état d'un système est la collection de variables qui le décrivent à un instant t.",t:true,e:"Définition exacte de l'état (variables d'état)."},
+  {s:"La propriété P(arrivée dans Δt) ≈ λΔt est exacte, pas une approximation.",t:false,e:"FAUX : c'est une approximation pour Δt→0. Terme exact : P=1-e^(-λΔt) ≈ λΔt pour Δt petit."},
+  {s:"E[Exp(λ)] = λ.",t:false,e:"FAUX : E[Exp(λ)] = 1/λ. λ est le TAUX, l'espérance est son inverse."},
+
+  // SET B: CMTD (28–55)
+  {s:"La somme des éléments de chaque LIGNE d'une matrice stochastique P vaut 1.",t:true,e:"Σⱼ pᵢⱼ = 1 pour tout i. Ce sont des probabilités qui couvrent toutes les destinations."},
+  {s:"La somme des éléments de chaque COLONNE d'une matrice stochastique vaut 1.",t:false,e:"FAUX : c'est la somme des LIGNES = 1. Les colonnes n'ont pas de contrainte générale."},
+  {s:"π⁽ⁿ⁾ = π⁽⁰⁾·Pⁿ donne la distribution à l'étape n.",t:true,e:"Formule d'analyse transitoire. π⁽ⁿ⁾ = π⁽⁰⁾·Pⁿ."},
+  {s:"La propriété de Markov : P(Xₙ=j|Xₙ₋₁=i,…,X₀=i₀) = P(Xₙ=j|Xₙ₋₁=i).",t:true,e:"Définition exacte de la propriété de Markov pour une CMTD."},
+  {s:"La période D(i) = PGCD des longueurs des circuits passant par i.",t:true,e:"D(i) = PGCD{k≥1 : p⁽ᵏ⁾ᵢᵢ > 0}. Si pᵢᵢ>0 alors 1 ∈ ensemble → D(i)=1."},
+  {s:"Si pᵢᵢ > 0, alors D(i) = 2.",t:false,e:"FAUX : si pᵢᵢ>0, alors p⁽¹⁾ᵢᵢ>0 → 1∈{k} → PGCD contient 1 → D(i)=1 (apériodique)."},
+  {s:"État récurrent : fᵢᵢ < 1.",t:false,e:"FAUX : Récurrent ↔ fᵢᵢ=1. Transitoire ↔ fᵢᵢ<1."},
+  {s:"CMTD finie irréductible : tous les états sont récurrents non nuls.",t:true,e:"Propriété fondamentale. Finie+irréductible → récurrents non nuls (Mᵢ<∞)."},
+  {s:"La distribution stationnaire vérifie πP=π et Σπᵢ=1.",t:true,e:"Système complet pour trouver π dans une CMTD."},
+  {s:"πⱼ = 1/Mⱼ où Mⱼ est le temps moyen de retour en j.",t:true,e:"Théorème de renouvellement : πⱼ = fréquence limite = 1/Mⱼ."},
+  {s:"CMTD ergodique ⟺ irréductible + périodique.",t:false,e:"FAUX : Ergodique ⟺ irréductible + APériodique (D=1 pour tous les états)."},
+  {s:"Tous les états d'une même classe de communication ont la même période.",t:true,e:"Propriété des classes : D(i)=D(j) si i↔j (communiquent)."},
+  {s:"État récurrent nul peut exister dans une CMTD finie.",t:false,e:"FAUX : Récurrent nul (Mᵢ=∞) seulement dans CMTD infinie. CMTD finie → récurrent non nul."},
+  {s:"fᵢⱼ est la probabilité d'atteindre j en partant de i.",t:true,e:"fᵢⱼ = probabilité de première visite à j depuis i. fᵢⱼ = pᵢⱼ + Σₖ≠ⱼ pᵢₖ·fₖⱼ."},
+  {s:"Mᵢⱼ est la probabilité de retour en i.",t:false,e:"FAUX : Mᵢⱼ est le TEMPS MOYEN en nb d'étapes pour aller de i à j. Pas une probabilité."},
+  {s:"Processus NM-CMTD infini avec p=0.6, q=0.4 est ergodique.",t:false,e:"FAUX : ergodicité NM ⟺ p < q. Ici p=0.6 > q=0.4 → NON ergodique (dérive vers +∞)."},
+  {s:"NM-CMTD ergodique : πᵢ = (1-p/q)·(p/q)ⁱ — distribution géométrique.",t:true,e:"Formule exacte. Géométrique de raison p/q < 1 (condition d'ergodicité)."},
+  {s:"Une classe fermée est une classe depuis laquelle on ne peut pas sortir.",t:true,e:"Classe fermée : Σⱼ∈C pᵢⱼ=1 pour tout i∈C. La probabilité reste dans la classe."},
+  {s:"Si CMTD irréductible et D(i)=2, alors lim π⁽ⁿ⁾ = π existe.",t:false,e:"FAUX : D=2 → périodique → π⁽ⁿ⁾ oscille, pas de limite. Le système πP=π a une solution mais ce n'est pas une limite."},
+  {s:"Chapman-Kolmogorov : p⁽ⁿ⁾ᵢⱼ = Σₖ p⁽ᵐ⁾ᵢₖ · p⁽ⁿ⁻ᵐ⁾ₖⱼ.",t:true,e:"Équation de C-K pour CMTD. Valide pour 0≤m≤n."},
+  {s:"Un état absorbant k vérifie pₖₖ = 0.",t:false,e:"FAUX : état absorbant → pₖₖ=1 (impossible d'en sortir). pₖⱼ=0 pour j≠k."},
+  {s:"Dans une CMTD homogène, les probabilités pᵢⱼ dépendent de l'instant n.",t:false,e:"FAUX : homogène = pᵢⱼ constants dans le temps. C'est l'hypothèse standard."},
+  {s:"Si π est stationnaire, alors π·P² = π aussi.",t:true,e:"π·P=π → π·P²=π·P=π. Par récurrence, π·Pⁿ=π pour tout n."},
+  {s:"L'équivalence fᵢᵢ=1 implique que l'état i est transitoire.",t:false,e:"FAUX : fᵢᵢ=1 → RÉCURRENT. Transitoire ↔ fᵢᵢ<1."},
+  {s:"La CMTD homogène est une CMTD dont les probabilités de transition sont constantes dans le temps.",t:true,e:"Définition exacte. P(Xₙ=j|Xₙ₋₁=i) = pᵢⱼ ne dépend pas de n."},
+  {s:"L'équation Chapman-Kolmogorov permet de calculer π⁽ⁿ⁾ pour tout n.",t:true,e:"C-K permet de décomposer p⁽ⁿ⁾ᵢⱼ en produit de matrices. π⁽ⁿ⁾=π⁽⁰⁾·Pⁿ."},
+  {s:"i→j (accessibilité) implique que j→i aussi.",t:false,e:"FAUX : l'accessibilité n'est pas symétrique. Communication (i↔j) = i→j ET j→i."},
+  {s:"Si la CMTD est irréductible, tous ses états communiquent.",t:true,e:"CMTD irréductible ⟺ tous les états communiquent ⟺ une seule classe d'équivalence."},
+
+  // SET C: CMTC (56–83)
+  {s:"La somme de chaque LIGNE de la matrice Q vaut 0.",t:true,e:"Propriété fondamentale de Q : Σⱼ qᵢⱼ=0 pour tout i. qᵢᵢ = -Σⱼ≠ᵢ µᵢⱼ."},
+  {s:"L'élément diagonal qᵢᵢ de Q est positif.",t:false,e:"FAUX : qᵢᵢ = -Σⱼ≠ᵢ µᵢⱼ ≤ 0. Le diagonal est négatif (ou nul si état absorbant)."},
+  {s:"Le temps de séjour en état i ~ Exp(|qᵢᵢ|) dans une CMTC.",t:true,e:"Temps de séjour ~ Exp(µᵢ) où µᵢ=|qᵢᵢ|=Σⱼ≠ᵢ µᵢⱼ."},
+  {s:"La CMTD incluse d'une CMTC a pᵢⱼ = µᵢⱼ·µᵢ.",t:false,e:"FAUX : pᵢⱼ = µᵢⱼ/µᵢ (DIVISION). On NORMALISE les taux."},
+  {s:"Le régime stationnaire CMTC est πQ=0 avec Σπᵢ=1.",t:true,e:"Correct. Différent de CMTD (πP=π)."},
+  {s:"La condition stationnaire d'une CMTC est πP=π.",t:false,e:"FAUX : πP=π est pour CMTD. Pour CMTC : πQ=0."},
+  {s:"Une CMTC finie irréductible est toujours ergodique.",t:true,e:"Vrai. Pas de périodicité en temps continu. CMTC finie+irréductible → ergodique."},
+  {s:"Une CMTC périodique est possible si ses états ont des taux entiers.",t:false,e:"FAUX : il est IMPOSSIBLE d'avoir une CMTC périodique. Le temps exponentiel est apériodique par nature."},
+  {s:"Pour une CMTC à 2 états avec λ et µ : π₀ = µ/(λ+µ).",t:true,e:"π₀ = µ/(λ+µ) = disponibilité. π₁ = λ/(λ+µ) = indisponibilité."},
+  {s:"L'équation d'état d'une CMTC est dπ/dt = π·Q.",t:true,e:"Forme matricielle de Chapman-Kolmogorov pour CMTC."},
+  {s:"CMTC irréductible ⟺ CMTD incluse irréductible.",t:true,e:"Les propriétés structurelles (irréductibilité, récurrence) se lisent via la CMTD incluse."},
+  {s:"Pour une CMTC ergodique, π(t)→π indépendamment de π(0).",t:true,e:"Convergence vers la distribution stationnaire unique, quelles que soient les conditions initiales."},
+  {s:"qᵢⱼ pour i≠j est toujours négatif.",t:false,e:"FAUX : qᵢⱼ=µᵢⱼ≥0 pour i≠j. Seul le diagonal qᵢᵢ est négatif."},
+  {s:"Flux sortant de l'état i = πᵢ·Σⱼ≠ᵢ µᵢⱼ = πᵢ·|qᵢᵢ|.",t:true,e:"Flux sortant = prob. d'être en i × taux total de sortie de i."},
+  {s:"La CMTD incluse a des lignes qui somment à 1.",t:true,e:"pᵢⱼ=µᵢⱼ/µᵢ. Σⱼ pᵢⱼ = Σⱼ µᵢⱼ/µᵢ = µᵢ/µᵢ = 1. Matrice stochastique."},
+  {s:"Dans πQ=0, une des équations est redondante et doit être remplacée par Σπᵢ=1.",t:true,e:"Le système πQ=0 est sous-déterminé (une équation = combinaison des autres). Remplacer une par normalisation."},
+  {s:"Pour un état absorbant k dans une CMTC, qₖₖ = -1.",t:false,e:"FAUX : état absorbant → aucune sortie → µₖⱼ=0 pour j≠k → qₖₖ=-Σµₖⱼ=0."},
+  {s:"La disponibilité d'un système à 2 états (panne/réparation) = µ/(λ+µ).",t:true,e:"Disponibilité = π₀ = µ/(λ+µ). λ=taux panne, µ=taux réparation."},
+  {s:"La CMTC et la CMTD ont la même condition d'ergodicité.",t:false,e:"FAUX : CMTD exige irréductible+apériodique. CMTC exige seulement finie+irréductible (apériodicité automatique)."},
+  {s:"Le générateur Q peut être asymétrique (qᵢⱼ ≠ qⱼᵢ en général).",t:true,e:"Vrai. µᵢⱼ≠µⱼᵢ en général (ex: panne plus fréquente que réparation)."},
+  {s:"Pour construire Q : on met les taux µᵢⱼ hors diagonale, et -Σµᵢⱼ sur la diagonale.",t:true,e:"Procédure exacte. Vérification : chaque ligne somme à 0."},
+  {s:"CMTC ergodique finie+irréductible a une distribution limite unique.",t:true,e:"Conséquence de l'ergodicité : π unique, indépendante de π(0)."},
+  {s:"µᵢ (taux total de sortie) = |qᵢᵢ| = Σⱼ≠ᵢ µᵢⱼ.",t:true,e:"Définition. µᵢ est le taux auquel on quitte l'état i. Le temps moyen en i est 1/µᵢ."},
+  {s:"La CMTD incluse d'une CMTC irréductible est toujours ergodique.",t:false,e:"FAUX : irréductible mais peut être périodique. Si µᵢⱼ symétriques par exemple. La CMTD incluse peut avoir D>1."},
+  {s:"Dans une CMTC, la probabilité de 2 transitions simultanées est nulle.",t:true,e:"Propriété infinitésimale : P(2+ transitions dans Δt) ≈ 0 pour Δt→0."},
+  {s:"La solution transitoire d'une CMTC est π(t)=π(0)·e^(Qt).",t:true,e:"Solution formelle de dπ/dt=π·Q. En pratique, on calcule surtout le régime stationnaire."},
+  {s:"Si Q=[[-2,2],[3,-3]], alors la disp. système = 3/(2+3) = 3/5.",t:true,e:"µ₀₁=2 (λ), µ₁₀=3 (µ). Disp=π₀=µ/(λ+µ)=3/5=0.6."},
+  {s:"Dans une CMTC naissance-mort, µᵢ,ᵢ₊₂ est possible.",t:false,e:"FAUX : naissance-mort = transitions uniquement vers ±1. µᵢ,ᵢ₊₂=0 par définition."},
+
+  // SET D: FILES (84–111)
+  {s:"La file M/M/1 est stable si et seulement si ρ=λ/µ < 1.",t:true,e:"Condition nécessaire et suffisante. Si ρ≥1, file instable (diverge)."},
+  {s:"La distribution stationnaire M/M/1 est πᵢ=(1-ρ)ρⁱ.",t:true,e:"Distribution géométrique de paramètre 1-ρ."},
+  {s:"N = ρ²/(1-ρ) dans M/M/1.",t:false,e:"FAUX : N = ρ/(1-ρ). C'est Nq = ρ²/(1-ρ)."},
+  {s:"Nq = ρ²/(1-ρ) dans M/M/1.",t:true,e:"Nq = N - ρ = ρ/(1-ρ) - ρ = ρ²/(1-ρ). Clients en file d'attente seulement."},
+  {s:"W = 1/(µ-λ) dans M/M/1.",t:true,e:"Temps moyen dans le système entier (attente + service)."},
+  {s:"Wq = 1/(µ-λ) dans M/M/1.",t:false,e:"FAUX : Wq = ρ/(µ-λ). W = 1/(µ-λ). La différence est Wq = W - 1/µ."},
+  {s:"Loi de Little : N = λ·W.",t:true,e:"Loi de Little universelle. Aussi Nq = λ·Wq."},
+  {s:"Loi de Little est valide seulement pour M/M/1.",t:false,e:"FAUX : Loi de Little est UNIVERSELLE. Valide pour tout système stable (G/G/s, M/M/1/K, etc.)."},
+  {s:"π₀ dans M/M/1 représente la probabilité que le serveur soit libre.",t:true,e:"π₀ = 1-ρ = prob. serveur libre = prob. aucun client dans le système."},
+  {s:"La file M/M/1/K est instable si ρ>1.",t:false,e:"FAUX : M/M/1/K est TOUJOURS stable. La capacité K empêche la divergence."},
+  {s:"M/M/1/K avec ρ=1 : π₀=1/(K+1) et distribution uniforme.",t:true,e:"Cas particulier ρ=1 : tous les K+1 états ont la même probabilité 1/(K+1)."},
+  {s:"La probabilité de blocage dans M/M/1/K est π₀.",t:false,e:"FAUX : prob. blocage = πK (état K=plein). π₀ = prob. système vide."},
+  {s:"λ_eff = λ·(1-πK) est le débit effectif de M/M/1/K.",t:true,e:"On soustrait les clients perdus. πK = prob. que K soit atteint (blocage)."},
+  {s:"Pour M/M/1/K, πᵢ = ρⁱ·π₀ pour i=0,...,K.",t:true,e:"Distribution tronquée à K. Pour K→∞ : retrouve M/M/1."},
+  {s:"π₀ dans M/M/1/K avec ρ≠1 est (1-ρ)/(1-ρᴷ⁺¹).",t:true,e:"Formule exacte. Si ρ=1 : indétermination → π₀=1/(K+1)."},
+  {s:"La Loi de Little N=λW implique W=N/λ.",t:true,e:"Trivial par algèbre. Utilisé pour trouver W si N et λ sont connus."},
+  {s:"W = Wq + 1/µ pour toute file M/M/1.",t:true,e:"Temps total = temps attente + temps service moyen. Valide pour toute file."},
+  {s:"N = Nq + ρ dans M/M/1.",t:true,e:"N = Nq + E[nb en service] = Nq + ρ (car prob. serveur occupé = ρ)."},
+  {s:"Processus naissance-mort général : πᵢ = π₀·Πₖ₌₀ⁱ⁻¹(λₖ/µₖ₊₁).",t:true,e:"Formule récurrente générale. Cas homogène : πᵢ=ρⁱπ₀."},
+  {s:"Poisson(λt) : P[Z(t)=0] = e^(-λt).",t:true,e:"P[Z(t)=0] = e^(-λt)×1/1 = e^(-λt). Prob. aucune arrivée sur [0,t]."},
+  {s:"Dans M/M/1, N→∞ quand ρ→1.",t:true,e:"N=ρ/(1-ρ)→+∞ quand ρ→1⁻. Le système est très congestionné avant l'instabilité."},
+  {s:"Pour M/M/1 avec λ=2, µ=3 : N = 2.",t:true,e:"ρ=2/3, N=ρ/(1-ρ)=(2/3)/(1/3)=2. Correct."},
+  {s:"Le processus de Poisson a E[arrivées sur [0,t]]=λt.",t:true,e:"E[Z(t)]=λt. Aussi Var[Z(t)]=λt."},
+  {s:"La notation M/M/1/K/N signifie s=K serveurs.",t:false,e:"FAUX : M/M/1/K = 1 serveur, capacité K. Le '1' est le nb de serveurs, K est la capacité."},
+  {s:"Dans M/M/1, le temps moyen de service est 1/µ.",t:true,e:"Le serveur suit Exp(µ) → E[service]=1/µ. W=Wq+1/µ."},
+  {s:"Nq > N est possible dans M/M/1.",t:false,e:"FAUX : Nq < N toujours. Nq=N-ρ. Le nombre en attente est inférieur au nombre total."},
+  {s:"La file M/M/1/K avec K=∞ est identique à M/M/1.",t:true,e:"M/M/1/K → M/M/1 quand K→∞ (π₀=(1-ρ)/(1-ρᴷ⁺¹)→1-ρ)."},
+  {s:"Un client dans M/M/1 trouve le serveur libre avec probabilité 1-ρ.",t:true,e:"Prob. serveur libre = π₀ = 1-ρ = prob. système vide à l'arrivée (PASTA: Poisson Arrivals See Time Averages)."},
+];
+
+const tfSets=[allTF.slice(0,28),allTF.slice(28,56),allTF.slice(56,84),allTF.slice(84,112)];
+let curTFSet=0,tfAnswers={},tfRevealed={};
+function loadTFSet(idx,btn){curTFSet=idx;tfAnswers={};tfRevealed={};document.querySelectorAll('#tfTabs .set-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTF();document.getElementById('tfResult').classList.remove('show');}
+function renderTF(){
+  const qs=tfSets[curTFSet];let html='';const go=[0,28,56,84][curTFSet];
+  qs.forEach((q,idx)=>{
+    const ans=tfAnswers[idx];const rev=tfRevealed[idx];const correct=(ans===q.t);
+    html+=`<div class="tf-card">
+      <div class="tf-statement"><strong>${go+idx+1}.</strong> ${q.s}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" style="background:${ans===true?(rev?(correct?'var(--green)':'var(--red)'):'rgba(139,92,246,.3)'):'var(--panel2)'};color:${ans===true?'#fff':'var(--text)'}" onclick="setTF(${idx},true)" ${rev?'disabled':''}>✓ VRAI</button>
+        <button class="tf-btn" style="background:${ans===false?(rev?(correct?'var(--green)':'var(--red)'):'rgba(139,92,246,.3)'):'var(--panel2)'};color:${ans===false?'#fff':'var(--text)'}" onclick="setTF(${idx},false)" ${rev?'disabled':''}>✗ FAUX</button>
+      </div>
+      ${rev?`<div class="tf-result show" style="color:${correct?'var(--green)':'var(--red)'}"><strong>${correct?'✓ Correct !':'✗ Incorrect.'}</strong> ${q.e}</div>`:''}
+    </div>`;
+  });
+  document.getElementById('tfContainer').innerHTML=html;
+  const c=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].t).length;
+  document.getElementById('tfScoreBadge').textContent=`Score: ${c} / ${qs.length}`;
+}
+function setTF(idx,val){if(tfRevealed[idx])return;tfAnswers[idx]=val;tfRevealed[idx]=true;renderTF();}
+function checkAllTF(){const qs=tfSets[curTFSet];qs.forEach((_,i)=>{if(tfAnswers[i]===undefined)tfAnswers[i]=null;tfRevealed[i]=true;});renderTF();const c=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].t).length;const pct=Math.round(c/qs.length*100);const r=document.getElementById('tfResult');r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${c} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Excellent ! 🎉":pct>=60?"Bon travail !":"Révisez le cours."}</div><button class="quiz-btn-primary" onclick="resetTF()">Reset</button>`;r.classList.add('show');}
+function resetTF(){tfAnswers={};tfRevealed={};renderTF();document.getElementById('tfResult').classList.remove('show');}
+renderTF();
+
+/* ===== NAV ===== */
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids=['brain','summary','flashcards','scenarios','mcq','tf'];
+  document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('active',ids[i]===id));
+}
+</script>
+</body>
+</html>

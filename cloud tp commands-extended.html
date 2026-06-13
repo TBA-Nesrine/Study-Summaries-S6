@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps & Virtualization Commands Vault | Docker | VMware | Kubernetes | Git</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Fira Code', 'Cascadia Code', monospace;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #0f172a, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .sub {
+            color: #334155;
+            margin-top: 0.5rem;
+            border-top: 2px dashed #cbd5e1;
+            display: inline-block;
+            padding-top: 0.5rem;
+        }
+
+        .badge {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background: #f8fafc;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .card-header i {
+            font-size: 1.5rem;
+        }
+
+        .cmd-block {
+            padding: 1rem 1.5rem 1.5rem;
+        }
+
+        .cmd-item {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .cmd-line {
+            background: #1e293b;
+            padding: 0.8rem 1.2rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            border-left: 4px solid #3b82f6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .comment {
+            background: #f1f5f9;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.8rem;
+            color: #334155;
+            border-top: 1px solid #cbd5e1;
+            font-style: normal;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .comment::before {
+            content: "📘 ";
+            font-weight: bold;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .tag {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #475569;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 650px) {
+            body { padding: 1rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="badge">⚡ ALL COMMANDS - CYBERSECURITY TP 2025/2026</div>
+        <h1>📦 Virtualization · Docker · Kubernetes · Git</h1>
+        <div class="sub">Every command from TP1 to TP7 + Git & Codespaces — explained simply</div>
+    </header>
+
+    <div class="grid">
+        <!-- VMware & Network modes (TP1 + TP2) -->
+        <div class="card">
+            <div class="card-header">
+                🖥️ VMware & Virtual Networking
+                <span class="tag">NAT/Bridged/Host-Only</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line"># Verify virtualization is enabled (Windows: Task Manager > Performance > CPU)</div><div class="comment">Check if "Virtualization: Enabled" — required for VMware/VirtualBox.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># On Linux host: egrep -c '(vmx|svm)' /proc/cpuinfo</div><div class="comment">Returns >0 if CPU virtualization extensions (VT-x/AMD-V) active.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Inside Linux Lite VM: ip a  or  ifconfig</div><div class="comment">Show all network interfaces, IP addresses, MAC.</div></div>
+                <div class="cmd-item"><div class="cmd-line">ip route show default</div><div class="comment">Display default gateway (ex: 192.168.x.1).</div></div>
+                <div class="cmd-item"><div class="cmd-line">cat /etc/resolv.conf</div><div class="comment">View DNS server addresses configured for VM.</div></div>
+                <div class="cmd-item"><div class="cmd-line">ping -c 4 8.8.8.8</div><div class="comment">Test internet connectivity via Google DNS (ICMP).</div></div>
+                <div class="cmd-item"><div class="cmd-line">ping -c 4 google.com</div><div class="comment">Check DNS resolution + external reachability.</div></div>
+                <div class="cmd-item"><div class="cmd-line">ping &lt;host_ip&gt;</div><div class="comment">From VM → host machine (depends on network mode).</div></div>
+                <div class="cmd-item"><div class="cmd-line"># On host: ping &lt;VM_IP&gt;</div><div class="comment">Test connectivity host → VM in bridged or host-only.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># SSH config inside Linux Lite: sudo apt update && sudo apt install openssh-server -y</div><div class="comment">Install SSH server to allow remote connections.</div></div>
+                <div class="cmd-item"><div class="cmd-line">systemctl status ssh</div><div class="comment">Check if SSH daemon is active and running.</div></div>
+                <div class="cmd-item"><div class="cmd-line">ssh localhost</div><div class="comment">Test SSH locally — if works, server is ready.</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo hostnamectl set-hostname LinuxLite-02</div><div class="comment">Rename machine hostname permanently.</div></div>
+                <div class="cmd-item"><div class="cmd-line">ssh user@&lt;target_vm_ip&gt;</div><div class="comment">Establish SSH session from one VM to another.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Export VM as OVA: In VMware → File → Export OVF Template</div><div class="comment">Package entire VM for backup or cloning.</div></div>
+            </div>
+        </div>
+
+        <!-- GitHub Codespaces + Apache (TP3) -->
+        <div class="card">
+            <div class="card-header">
+                ☁️ GitHub Codespaces & Apache
+                <span class="tag">Cloud VM</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line"># Create GitHub repo (via web UI) then launch Codespace</div><div class="comment">Cloud Ubuntu environment with VS Code — ready in seconds.</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo apt update</div><div class="comment">Refresh package index (download latest metadata).</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo apt install apache2 -y</div><div class="comment">Install Apache2 web server (httpd). '-y' auto-confirms.</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo service apache2 start</div><div class="comment">Start Apache background service.</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo service apache2 status</div><div class="comment">Verify Apache is active (green "active (running)").</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo nano /etc/apache2/apache2.conf</div><div class="comment">Edit Apache main config to remove ServerName warning.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Add line: ServerName localhost   (inside apache2.conf)</div><div class="comment">Define server name globally to avoid "Could not reliably determine FQDN".</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo service apache2 restart</div><div class="comment">Apply configuration changes.</div></div>
+                <div class="cmd-item"><div class="cmd-line">cd /var/www/html</div><div class="comment">Default web root directory for Apache.</div></div>
+                <div class="cmd-item"><div class="cmd-line">sudo nano index.html</div><div class="comment">Edit default homepage; replace with custom HTML.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Forward port 80 in VS Code (Ports tab → Forward Port 80)</div><div class="comment">Expose Apache's port to access website via browser URL.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Bonus: create CSS folder, image subdir</div><div class="comment">mkdir images &amp;&amp; sudo cp ~/pic.png images/</div></div>
+                <div class="cmd-item"><div class="cmd-line">git add . &amp;&amp; git commit -m "Completed Cloud Lab" &amp;&amp; git push</div><div class="comment">Commit and push changes to GitHub repository.</div></div>
+            </div>
+        </div>
+
+        <!-- Docker basics + hello-world + images + redis (TP3/TP4/TP5 content) -->
+        <div class="card">
+            <div class="card-header">
+                🐳 Docker Fundamentals
+                <span class="tag">images · containers · run</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line">docker -v</div><div class="comment">Show Docker client version (installed check).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker version</div><div class="comment">Detailed client + server engine version info.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run hello-world</div><div class="comment">Download test image & run container → "Hello from Docker" confirmation.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker ps</div><div class="comment">List RUNNING containers (ID, image, status, ports).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker ps -a</div><div class="comment">Show ALL containers (including stopped/exited).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker images</div><div class="comment">List all downloaded images (local cache).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker image rm &lt;image_id_or_name&gt;</div><div class="comment">Remove image (e.g., docker image rm fedora).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker container run redis</div><div class="comment">Pull Redis image & run in foreground (attached).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker container run -d redis</div><div class="comment">Run Redis DETACHED mode (background).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker container run -d redis:alpine</div><div class="comment">Run specific lightweight Alpine-based Redis image.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker inspect &lt;container&gt;</div><div class="comment">Show low-level JSON details (IP, mounts, config, state).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker logs &lt;container_id&gt;</div><div class="comment">Fetch container's STDOUT / STDERR logs.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker stats</div><div class="comment">Live resource usage (CPU, MEM, NET I/O) of running containers.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker info</div><div class="comment">System-wide info: containers, images, storage driver, etc.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker rm &lt;container_name&gt;</div><div class="comment">Remove stopped container (use -f to force remove running).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker container prune</div><div class="comment">Remove all stopped containers to free space.</div></div>
+            </div>
+        </div>
+
+        <!-- Dockerfile & Python app + matplotlib (TP4) -->
+        <div class="card">
+            <div class="card-header">
+                🐍 Containerizing Python Apps
+                <span class="tag">Dockerfile · matplotlib · volumes</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line">mkdir hello-docker &amp;&amp; cd hello-docker</div><div class="comment">Create project directory for Python app.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># app.py: print("Hello, Docker!")</div><div class="comment">Simple python script.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Dockerfile: FROM python:3.8-slim COPY app.py /app.py CMD ["python","/app.py"]</div><div class="comment">Define base image, copy script, default command.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker build -t hello-docker .</div><div class="comment">Build image from Dockerfile (tag: hello-docker).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run hello-docker</div><div class="comment">Run container → prints "Hello, Docker!".</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker tag hello-docker yourusername/hello-docker</div><div class="comment">Tag local image for Docker Hub registry.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker login</div><div class="comment">Authenticate to Docker Hub (interactive).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker push yourusername/hello-docker</div><div class="comment">Upload image to Docker Hub repository.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Matplotlib app: mkdir matplotlib-docker &amp;&amp; cd matplotlib-docker</div><div class="comment">Project for generating graphs without display.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Dockerfile: FROM python:3.11-slim, RUN pip install matplotlib, COPY plot_graph.py . RUN mkdir /output</div><div class="comment">Install matplotlib, create output folder.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker build -t matplotlib-app .</div><div class="comment">Build matplotlib image.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run -v ${PWD}/output:/output matplotlib-app</div><div class="comment">Mount volume to persist generated graph.png locally.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Windows CMD: docker run -v %cd%/output:/output matplotlib-app</div><div class="comment">Bind mount current directory in Windows CMD.</div></div>
+                <div class="cmd-item"><div class="cmd-line">ls output/</div><div class="comment">Verify graph.png has been created.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker rmi matplotlib-app</div><div class="comment">Remove image by name / ID.</div></div>
+            </div>
+        </div>
+
+        <!-- Multi-container: MySQL + Adminer + WordPress (TP5) -->
+        <div class="card">
+            <div class="card-header">
+                🌐 Multi-Container Web App
+                <span class="tag">WordPress · MySQL · Adminer</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line">docker network create demo</div><div class="comment">Create custom bridge network for inter-container communication.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker pull mysql:8</div><div class="comment">Download MySQL 8 image from Docker Hub.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run --network demo --name db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=wordpress -d mysql:8</div><div class="comment">Run MySQL container with root pass and auto-create wordpress db.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker logs db</div><div class="comment">Check MySQL startup logs (ready to accept connections).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker pull adminer:4</div><div class="comment">Pull Adminer (lightweight DB management tool).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run --network demo -d -p 8080:8080 adminer:4</div><div class="comment">Run Adminer exposed on host port 8080.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker pull wordpress:5</div><div class="comment">Official WordPress image version 5.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run --network demo -d -p 8000:80 --name wordpress-container wordpress:5</div><div class="comment">WordPress container accessible on http://localhost:8000.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Access Adminer: http://localhost:8080 (Server: db, user: root, pass: password)</div><div class="comment">Visual database management interface.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker stop db wordpress-container</div><div class="comment">Gracefully stop containers.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker rm db wordpress-container</div><div class="comment">Remove stopped containers.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker network rm demo</div><div class="comment">Delete custom network.</div></div>
+            </div>
+        </div>
+
+        <!-- Docker Compose (TP6) + flask + redis -->
+        <div class="card">
+            <div class="card-header">
+                ⚙️ Docker Compose Orchestration
+                <span class="tag">Flask + Redis counter</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line">mkdir composedemo &amp;&amp; cd composedemo</div><div class="comment">Folder for flask-redis compose project.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># app.py: Flask app using Redis incr counter</div><div class="comment">Python web app: increments visit counter.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Dockerfile: FROM python:3.8-slim, COPY app.py, RUN pip install flask redis</div><div class="comment">Build custom image for web service.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># requirements.txt: Flask==2.0.1 Redis==3.5.3</div><div class="comment">Dependencies declared for reproducibility.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># docker-compose.yml: services (web build: . , ports: "5000:5000") , (redis: image: redis:alpine)</div><div class="comment">Define two services, automatically linked via network.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker-compose up --build</div><div class="comment">Build images and start all containers (foreground).</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Access http://localhost:5000 → incrementing visits</div><div class="comment">Each refresh increments redis counter.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker-compose ps</div><div class="comment">Show status, ports, names of services.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker-compose down</div><div class="comment">Stop and remove containers, networks (preserves volumes if not defined).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker-compose up -d</div><div class="comment">Run in background (detached mode).</div></div>
+            </div>
+        </div>
+
+        <!-- Docker Volumes & Backup + Kubernetes intro (TP7) -->
+        <div class="card">
+            <div class="card-header">
+                💾 Volumes · Backup · Kubernetes PV
+                <span class="tag">persistent storage</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line">docker volume ls</div><div class="comment">List all Docker volumes (named & anonymous).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker volume create my_data</div><div class="comment">Create a named volume (managed by Docker).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker volume inspect my_data</div><div class="comment">Show metadata: mountpoint, driver, options.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run -d --name my_container -v my_data:/app/data ubuntu:latest sleep infinity</div><div class="comment">Mount volume into container at /app/data (persistent).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker exec my_container sh -c "echo 'Hello from volume' > /app/data/test.txt"</div><div class="comment">Write data inside volume via container.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker exec my_container cat /app/data/test.txt</div><div class="comment">Read file content from volume.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run -d --name another_container -v my_data:/app/shared_data ubuntu:latest sleep infinity</div><div class="comment">Second container sharing same volume (different mount path).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker stop my_container another_container &amp;&amp; docker rm my_container another_container</div><div class="comment">Stop+remove containers before backup.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Backup volume to tar archive (Windows CMD: %cd%)</div><div class="comment">docker run --rm -v my_data:/source:ro -v %cd%:/backup ubuntu tar cvf /backup/my_data_backup.tar -C /source .</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker volume rm my_data</div><div class="comment">Delete original volume (data still in backup).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker volume create my_restored_data</div><div class="comment">Create fresh volume for restoration.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run --rm -v my_restored_data:/dest -v %cd%:/backup ubuntu bash -c "tar xvf /backup/my_data_backup.tar -C /dest"</div><div class="comment">Extract backup into new volume.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run --rm -v my_restored_data:/app/data ubuntu cat /app/data/test.txt</div><div class="comment">Verify restored file content.</div></div>
+                <div class="cmd-item"><div class="cmd-line"># Kubernetes PV / PVC (optional extension)</div><div class="comment">kubectl apply -f pv.yaml   (PersistentVolume manifest)</div></div>
+                <div class="cmd-item"><div class="cmd-line">kubectl get pv</div><div class="comment">List persistent volumes in cluster.</div></div>
+                <div class="cmd-item"><div class="cmd-line">kubectl apply -f pvc.yaml</div><div class="comment">Create PersistentVolumeClaim to request storage.</div></div>
+                <div class="cmd-item"><div class="cmd-line">kubectl exec pod-demo -- cat /data/test.txt</div><div class="comment">Check mounted volume inside pod.</div></div>
+            </div>
+        </div>
+
+        <!-- Extra utilities & cleanup -->
+        <div class="card">
+            <div class="card-header">
+                🧹 Cleanup & Utility Commands
+                <span class="tag">docker system prune</span>
+            </div>
+            <div class="cmd-block">
+                <div class="cmd-item"><div class="cmd-line">docker system prune -a</div><div class="comment">Remove all unused containers, networks, images (caution).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker stop $(docker ps -aq)</div><div class="comment">Stop all running containers.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker rm $(docker ps -aq)</div><div class="comment">Remove all containers (stopped or running with -f).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker image prune -f</div><div class="comment">Delete dangling images.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker volume prune -f</div><div class="comment">Remove unused local volumes (free disk).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker network ls</div><div class="comment">Show all Docker networks (bridge, host, none, custom).</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker network inspect demo</div><div class="comment">Details about network: connected containers, subnet.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker exec -it &lt;container&gt; /bin/bash</div><div class="comment">Interactive shell inside running container.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker logs --tail 50 &lt;container&gt;</div><div class="comment">Show last 50 log lines.</div></div>
+                <div class="cmd-item"><div class="cmd-line">docker run --rm -it python:3.8-slim bash</div><div class="comment">Ephemeral container with interactive bash (removed after exit).</div></div>
+                <div class="cmd-item"><div class="cmd-line">git clone &lt;repo-url&gt;</div><div class="comment">Clone GitHub repository locally (used with Codespaces).</div></div>
+                <div class="cmd-item"><div class="cmd-line">chmod 777 output/</div><div class="comment">Fix permission denied for volume mounts (Linux/Mac).</div></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        ✅ Every command from TP1 (VMware networking), TP2 (SSH & OVA), TP3 (Apache, Codespaces), TP4 (Python + matplotlib), TP5 (WordPress stack), TP6 (Docker Compose), TP7 (Volumes, Kubernetes) — fully documented.<br>
+        📌 Use CTRL+F to find any command · Comments explain purpose in simplest way.
+    </footer>
+</div>
+</body>
+</html>

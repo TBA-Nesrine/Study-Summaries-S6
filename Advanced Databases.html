@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Databases — Full Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--bg2:#0f1628;--panel:#141c30;--panel2:#1a2440;--border:#1e2e50;--accent:#3b82f6;--accent2:#06b6d4;--accent3:#8b5cf6;--gold:#f59e0b;--green:#10b981;--red:#ef4444;--text:#e2e8f0;--muted:#64748b;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+header{background:linear-gradient(135deg,#0a0e1a 0%,#0f1e40 50%,#0a0e1a 100%);border-bottom:1px solid var(--border);padding:2rem;text-align:center}
+.course-tag{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;color:var(--accent2);background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);display:inline-block;padding:.3rem 1rem;border-radius:2px;margin-bottom:1rem}
+header h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:var(--white);letter-spacing:-.02em;margin-bottom:.4rem}
+header h1 span{color:var(--accent)}
+header p{color:var(--muted);font-size:.85rem}
+.badge{background:var(--accent3);font-size:.7rem;padding:.2rem .8rem;border-radius:20px;margin-left:.5rem;font-family:monospace;vertical-align:middle}
+nav{display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;padding:.8rem 1rem;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+nav button{font-family:'Space Mono',monospace;font-size:.65rem;padding:.45rem 1rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+nav button:hover,nav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.section{display:none;padding:1.5rem;max-width:1200px;margin:0 auto}
+.section.active{display:block;animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Fraunces',serif;font-size:1.9rem;color:var(--white);margin-bottom:.3rem;font-weight:700}
+.section-sub{color:var(--muted);font-size:.8rem;margin-bottom:1.5rem;font-family:'Space Mono',monospace}
+
+/* Brain */
+.brain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.1rem;margin-bottom:1.5rem}
+.brain-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:.2s;position:relative;overflow:hidden}
+.brain-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.brain-card.blue::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.brain-card.purple::before{background:linear-gradient(90deg,var(--accent3),var(--accent))}
+.brain-card.gold::before{background:linear-gradient(90deg,var(--gold),#f97316)}
+.brain-card.green::before{background:linear-gradient(90deg,var(--green),var(--accent2))}
+.brain-card.red::before{background:linear-gradient(90deg,var(--red),var(--gold))}
+.brain-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.brain-card h3{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent2);letter-spacing:.2em;margin-bottom:.4rem}
+.brain-card h2{font-family:'Fraunces',serif;font-size:1.15rem;margin-bottom:.6rem;color:var(--white)}
+.def-box{background:rgba(59,130,246,.08);border-left:3px solid var(--accent);padding:.6rem .9rem;border-radius:5px;margin:.4rem 0;font-size:.82rem;line-height:1.6}
+.def-box strong{color:var(--accent2)}
+.tag-row{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem}
+.tag{font-family:'Space Mono',monospace;font-size:.58rem;padding:.18rem .65rem;border-radius:3px;background:rgba(59,130,246,.15);color:var(--accent);border:1px solid rgba(59,130,246,.3)}
+.tag.green{background:rgba(16,185,129,.15);color:var(--green);border-color:rgba(16,185,129,.3)}
+.tag.red{background:rgba(239,68,68,.15);color:var(--red);border-color:rgba(239,68,68,.3)}
+.tag.purple{background:rgba(139,92,246,.15);color:var(--accent3);border-color:rgba(139,92,246,.3)}
+.tag.gold{background:rgba(245,158,11,.15);color:var(--gold);border-color:rgba(245,158,11,.3)}
+.comparison-table{width:100%;border-collapse:collapse;font-size:.78rem;background:var(--panel);border-radius:8px;overflow:hidden;margin:1.2rem 0;border:1px solid var(--border)}
+.comparison-table th,.comparison-table td{padding:.6rem .9rem;text-align:left;border-bottom:1px solid var(--border)}
+.comparison-table th{background:var(--panel2);color:var(--accent2);font-family:'Space Mono',monospace;letter-spacing:.07em;font-size:.68rem}
+.comparison-table tr:hover td{background:rgba(59,130,246,.04)}
+code{font-family:'Space Mono',monospace;font-size:.75rem;background:rgba(59,130,246,.12);padding:.1rem .4rem;border-radius:3px;color:var(--accent2)}
+
+/* Flashcard */
+.set-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.set-tab{font-family:'Space Mono',monospace;font-size:.62rem;padding:.33rem .85rem;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+.set-tab.active{background:var(--accent3);border-color:var(--accent3);color:#fff}
+.fc-progress{width:100%;height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:.8rem}
+.fc-progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s}
+.flashcard-scene{perspective:1000px;margin-bottom:.8rem}
+.flashcard{width:100%;max-width:640px;height:240px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);margin:0 auto}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;justify-content:center;text-align:center;background:var(--panel);border:1px solid var(--border)}
+.fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#0f1e40,#1a2440);border-color:var(--accent);text-align:left}
+.fc-label{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--accent2);margin-bottom:.8rem}
+.fc-question{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--white);line-height:1.4}
+.fc-answer{font-size:.84rem;line-height:1.6;color:#cbd5e1;white-space:pre-wrap;font-family:'Space Mono',monospace}
+.fc-hint{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--muted);margin-top:.8rem}
+.fc-diff{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--gold);margin-top:.5rem}
+.fc-nav{display:flex;justify-content:center;align-items:center;gap:.7rem;margin:.6rem 0;flex-wrap:wrap}
+.fc-btn{font-family:'Space Mono',monospace;background:var(--panel2);border:1px solid var(--border);padding:.45rem 1rem;border-radius:5px;color:var(--text);cursor:pointer;font-size:.68rem;transition:.2s}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fc-count{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--muted);min-width:70px;text-align:center}
+
+/* MCQ / Quiz */
+.score-badge{background:var(--panel2);border:1px solid var(--border);padding:.3rem .9rem;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--accent2);margin-bottom:.9rem;display:inline-block}
+.question-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.2rem;margin-bottom:.7rem}
+.question-number{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--accent);letter-spacing:.15em;margin-bottom:.35rem}
+.question-text{font-size:.88rem;color:var(--white);margin-bottom:.8rem;line-height:1.5}
+.option-btn{background:var(--panel2);border:1px solid var(--border);padding:.55rem .9rem;border-radius:6px;cursor:pointer;margin:.2rem 0;width:100%;text-align:left;display:flex;align-items:center;gap:.7rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.84rem;transition:.15s}
+.option-btn:hover:not(:disabled){border-color:var(--accent2);background:rgba(6,182,212,.07)}
+.option-btn.correct{border-color:var(--green);background:rgba(16,185,129,.12);color:var(--green)}
+.option-btn.wrong{border-color:var(--red);background:rgba(239,68,68,.12);color:#fca5a5}
+.option-letter{font-family:'Space Mono',monospace;font-size:.6rem;width:20px;height:20px;border-radius:3px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feedback-box{margin-top:.45rem;padding:.55rem .85rem;border-radius:5px;font-size:.76rem;line-height:1.4;display:none}
+.feedback-box.show{display:block}
+.correct-fb{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.wrong-fb{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+
+/* TF */
+.tf-container{display:flex;flex-direction:column;gap:.6rem}
+.tf-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:.9rem 1.1rem}
+.tf-statement{font-size:.86rem;color:var(--text);margin-bottom:.6rem;line-height:1.5}
+.tf-buttons{display:flex;gap:.5rem}
+.tf-btn2{font-family:'Space Mono',monospace;border:1px solid var(--border);background:var(--panel2);padding:.28rem .85rem;border-radius:4px;cursor:pointer;font-size:.65rem;transition:.2s;color:var(--text)}
+.tf-btn2:hover{border-color:var(--accent2)}
+.tf-result{font-size:.75rem;margin-top:.4rem;display:none}
+.tf-result.show{display:block}
+
+/* Short */
+.short-input{width:100%;background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:.65rem .9rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;margin-bottom:.45rem;resize:vertical}
+.short-input:focus{border-color:var(--accent)}
+
+/* Quiz actions */
+.quiz-actions{display:flex;gap:.7rem;margin-top:1.2rem;flex-wrap:wrap}
+.quiz-btn-primary{font-family:'Space Mono',monospace;padding:.6rem 1.4rem;border-radius:5px;cursor:pointer;background:var(--accent);border:none;color:#fff;font-size:.68rem;transition:opacity .2s}
+.quiz-btn-primary:hover{opacity:.85}
+.quiz-btn-secondary{font-family:'Space Mono',monospace;padding:.6rem 1.4rem;border-radius:5px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.68rem;transition:.2s}
+.quiz-btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.result-panel{background:var(--panel);border:1px solid var(--accent);border-radius:12px;padding:2rem;text-align:center;margin-top:1.5rem;display:none}
+.result-panel.show{display:block;animation:fadeIn .4s}
+.result-score{font-family:'Fraunces',serif;font-size:3rem;color:var(--accent);font-weight:700}
+.result-label{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.15em;color:var(--muted);margin:.3rem 0 .8rem}
+.section-heading{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin:1.2rem 0 .8rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="course-tag">USTHB · ING3 · Advanced Databases · 2025/2026</div>
+  <h1>Advanced <span>Databases</span> <span class="badge">Full Review</span></h1>
+  <p>SQL3 · Object-Relational · BigData · MongoDB · NoSQL · Distributed DB · Fragmentation · Triggers</p>
+</header>
+<nav>
+  <button class="active" onclick="showSection('brain')">🧠 Concepts</button>
+  <button onclick="showSection('queries')">💡 Query Cards</button>
+  <button onclick="showSection('mcq')">📝 MCQ (110+)</button>
+  <button onclick="showSection('tf')">✅ True/False (110+)</button>
+  <button onclick="showSection('short')">✏️ Short Answer (40)</button>
+  <button onclick="showSection('scenario')">🔍 Scenarios (10)</button>
+</nav>
+
+<!-- ===== BRAIN REFRESHER ===== -->
+<div id="brain" class="section active">
+  <h2 class="section-title">Complete Refresher</h2>
+  <p class="section-sub">// All key concepts from the course — definitions, syntax, comparisons, examples</p>
+  <div class="brain-grid">
+
+    <div class="brain-card blue">
+      <h3>📖 WHY OBJECT-RELATIONAL?</h3>
+      <h2>Motivation</h2>
+      <div class="def-box"><strong>Relational ✅:</strong> Simplicity · Theoretical support · Declarative SQL · Data independence · Optimization · Integrity constraints.</div>
+      <div class="def-box"><strong>Object ✅:</strong> Complex types (multimedia, spatial) · Encapsulation · Inheritance & polymorphism · No excessive joins.</div>
+      <div class="def-box"><strong>ORDBMS 🔀:</strong> Keeps relational robustness + SQL core, adds OO extensions: UDTs, UDFs, Inheritance, OIDs. Standard: <strong>SQL-99 / SQL3</strong>. Supported by IBM, Oracle, Microsoft, Informix, Sybase.</div>
+    </div>
+
+    <div class="brain-card purple">
+      <h3>🧱 ABSTRACT DATA TYPES</h3>
+      <h2>ADT / UDT</h2>
+      <div class="def-box"><strong>ADT</strong> = composite type grouping attributes + methods. Replaces "class" concept in SQL3. Can contain: member methods (on instance), static methods (on type), constructor methods.</div>
+      <div class="def-box"><code>CREATE OR REPLACE TYPE TAddress AS OBJECT (num NUMBER, street VARCHAR2(50), city VARCHAR2(25), zipcode NUMBER);</code></div>
+      <div class="def-box"><strong>CREATE TYPE</strong>: fails if exists. <strong>CREATE OR REPLACE TYPE</strong>: replaces if exists, creates if not.</div>
+      <div class="tag-row"><span class="tag">UDT</span><span class="tag purple">Member method</span><span class="tag gold">Static method</span><span class="tag green">Constructor</span></div>
+    </div>
+
+    <div class="brain-card gold">
+      <h3>📋 TABLE TYPES</h3>
+      <h2>Relational vs NF² vs Object</h2>
+      <div class="def-box"><strong>Relational table:</strong> classic, simple data, no ADT.</div>
+      <div class="def-box"><strong>NF² table:</strong> Not First Normal Form — has ADT columns but NO OID.</div>
+      <div class="def-box"><strong>Object table:</strong> <code>CREATE TABLE t OF TypeName;</code> — system-generated OIDs, fully polymorphic.</div>
+      <div class="def-box"><strong>ALTER TYPE ... CASCADE</strong> propagates changes to all dependent types/tables. Cannot DROP a type used by a table — ALTER instead.</div>
+    </div>
+
+    <div class="brain-card green">
+      <h3>🔍 SELECT / DML</h3>
+      <h2>Dot Notation & TABLE()</h2>
+      <div class="def-box"><strong>Access ADT attr:</strong> requires correlation variable + dot path.<br><code>SELECT P.NAME, P.ADDRESS.CITY FROM PEOPLE P;</code></div>
+      <div class="def-box"><strong>Index on ADT attr</strong> (no alias needed):<br><code>CREATE INDEX idx ON PEOPLE(ADDRESS.CITY);</code></div>
+      <div class="def-box"><strong>TABLE():</strong> flattens VARRAY or NESTED TABLE into queryable rows.<br><code>SELECT nt.CITY FROM PEOPLE P, TABLE(P.ADDRESSES) nt;</code></div>
+    </div>
+
+    <div class="brain-card blue">
+      <h3>📦 COLLECTIONS</h3>
+      <h2>VARRAY vs NESTED TABLE</h2>
+      <table class="comparison-table" style="margin:.4rem 0">
+        <tr><th>Feature</th><th>VARRAY</th><th>Nested Table</th></tr>
+        <tr><td>Max size</td><td>Fixed (declared)</td><td>Unlimited</td></tr>
+        <tr><td>Storage</td><td>Inline in row</td><td>Separate table</td></tr>
+        <tr><td>Order</td><td>Preserved</td><td>None</td></tr>
+        <tr><td>Gaps</td><td>Dense</td><td>Sparse OK</td></tr>
+      </table>
+      <div class="def-box"><code>CAST(MULTISET(SELECT...) AS NT_Type)</code>: bulk-copies rows into a nested table.</div>
+    </div>
+
+    <div class="brain-card red">
+      <h3>🔗 OID, REF, DEREF</h3>
+      <h2>Object Identity</h2>
+      <div class="def-box"><strong>OID:</strong> unique, immutable, system-generated per row in object table.</div>
+      <div class="def-box"><strong>REF(alias):</strong> returns OID pointer. Only on object tables.</div>
+      <div class="def-box"><strong>DEREF(ref_col):</strong> dereferences OID → returns the actual object.</div>
+      <div class="def-box"><strong>DANGLING REF:</strong> REF points to deleted object. Fix: <code>UPDATE t SET col=NULL WHERE col IS DANGLING;</code></div>
+      <div class="def-box"><strong>SCOPE IS tableName:</strong> restricts REF to one specific object table.</div>
+      <div class="def-box"><strong>VALUE(alias):</strong> returns full object instance (not OID). Used with object tables + views.</div>
+      <div class="def-box"><strong>Forward declaration:</strong> <code>CREATE TYPE name;</code> — breaks circular REF dependency.</div>
+    </div>
+
+    <div class="brain-card purple">
+      <h3>⚙️ UDFs & METHODS</h3>
+      <h2>User-Defined Functions</h2>
+      <div class="def-box"><strong>MEMBER:</strong> operates on instance via SELF. Default type.</div>
+      <div class="def-box"><strong>STATIC:</strong> called on the type: <code>TypeName.method()</code>.</div>
+      <div class="def-box"><strong>MAP MEMBER:</strong> maps object to scalar → enables ORDER BY.</div>
+      <div class="def-box"><strong>ORDER MEMBER:</strong> compares two objects. Returns -1 / 0 / 1.</div>
+      <div class="def-box"><strong>Overloading:</strong> same name, different params — Oracle picks by args.</div>
+      <div class="def-box"><strong>Params:</strong> IN (default), OUT, IN OUT.</div>
+      <div class="def-box">Invoked via dot notation: <code>SELECT P.AGE() FROM PERSON P;</code></div>
+    </div>
+
+    <div class="brain-card gold">
+      <h3>🌳 INHERITANCE</h3>
+      <h2>Subtypes & Polymorphism</h2>
+      <div class="def-box"><strong>NOT FINAL:</strong> allows subtyping. Default = FINAL.</div>
+      <div class="def-box"><strong>UNDER:</strong> creates subtype. Inherits ALL attributes + methods.</div>
+      <div class="def-box"><strong>NOT INSTANTIABLE:</strong> abstract type — can't be directly instantiated.</div>
+      <div class="def-box"><strong>OVERRIDING:</strong> required when re-implementing a parent method.</div>
+      <div class="def-box"><strong>TREAT(VALUE(p) AS SubType):</strong> downcasting. IS OF (SubType): checks membership.</div>
+      <div class="def-box">Object tables are polymorphic — store supertype AND subtype instances.</div>
+    </div>
+
+    <div class="brain-card green">
+      <h3>💾 LOBs & VIEWS</h3>
+      <h2>Large Objects & Object Views</h2>
+      <div class="def-box"><strong>BLOB:</strong> binary (images, video). <strong>CLOB:</strong> large text (UTF-8). <strong>NCLOB:</strong> multilingual text (Unicode).</div>
+      <div class="def-box"><strong>Object View:</strong> applies OO structure on top of relational tables — NO physical change. Allows old relational DB + new object interface to coexist.</div>
+      <div class="def-box"><code>CREATE VIEW V OF Type WITH OBJECT IDENTIFIER (col) AS (SELECT ... CAST(MULTISET(...) AS CollType));</code></div>
+    </div>
+
+    <div class="brain-card red">
+      <h3>⚡ TRIGGERS (ECA)</h3>
+      <h2>Event-Condition-Action</h2>
+      <div class="def-box"><strong>Event:</strong> INSERT / UPDATE [OF col] / DELETE on a table/view.</div>
+      <div class="def-box"><strong>Condition:</strong> optional WHEN clause.</div>
+      <div class="def-box"><strong>Action:</strong> PL/SQL block.</div>
+      <div class="def-box"><strong>:OLD</strong> = values before DML. <strong>:NEW</strong> = values after. INSERT: only :NEW. DELETE: only :OLD.</div>
+      <div class="def-box"><strong>Row-level</strong> (FOR EACH ROW): once per row. <strong>Statement-level</strong>: once per DML.</div>
+      <div class="def-box"><strong>INSTEAD OF:</strong> on views only. <strong>RAISE_APPLICATION_ERROR(-20000...-20999,'msg'):</strong> custom error.</div>
+    </div>
+
+    <div class="brain-card blue">
+      <h3>🔗 ASSOCIATIONS IN SQL3</h3>
+      <h2>1..*, *..*</h2>
+      <div class="def-box"><strong>1..* (Father-Son):</strong> Parent gets NT of REFs to children. Child gets REF to parent. Forward declaration needed for circular refs.</div>
+      <div class="def-box"><strong>*..*:</strong> Both sides get a nested table of REFs to the other side.</div>
+      <div class="def-box">Each association with an association class → split into two associations. Both ROLES must be defined.</div>
+    </div>
+
+    <div class="brain-card purple">
+      <h3>📊 BIG DATA</h3>
+      <h2>5 Vs & Hadoop</h2>
+      <div class="def-box"><strong>5 Vs:</strong> Volume (quantity) · Velocity (speed) · Variety (structured/semi/unstructured) · Veracity (uncertainty/incompleteness) · Value (insights).</div>
+      <div class="def-box"><strong>Vertical scaling:</strong> upgrade one machine (physical limit). <strong>Horizontal scaling:</strong> add more nodes (coordination overhead).</div>
+      <div class="def-box"><strong>HDFS:</strong> files split into 64MB chunks, replicated 3×. NameNode = metadata. DataNodes = actual blocks.</div>
+      <div class="def-box"><strong>MapReduce:</strong> Map(input) → [(k,v)] → Shuffle & Sort → Reduce((k,[v])) → result.</div>
+    </div>
+
+    <div class="brain-card gold">
+      <h3>🚫 NOSQL</h3>
+      <h2>CAP · BASE · Types</h2>
+      <div class="def-box"><strong>CAP Theorem:</strong> Consistency · Availability · Partition tolerance — only 2 simultaneously. NoSQL: AP or CP.</div>
+      <div class="def-box"><strong>BASE:</strong> Basically Available · Soft state · Eventually consistent. (vs ACID)</div>
+      <div class="def-box"><strong>Key-Value:</strong> Dynamo, Riak. <strong>Document:</strong> MongoDB, CouchDB. <strong>Wide-Column:</strong> Cassandra, HBase. <strong>Graph:</strong> Neo4j, ArangoDB.</div>
+      <div class="tag-row"><span class="tag red">No standard query lang</span><span class="tag gold">Schema-less</span><span class="tag green">Horizontal scale</span></div>
+    </div>
+
+    <div class="brain-card green">
+      <h3>🍃 MONGODB</h3>
+      <h2>Document Store</h2>
+      <div class="def-box"><strong>Hierarchy:</strong> Database → Collections → Documents (BSON) → Fields. _id is mandatory primary key.</div>
+      <div class="def-box"><strong>Embedded docs:</strong> 1-to-1 or 1-to-many (fewer queries, possible redundancy). <strong>References:</strong> many-to-many (avoids duplication).</div>
+      <div class="def-box"><strong>Field rules:</strong> cannot start with $, cannot contain dot (.), names must be unique.</div>
+      <div class="def-box"><strong>Aggregation pipeline stages:</strong> $match → $unwind → $group → $project → $sort → $limit → $addFields → $count → $lookup → $facet.</div>
+    </div>
+
+    <div class="brain-card blue">
+      <h3>📡 DISTRIBUTED DB</h3>
+      <h2>Fragmentation & Allocation</h2>
+      <div class="def-box"><strong>Stonebraker Transparency:</strong> 1. Data (logical + physical independence) 2. Network/Location 3. Replication 4. Fragmentation.</div>
+      <div class="def-box"><strong>Horizontal frag (PHF):</strong> rows via σ. Reconstruct: ∪. <strong>Vertical frag:</strong> columns via π (keep PK). Reconstruct: ⋈. <strong>DHF:</strong> semi-join ⋉ on parent's fragment.</div>
+      <div class="def-box"><strong>Allocation:</strong> Full replication (all sites) · Partial (some sites) · No replication (one site). NP-complete problem.</div>
+    </div>
+
+    <div class="brain-card red">
+      <h3>🗂️ ORACLE PARTITIONING</h3>
+      <h2>Range · List · Reference</h2>
+      <div class="def-box"><strong>PARTITION BY RANGE (col):</strong> PHF — splits rows by value range.</div>
+      <div class="def-box"><strong>PARTITION BY LIST (col):</strong> PHF — splits by discrete value list.</div>
+      <div class="def-box"><strong>PARTITION BY REFERENCE (fk):</strong> DHF — child inherits parent's partitioning via FK constraint.</div>
+    </div>
+
+  </div>
+
+  <h3 class="section-heading">MongoDB CRUD & Operators — Quick Reference</h3>
+  <table class="comparison-table">
+    <thead><tr><th>Operation</th><th>Syntax</th></tr></thead>
+    <tbody>
+      <tr><td>Insert one</td><td><code>db.col.insertOne({field:val})</code></td></tr>
+      <tr><td>Insert many</td><td><code>db.col.insertMany([{...},{...}])</code></td></tr>
+      <tr><td>Find</td><td><code>db.col.find({filter},{projection}).sort().skip().limit()</code></td></tr>
+      <tr><td>Update</td><td><code>db.col.updateOne({filter},{$set:{field:val}})</code></td></tr>
+      <tr><td>Upsert</td><td><code>db.col.updateOne({filter},{update},{upsert:true})</code></td></tr>
+      <tr><td>Delete</td><td><code>db.col.deleteMany({filter})</code></td></tr>
+      <tr><td>Replace</td><td><code>db.col.replaceOne({filter},{newDoc})</code></td></tr>
+      <tr><td>$eq / $ne / $gt / $gte / $lt / $lte</td><td>Comparison operators</td></tr>
+      <tr><td>$in / $nin</td><td>Array membership</td></tr>
+      <tr><td>$and / $or / $nor / $not</td><td>Logical operators</td></tr>
+      <tr><td>$exists</td><td>Field presence check</td></tr>
+      <tr><td>$regex</td><td>Pattern matching</td></tr>
+      <tr><td>$all / $elemMatch / $size</td><td>Array operators</td></tr>
+      <tr><td>$push / $pull / $inc / $set / $unset / $rename</td><td>Update operators</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-heading">Service Model Responsibility (SQL3 ↔ NoSQL ↔ Distributed)</h3>
+  <table class="comparison-table">
+    <thead><tr><th>Concept</th><th>SQL3 / ORDBMS</th><th>MongoDB / NoSQL</th><th>Distributed DB</th></tr></thead>
+    <tbody>
+      <tr><td>Schema</td><td>Strong typed (ADT)</td><td>Schema-less (BSON)</td><td>Global schema + fragments</td></tr>
+      <tr><td>Query Language</td><td>SQL3 + OO extensions</td><td>JavaScript API</td><td>Distributed SQL / sub-queries</td></tr>
+      <tr><td>Consistency</td><td>ACID</td><td>BASE / eventual</td><td>CAP trade-off</td></tr>
+      <tr><td>Scalability</td><td>Vertical</td><td>Horizontal</td><td>Horizontal (fragmentation)</td></tr>
+      <tr><td>Relationships</td><td>REF / DEREF / JOIN</td><td>Embedded / $lookup</td><td>Semi-join (DHF)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== QUERY FLASHCARDS ===== -->
+<div id="queries" class="section">
+  <h2 class="section-title">Query Flashcards</h2>
+  <p class="section-sub">// Tap card to flip — progresses from easy to hard</p>
+  <div class="set-tabs" id="qTabs">
+    <button class="set-tab active" onclick="setQMode('sql3',this)">💾 SQL3 / Oracle</button>
+    <button class="set-tab" onclick="setQMode('mongo',this)">🍃 MongoDB</button>
+  </div>
+  <div class="fc-progress"><div class="fc-progress-bar" id="qProgress" style="width:0%"></div></div>
+  <div class="flashcard-scene">
+    <div class="flashcard" id="fcCard" onclick="flipCard()">
+      <div class="fc-face">
+        <div class="fc-label">📝 QUESTION — tap to reveal</div>
+        <div class="fc-question" id="fcQ">Loading...</div>
+        <div class="fc-diff" id="fcDiff"></div>
+        <div class="fc-hint">↕ Click to flip</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-label">✅ ANSWER</div>
+        <div class="fc-answer" id="fcA"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevQ()">← PREV</button>
+    <span class="fc-count" id="fcCount">1 / ?</span>
+    <button class="fc-btn" onclick="nextQ()">NEXT →</button>
+    <button class="fc-btn" onclick="shuffleQ()">🔀 Shuffle</button>
+  </div>
+</div>
+
+<!-- ===== MCQ ===== -->
+<div id="mcq" class="section">
+  <h2 class="section-title">MCQ Quiz</h2>
+  <p class="section-sub">// 110+ unique questions — select a set</p>
+  <div class="set-tabs" id="mcqTabs">
+    <button class="set-tab active" onclick="loadMCQSet(0,this)">Set A: SQL3 & ADT (1–28)</button>
+    <button class="set-tab" onclick="loadMCQSet(1,this)">Set B: MongoDB & NoSQL (29–56)</button>
+    <button class="set-tab" onclick="loadMCQSet(2,this)">Set C: Distributed DB (57–84)</button>
+    <button class="set-tab" onclick="loadMCQSet(3,this)">Set D: Mixed & Tricky (85–112)</button>
+  </div>
+  <div class="score-badge" id="mcqScore">Score: 0 / ?</div>
+  <div id="mcqContainer"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllMCQ()">✅ Check All</button>
+    <button class="quiz-btn-secondary" onclick="resetMCQ()">🔄 Reset</button>
+  </div>
+  <div id="mcqResult" class="result-panel"></div>
+</div>
+
+<!-- ===== TRUE / FALSE ===== -->
+<div id="tf" class="section">
+  <h2 class="section-title">True / False</h2>
+  <p class="section-sub">// 110+ unique statements — select a set</p>
+  <div class="set-tabs" id="tfTabs">
+    <button class="set-tab active" onclick="loadTFSet(0,this)">Set A: SQL3 & ADT (1–28)</button>
+    <button class="set-tab" onclick="loadTFSet(1,this)">Set B: MongoDB & NoSQL (29–56)</button>
+    <button class="set-tab" onclick="loadTFSet(2,this)">Set C: Distributed DB (57–84)</button>
+    <button class="set-tab" onclick="loadTFSet(3,this)">Set D: Mixed & Tricky (85–110)</button>
+  </div>
+  <div class="score-badge" id="tfScore">Score: 0 / ?</div>
+  <div id="tfContainer" class="tf-container"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllTF()">✅ Submit All</button>
+    <button class="quiz-btn-secondary" onclick="resetTF()">🔄 Reset</button>
+  </div>
+  <div id="tfResult" class="result-panel"></div>
+</div>
+
+<!-- ===== SHORT ANSWER ===== -->
+<div id="short" class="section">
+  <h2 class="section-title">Short Answer Questions</h2>
+  <p class="section-sub">// Write your answer — then reveal model answer</p>
+  <div id="shortContainer"></div>
+</div>
+
+<!-- ===== SCENARIOS ===== -->
+<div id="scenario" class="section">
+  <h2 class="section-title">Scenario-Based Quiz</h2>
+  <p class="section-sub">// Real-world situations — pick the best solution</p>
+  <div id="scenarioContainer"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkScenario()">Check Answers</button>
+    <button class="quiz-btn-secondary" onclick="resetScenario()">Reset</button>
+  </div>
+  <div id="scenarioResult" class="result-panel"></div>
+</div>
+
+<script>
+// ===== NAV =====
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids=['brain','queries','mcq','tf','short','scenario'];
+  document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('active',ids[i]===id));
+}
+
+// ===== QUERY FLASHCARD DATA =====
+const sql3Data=[
+  {diff:"⭐ Easy",q:"Create an object type TAddress with num, street, city, zipcode.",a:"CREATE TYPE TAddress AS OBJECT (\n  num     NUMBER,\n  street  VARCHAR2(50),\n  city    VARCHAR2(25),\n  zipcode NUMBER\n);\n/"},
+  {diff:"⭐ Easy",q:"Create an object type TPerson with id, name, salary, address of type TAddress.",a:"CREATE TYPE TPerson AS OBJECT (\n  id      NUMBER,\n  name    VARCHAR2(25),\n  salary  NUMBER,\n  address TAddress\n);\n/"},
+  {diff:"⭐ Easy",q:"Create an object table PEOPLE of type TPerson.",a:"CREATE TABLE PEOPLE OF TPerson;"},
+  {diff:"⭐ Easy",q:"Create a VARRAY type TList_FNames holding up to 4 VARCHAR2(15).",a:"CREATE TYPE TList_FNames AS VARRAY(4) OF VARCHAR2(15);\n/"},
+  {diff:"⭐ Easy",q:"Insert a person (id=10, name='Ahmed') with address (num=10, street='Rue A', city='Algiers', zipcode=16140).",a:"INSERT INTO PEOPLE VALUES (\n  TPerson(10,'Ahmed',\n    TAddress(10,'Rue A','Algiers',16140)\n  )\n);"},
+  {diff:"⭐ Easy",q:"Select name and city from PEOPLE using dot notation.",a:"SELECT P.NAME, P.ADDRESS.CITY\nFROM PEOPLE P;"},
+  {diff:"⭐ Easy",q:"Select all people where zipcode starts with '16'.",a:"SELECT P.NAME\nFROM PEOPLE P\nWHERE P.ADDRESS.ZIPCODE LIKE '16%';"},
+  {diff:"⭐ Easy",q:"Update city to 'ALGIERS' where zipcode starts with '16'.",a:"UPDATE PEOPLE P\nSET P.ADDRESS.CITY = 'ALGIERS'\nWHERE P.ADDRESS.ZIPCODE LIKE '16%';"},
+  {diff:"⭐ Easy",q:"Delete all people living in 'Setif'.",a:"DELETE FROM PEOPLE P\nWHERE P.ADDRESS.CITY = 'Setif';"},
+  {diff:"⭐ Easy",q:"Create an index on ADDRESS.CITY for table PEOPLE.",a:"CREATE INDEX IND_CITY_PEOPLE\nON PEOPLE(ADDRESS.CITY);"},
+  {diff:"⭐ Easy",q:"Create an object table ADDRESSES of type TAddress.",a:"CREATE TABLE ADDRESSES OF TAddress;"},
+  {diff:"⭐ Easy",q:"Get the REF (OID) of person named 'Ahmed'.",a:"SELECT REF(P)\nFROM PEOPLE P\nWHERE P.NAME = 'Ahmed';"},
+  {diff:"⭐ Easy",q:"Add attribute BIRTHDATE DATE to TPerson, cascading to dependents.",a:"ALTER TYPE TPerson ADD ATTRIBUTE (BIRTHDATE DATE) CASCADE;"},
+  {diff:"⭐ Easy",q:"Create nested table type NT_Address as TABLE OF TAddress.",a:"CREATE TYPE NT_Address AS TABLE OF TAddress;\n/"},
+  {diff:"⭐ Easy",q:"Declare TPerson as NOT FINAL to allow subtyping.",a:"CREATE TYPE TPerson AS OBJECT (\n  id NUMBER, name VARCHAR2(50)\n) NOT FINAL;\n/"},
+  {diff:"⭐⭐ Medium",q:"Create table PEOPLE with NESTED TABLE ADDRESSES stored as TABLE_ADDRESSES.",a:"CREATE TABLE PEOPLE (\n  NOMP      VARCHAR2(25),\n  ADDRESSES NT_Address\n) NESTED TABLE ADDRESSES STORE AS TABLE_ADDRESSES;"},
+  {diff:"⭐⭐ Medium",q:"Insert a new address into Ahmed's nested table using TABLE().",a:"INSERT INTO TABLE(\n  SELECT ADDRESSES FROM PEOPLE\n  WHERE PNAME='Ahmed'\n) VALUES (TAddress(25,'1st May Sq','ALGIERS',16450));"},
+  {diff:"⭐⭐ Medium",q:"Copy Ahmed's addresses to Anes using CAST and MULTISET.",a:"INSERT INTO PEOPLE VALUES (\n  'Anes',\n  CAST(MULTISET(\n    SELECT * FROM TABLE(\n      SELECT ADDRESSES FROM PEOPLE\n      WHERE PNAME='Ahmed'\n    )\n  ) AS NT_Address)\n);"},
+  {diff:"⭐⭐ Medium",q:"Update all of Ahmed's nested addresses from ALGIERS to ORAN.",a:"UPDATE TABLE(\n  SELECT ADDRESSES FROM PEOPLE\n  WHERE PNAME='Ahmed'\n) adr\nSET adr.CITY='ORAN'\nWHERE adr.CITY='ALGIERS';"},
+  {diff:"⭐⭐ Medium",q:"Set Ahmed's ADDRESSES collection to NULL (remove all entries).",a:"UPDATE PEOPLE\nSET ADDRESSES = NULL\nWHERE PNAME='Ahmed';"},
+  {diff:"⭐⭐ Medium",q:"Query cities from Ahmed's nested addresses where street contains 'AHMED K'.",a:"SELECT nt.CITY\nFROM PEOPLE P, TABLE(P.ADDRESSES) nt\nWHERE PNAME='Ahmed'\nAND nt.STREET LIKE '%AHMED K%';"},
+  {diff:"⭐⭐ Medium",q:"Create TCar, object table CAR, then TPerson with car REF TCar.",a:"CREATE TYPE TCar AS OBJECT (\n  MODEL VARCHAR2(15), REGISTRATION VARCHAR2(10)\n);\n/\nCREATE TABLE CAR OF TCar;\nCREATE OR REPLACE TYPE TPerson AS OBJECT (\n  FNAME TList_FNames, LNAME VARCHAR2(15),\n  CAR REF TCar\n);\n/"},
+  {diff:"⭐⭐ Medium",q:"Insert into PEOPLE with car REF pointing to car with NUMCAR='1234567890'.",a:"INSERT INTO PEOPLE VALUES (\n  'ARKAM', TList_FNames('AHMED','FADI'),\n  (SELECT REF(C) FROM CARS C\n   WHERE C.NUMCAR='1234567890')\n);"},
+  {diff:"⭐⭐ Medium",q:"Select person names and their full car object using DEREF.",a:"SELECT P.FNAME, P.LNAME,\n       P.BIRTH_DATE, DEREF(P.CAR)\nFROM PEOPLE P\nWHERE P.LNAME='YACINE';"},
+  {diff:"⭐⭐ Medium",q:"Fix dangling car references in PEOPLE by setting to NULL.",a:"UPDATE PEOPLE\nSET CAR = NULL\nWHERE CAR IS DANGLING;"},
+  {diff:"⭐⭐ Medium",q:"Create subtype STUDENT UNDER PERSON with student_id NUMBER.",a:"CREATE TYPE STUDENT UNDER PERSON (\n  student_id NUMBER\n);\n/"},
+  {diff:"⭐⭐ Medium",q:"Declare a MAP MEMBER FUNCTION age RETURN NUMBER in Person type.",a:"CREATE OR REPLACE TYPE Person AS OBJECT (\n  id NUMBER, name VARCHAR2(100),\n  birth_date DATE,\n  MAP MEMBER FUNCTION age RETURN NUMBER\n);\n/"},
+  {diff:"⭐⭐ Medium",q:"Implement age() MAP MEMBER FUNCTION body.",a:"CREATE OR REPLACE TYPE BODY Person AS\n  MAP MEMBER FUNCTION age RETURN NUMBER IS\n  BEGIN\n    RETURN ROUND((SYSDATE-SELF.birth_date)/365);\n  END;\nEND;\n/"},
+  {diff:"⭐⭐ Medium",q:"Invoke age() method in a SELECT on a Person object table.",a:"SELECT P.PNAME, P.AGE()\nFROM PERSON P;"},
+  {diff:"⭐⭐ Medium",q:"Create BEFORE UPDATE trigger on Item preventing price decrease, error -20100.",a:"CREATE OR REPLACE TRIGGER not_lowering_price\nBEFORE UPDATE OF unitprice ON Item\nFOR EACH ROW\nWHEN (:OLD.unitprice > :NEW.unitprice)\nBEGIN\n  RAISE_APPLICATION_ERROR(\n    -20100,'Price cannot be lowered'\n  );\nEND;"},
+  {diff:"⭐⭐ Medium",q:"Create AFTER UPDATE trigger on employees to audit salary changes.",a:"CREATE OR REPLACE TRIGGER salary_update_trigger\nAFTER UPDATE OF salary ON employees\nFOR EACH ROW\nBEGIN\n  INSERT INTO salary_audit(\n    emp_id,old_salary,new_salary,change_date\n  ) VALUES(\n    :OLD.emp_id,:OLD.salary,\n    :NEW.salary,SYSDATE\n  );\nEND;"},
+  {diff:"⭐⭐ Medium",q:"Create object view VPERSON of TPERSON on relational PERSON joined with LIVE.",a:"CREATE VIEW VPERSON OF TPERSON\n  WITH OBJECT IDENTIFIER (NUM)\nAS (\n  SELECT NUM, LASTNAME, FIRSTNAME,\n    CAST(MULTISET(\n      SELECT TADDRESS(STREET,CITY,ZIPCODE)\n      FROM LIVE L WHERE P.NUM=L.NUM\n    ) AS TLIST_ADDRESSES)\n  FROM PERSON P\n);"},
+  {diff:"⭐⭐ Medium",q:"Use TREAT to get student_id from a polymorphic person_table.",a:"SELECT TREAT(VALUE(p) AS STUDENT).student_id\nFROM person_table p\nWHERE TREAT(VALUE(p) AS STUDENT) IS NOT NULL;"},
+  {diff:"⭐⭐ Medium",q:"Use IS OF to select only STUDENT objects from person_table.",a:"SELECT VALUE(p)\nFROM person_table p\nWHERE VALUE(p) IS OF (STUDENT);"},
+  {diff:"⭐⭐⭐ Hard",q:"Forward-declare two mutually referencing types TPerson and TCar.",a:"CREATE TYPE TPerson;\n/\nCREATE TYPE TCar AS OBJECT (\n  model VARCHAR2(50), year NUMBER,\n  owner REF TPerson\n);\n/\nCREATE TYPE TPerson AS OBJECT (\n  name VARCHAR2(50), age NUMBER,\n  car REF TCar\n);\n/"},
+  {diff:"⭐⭐⭐ Hard",q:"Create abstract NOT INSTANTIABLE type TShape with abstract area(), then TCircle overriding it.",a:"CREATE TYPE TShape AS OBJECT (\n  color VARCHAR2(20),\n  NOT INSTANTIABLE MEMBER FUNCTION area\n    RETURN NUMBER\n) NOT INSTANTIABLE NOT FINAL;\n/\nCREATE TYPE TCircle UNDER TShape (\n  radius NUMBER,\n  OVERRIDING MEMBER FUNCTION area RETURN NUMBER\n);\n/"},
+  {diff:"⭐⭐⭐ Hard",q:"Implement OVERRIDING area() for TCircle.",a:"CREATE OR REPLACE TYPE BODY TCircle AS\n  OVERRIDING MEMBER FUNCTION area\n    RETURN NUMBER IS\n  BEGIN\n    RETURN 3.14159 * SELF.radius * SELF.radius;\n  END;\nEND;\n/"},
+  {diff:"⭐⭐⭐ Hard",q:"Create teacher-course 1..* association using forward declaration, REF, and nested table of REFs.",a:"CREATE OR REPLACE TYPE Course_Type;\n/\nCREATE OR REPLACE TYPE Teacher_Type AS OBJECT (\n  Teacher_ID NUMBER,\n  Teacher_Course REF Course_Type\n);\n/\nCREATE OR REPLACE TYPE Teacher_Set\n  AS TABLE OF REF Teacher_Type;\n/\nCREATE OR REPLACE TYPE Course_Type AS OBJECT (\n  Course_ID NUMBER, Title VARCHAR2(100),\n  Course_Teachers Teacher_Set\n);\n/"},
+  {diff:"⭐⭐⭐ Hard",q:"Use CAST(MULTISET(...) AS CollType) to build a nested table of employee names per dept.",a:"SELECT d.dname,\n  CAST(MULTISET(\n    SELECT e.name FROM Employees e\n    WHERE DEREF(e.dept).did = d.did\n  ) AS NT_Names) AS emp_names\nFROM Departments d;"},
+  {diff:"⭐⭐⭐ Hard",q:"Trigger: prevent deleting a Department that still has employees referenced by REF.",a:"CREATE OR REPLACE TRIGGER dept_ref_check\nBEFORE DELETE ON Departments\nFOR EACH ROW\nDECLARE v_cnt NUMBER;\nBEGIN\n  SELECT COUNT(*) INTO v_cnt\n  FROM Employees\n  WHERE DEREF(dept).did = :OLD.did;\n  IF v_cnt > 0 THEN\n    RAISE_APPLICATION_ERROR(\n      -20002,'Dept has employees');\n  END IF;\nEND;"},
+  {diff:"⭐⭐⭐ Hard",q:"Oracle Range Partitioning: partition Customer by Age into <18, 18-59, 60+.",a:"CREATE TABLE Customer (\n  Customer_id NUMBER, Name VARCHAR2(20),\n  City VARCHAR2(20), Age NUMBER\n)\nPARTITION BY RANGE (Age) (\n  PARTITION p_u18  VALUES LESS THAN (18),\n  PARTITION p_18_59 VALUES LESS THAN (60),\n  PARTITION p_60p  VALUES LESS THAN (MAXVALUE)\n);"},
+  {diff:"⭐⭐⭐ Hard",q:"Oracle List Partitioning: partition Customer by City (ALGER, BECHAR).",a:"CREATE TABLE Customer (\n  Customer_id NUMBER, Name VARCHAR2(20),\n  City VARCHAR2(20)\n)\nPARTITION BY LIST (City) (\n  PARTITION Customer1 VALUES ('ALGER'),\n  PARTITION Customer2 VALUES ('BECHAR')\n);"},
+  {diff:"⭐⭐⭐ Hard",q:"Oracle Reference Partitioning: partition child table Sales based on Customer's partitioning.",a:"CREATE TABLE Sales (\n  Customer_id NUMBER, Amount NUMBER,\n  CONSTRAINT fk FOREIGN KEY (Customer_id)\n    REFERENCES Customer(Customer_id)\n) PARTITION BY REFERENCE (fk);"},
+];
+
+const mongoData=[
+  {diff:"⭐ Easy",q:"Switch to (or create) database myDatabase.",a:"use myDatabase"},
+  {diff:"⭐ Easy",q:"Create a collection called 'students' explicitly.",a:"db.createCollection('students')"},
+  {diff:"⭐ Easy",q:"List all databases.",a:"show dbs"},
+  {diff:"⭐ Easy",q:"List all collections in the current database.",a:"show collections"},
+  {diff:"⭐ Easy",q:"Insert one student: name='Sara', age=21, major='CS'.",a:"db.students.insertOne({\n  name: 'Sara Lokman',\n  age: 21,\n  major: 'Computer Science'\n});"},
+  {diff:"⭐ Easy",q:"Insert two students at once: Ali (age 22, Math) and Lina (age 20, Physics).",a:"db.students.insertMany([\n  { name:'Ali Ben', age:22, major:'Math' },\n  { name:'Lina K', age:20, major:'Physics' }\n]);"},
+  {diff:"⭐ Easy",q:"Find all documents in students.",a:"db.students.find();"},
+  {diff:"⭐ Easy",q:"Find students with major='CS', show only name (no _id).",a:"db.students.find(\n  { major:'Computer Science' },\n  { name:1, _id:0 }\n);"},
+  {diff:"⭐ Easy",q:"Find exactly one student named 'Sara'.",a:"db.students.findOne({ name:'Sara' });"},
+  {diff:"⭐ Easy",q:"Update Amel's age to 23.",a:"db.students.updateOne(\n  { name:'Amel' },\n  { $set:{ age:23 } }\n);"},
+  {diff:"⭐ Easy",q:"Set graduationYear=2025 for ALL CS students.",a:"db.students.updateMany(\n  { major:'Computer Science' },\n  { $set:{ graduationYear:2025 } }\n);"},
+  {diff:"⭐ Easy",q:"Delete the student named 'Ahlem'.",a:"db.students.deleteOne({ name:'Ahlem' });"},
+  {diff:"⭐ Easy",q:"Delete all students whose major is 'Math'.",a:"db.students.deleteMany({ major:'Math' });"},
+  {diff:"⭐ Easy",q:"Replace Ahmed's document entirely (age 24, Physics).",a:"db.students.replaceOne(\n  { name:'Ahmed' },\n  { name:'Ahmed', age:24, major:'Physics' }\n);"},
+  {diff:"⭐ Easy",q:"Find active users, show name+age, sort by age desc, skip 10, return 5.",a:"db.users.find(\n  { status:'active' },\n  { name:1, age:1 }\n).sort({ age:-1 }).skip(10).limit(5);"},
+  {diff:"⭐ Easy",q:"Count all documents in students.",a:"db.students.countDocuments();"},
+  {diff:"⭐ Easy",q:"Find all students older than 20.",a:"db.students.find({ age:{ $gt:20 } });"},
+  {diff:"⭐ Easy",q:"Find products with price ≤ 500 in category 'electronics'.",a:"db.products.find({\n  price:{ $lte:500 },\n  category:'electronics'\n});"},
+  {diff:"⭐ Easy",q:"Find users where skills array contains 'Python'.",a:"db.users.find({ skills:'Python' });"},
+  {diff:"⭐ Easy",q:"Find users where address.city equals 'Algiers'.",a:"db.users.find({ 'address.city':'Algiers' });"},
+  {diff:"⭐⭐ Medium",q:"Push skill 'MongoDB' to Amel's skills array.",a:"db.students.updateOne(\n  { name:'Amel' },\n  { $push:{ skills:'MongoDB' } }\n);"},
+  {diff:"⭐⭐ Medium",q:"Remove skill 'Java' from ALL students.",a:"db.students.updateMany(\n  {},\n  { $pull:{ skills:'Java' } }\n);"},
+  {diff:"⭐⭐ Medium",q:"Upsert: update Zara age=25, insert if not found.",a:"db.students.updateOne(\n  { name:'Zara' },\n  { $set:{ age:25 } },\n  { upsert:true }\n);"},
+  {diff:"⭐⭐ Medium",q:"BulkWrite: insert Rami, update Baker's age, delete Chaima.",a:"db.students.bulkWrite([\n  { insertOne: { document:{ name:'Rami',age:22 } } },\n  { updateOne: {\n      filter:{ name:'Baker' },\n      update:{ $set:{ age:24 } }\n  }},\n  { deleteOne: { filter:{ name:'Chaima' } } }\n]);"},
+  {diff:"⭐⭐ Medium",q:"Aggregation: count how many 'book' items sold in status='A' orders.",a:"db.orders.aggregate([\n  { $match:   { status:'A' } },\n  { $unwind:  '$items' },\n  { $match:   { items:'book' } },\n  { $project: { customer:1 } },\n  { $count:   'totalBooksSold' }\n]);"},
+  {diff:"⭐⭐ Medium",q:"Aggregation: group orders by customer, sum totals, for status='A'.",a:"db.orders.aggregate([\n  { $match: { status:'A' } },\n  { $group: {\n      _id:'$customer',\n      total:{ $sum:'$amount' }\n  }}\n]);"},
+  {diff:"⭐⭐ Medium",q:"Find all products tagged with both 'eco' AND 'organic'.",a:"db.products.find({\n  tags:{ $all:['eco','organic'] }\n});"},
+  {diff:"⭐⭐ Medium",q:"Find orders where at least one item has price>100 AND qty≥2.",a:"db.orders.find({\n  items:{ $elemMatch:{\n    price:{ $gt:100 }, qty:{ $gte:2 }\n  }}\n});"},
+  {diff:"⭐⭐ Medium",q:"Find students whose name starts with 'A' using regex.",a:"db.students.find({\n  name:{ $regex:/^A/ }\n});"},
+  {diff:"⭐⭐ Medium",q:"Create a compound index on (department ASC, salary DESC).",a:"db.employees.createIndex({\n  department:1, salary:-1\n});"},
+  {diff:"⭐⭐ Medium",q:"Aggregation: average order amount per region since 2025-01-01.",a:"db.sales.aggregate([\n  { $match:{ date:{ $gte:new Date('2025-01-01') } } },\n  { $group:{\n      _id:'$region',\n      avg:{ $avg:'$amount' }\n  }}\n]);"},
+  {diff:"⭐⭐ Medium",q:"Left-join orders with customers collection on custId → _id.",a:"db.orders.aggregate([\n  { $lookup:{\n      from:'customers',\n      localField:'custId',\n      foreignField:'_id',\n      as:'customerInfo'\n  }}\n]);"},
+  {diff:"⭐⭐ Medium",q:"Find documents where price field is greater than cost field.",a:"db.products.find({\n  $expr:{ $gt:['$price','$cost'] }\n});"},
+  {diff:"⭐⭐⭐ Hard",q:"Aggregation: unwind items, group by item name, get total qty, sort desc.",a:"db.orders.aggregate([\n  { $unwind: '$items' },\n  { $group:  {\n      _id:'$items.name',\n      totalQty:{ $sum:'$items.qty' }\n  }},\n  { $sort: { totalQty:-1 } }\n]);"},
+  {diff:"⭐⭐⭐ Hard",q:"$facet: simultaneously compute price stats AND category counts.",a:"db.products.aggregate([\n  { $facet:{\n      priceStats:[\n        { $group:{\n            _id:null,\n            avg:{ $avg:'$price' },\n            max:{ $max:'$price' }\n        }}\n      ],\n      byCategory:[\n        { $group:{\n            _id:'$category',\n            count:{ $sum:1 }\n        }}\n      ]\n  }}\n]);"},
+  {diff:"⭐⭐⭐ Hard",q:"$bucket products by price ranges [0,100), [100,500), [500,1000), rest='Other'.",a:"db.products.aggregate([\n  { $bucket:{\n      groupBy:'$price',\n      boundaries:[0,100,500,1000],\n      default:'Other',\n      output:{\n        count:{ $sum:1 },\n        avg:{ $avg:'$price' }\n      }\n  }}\n]);"},
+  {diff:"⭐⭐⭐ Hard",q:"Add 'priceCategory' field: 'cheap' if price<100, else 'expensive' using $cond.",a:"db.products.aggregate([\n  { $project:{\n      name:1,\n      priceCategory:{\n        $cond:{\n          if:{ $lt:['$price',100] },\n          then:'cheap',\n          else:'expensive'\n        }\n      }\n  }}\n]);"},
+  {diff:"⭐⭐⭐ Hard",q:"Group orders by userId, count them, filter users with fewer than 3 orders.",a:"db.orders.aggregate([\n  { $group:{\n      _id:'$userId',\n      orderCount:{ $sum:1 }\n  }},\n  { $match:{ orderCount:{ $gte:3 } } }\n]);"},
+  {diff:"⭐⭐⭐ Hard",q:"Create a partial index on salary only for documents where active=true.",a:"db.employees.createIndex(\n  { salary:1 },\n  { partialFilterExpression:{ active:true } }\n);"},
+  {diff:"⭐⭐⭐ Hard",q:"findOneAndUpdate: atomically update first pending order, return NEW document.",a:"db.orders.findOneAndUpdate(\n  { status:'pending' },\n  { $set:{ status:'processing' } },\n  {\n    returnDocument:'after',\n    sort:{ createdAt:1 }\n  }\n);"},
+  {diff:"⭐⭐⭐ Hard",q:"$merge: write aggregated sales summary back into salesSummary collection.",a:"db.sales.aggregate([\n  { $group:{\n      _id:'$region',\n      total:{ $sum:'$amount' }\n  }},\n  { $merge:{\n      into:'salesSummary',\n      on:'_id',\n      whenMatched:'merge',\n      whenNotMatched:'insert'\n  }}\n]);"},
+];
+
+// ===== FLASHCARD ENGINE =====
+let qMode='sql3', qData=[...sql3Data], qIdx=0;
+function setQMode(mode,btn){
+  qMode=mode; qData=mode==='sql3'?[...sql3Data]:[...mongoData]; qIdx=0;
+  document.querySelectorAll('#qTabs .set-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  loadCard();
+}
+function loadCard(){
+  const c=qData[qIdx];
+  document.getElementById('fcQ').textContent=c.q;
+  document.getElementById('fcA').textContent=c.a;
+  document.getElementById('fcDiff').textContent=c.diff;
+  document.getElementById('fcCount').textContent=`${qIdx+1} / ${qData.length}`;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('qProgress').style.width=((qIdx+1)/qData.length*100)+'%';
+}
+function flipCard(){document.getElementById('fcCard').classList.toggle('flipped');}
+function nextQ(){qIdx=(qIdx+1)%qData.length;loadCard();}
+function prevQ(){qIdx=(qIdx-1+qData.length)%qData.length;loadCard();}
+function shuffleQ(){qData.sort(()=>Math.random()-.5);qIdx=0;loadCard();}
+loadCard();
+
+// ===== MCQ DATA =====
+const allMCQ=[
+  // SET A: SQL3 (0-27)
+  {q:"Which keyword creates an object table from a UDT?",opts:["CREATE TABLE t AS TypeName","CREATE TABLE t OF TypeName","CREATE OBJECT TABLE t","MAKE TABLE t FROM TypeName"],ans:1,exp:"CREATE TABLE t OF TypeName is the correct SQL3/Oracle syntax for object tables."},
+  {q:"Which table type has system-generated OID management?",opts:["Relational table","NF² table","Object table","All types"],ans:2,exp:"Only object tables (created with OF TypeName) have system-generated OIDs."},
+  {q:"A NF² table is defined as:",opts:["A table with no attributes","A table with ADT columns but NO OID","An object table with OIDs","A nested table"],ans:1,exp:"NF² (Not First Normal Form) tables contain ADT-typed columns but lack OID mechanism."},
+  {q:"To access city inside ADDRESS in SELECT, you write:",opts:["SELECT CITY FROM PEOPLE","SELECT ADDRESS.CITY FROM PEOPLE","SELECT P.ADDRESS.CITY FROM PEOPLE P","SELECT ADDRESS->CITY FROM PEOPLE"],ans:2,exp:"Dot notation with a correlation variable (alias P) is required for ADT attribute access."},
+  {q:"Which clause propagates ALTER TYPE changes to all dependent objects?",opts:["FORCE","PROPAGATE","CASCADE","EXTEND"],ans:2,exp:"CASCADE ensures all dependent types and tables automatically inherit the structural change."},
+  {q:"VARRAY elements are stored:",opts:["In a separate physical table","Inline within the parent row","As BLOBs","In a linked list"],ans:1,exp:"VARRAY is stored inline as a single unit within the parent row (unlike NESTED TABLE)."},
+  {q:"NESTED TABLE can become sparse because:",opts:["It has a maximum size limit","Deletions leave logical gaps","It's stored inline","It uses dense indexing"],ans:1,exp:"After deletions, nested table rows leave logical gaps, unlike VARRAY which is always dense."},
+  {q:"To insert into a NESTED TABLE column, you use:",opts:["INSERT INTO col VALUES","INSERT INTO TABLE(SELECT col FROM t WHERE...) VALUES","ADD TO NESTED TABLE","INSERT NESTED VALUES"],ans:1,exp:"INSERT INTO TABLE(subquery) VALUES(...) is the correct syntax for nested table insertion."},
+  {q:"REF() function returns:",opts:["The full object","The OID (pointer) of the object","The column value","NULL always"],ans:1,exp:"REF(alias) returns the Object Identifier (OID) pointer, not the object itself."},
+  {q:"DEREF() function:",opts:["Deletes a REF","Returns the OID","Returns the actual object from an OID","Checks if REF is null"],ans:2,exp:"DEREF dereferences an OID to retrieve the actual object instance."},
+  {q:"IS DANGLING checks whether:",opts:["A collection is empty","A REF points to a deleted object","A field is NULL","A type exists"],ans:1,exp:"IS DANGLING tests if a REF is invalid because the referenced object was deleted."},
+  {q:"SCOPE IS clause:",opts:["Restricts REF to one specific object table","Makes a REF global","Allows any table to be referenced","Is required for all REFs"],ans:0,exp:"SCOPE IS tableName limits the REF column to reference only that one specific object table."},
+  {q:"Forward declaration syntax in Oracle:",opts:["CREATE TYPE name AS OBJECT();","CREATE FORWARD TYPE name;","CREATE TYPE name;","DECLARE TYPE name;"],ans:2,exp:"CREATE TYPE name; (without body) declares an incomplete/forward type to break circular dependencies."},
+  {q:"VALUE() function returns:",opts:["The OID of the row","The full object instance of the current row","A scalar value","A REF"],ans:1,exp:"VALUE(alias) returns the complete object as an ADT instance rather than individual columns."},
+  {q:"Which method type maps an object to a scalar for ORDER BY?",opts:["MEMBER","STATIC","MAP MEMBER","ORDER MEMBER"],ans:2,exp:"MAP MEMBER maps an object to a scalar value, enabling comparison and ORDER BY operations."},
+  {q:"NOT INSTANTIABLE means the type:",opts:["Cannot be subtyped","Cannot be directly instantiated","Has no methods","Has no attributes"],ans:1,exp:"NOT INSTANTIABLE types are abstract — only their subtypes can be instantiated."},
+  {q:"OVERRIDING keyword is required when:",opts:["Creating a new method","Re-implementing a parent method in a subtype","Calling a method","Dropping a method"],ans:1,exp:"OVERRIDING MEMBER FUNCTION explicitly marks that the method re-implements the parent's version."},
+  {q:"INSTEAD OF triggers are used on:",opts:["Tables","Sequences","Views","Indexes"],ans:2,exp:"INSTEAD OF triggers intercept DML on views that cannot be directly updated."},
+  {q:"RAISE_APPLICATION_ERROR codes must be between:",opts:["-10000 and -19999","-20000 and -20999","-30000 and -39999","0 and 9999"],ans:1,exp:"Oracle reserves -20000 to -20999 for user-defined custom error codes in triggers."},
+  {q:"In a BEFORE INSERT trigger, :OLD values are:",opts:["The new values","The old values","NULL (no old row exists)","A copy of :NEW"],ans:2,exp:"In INSERT triggers there is no old row, so :OLD is meaningless/NULL. Only :NEW is meaningful."},
+  {q:"A statement-level trigger fires:",opts:["Once per changed row","Once per DML statement regardless of rows","Only on commit","Only on rollback"],ans:1,exp:"Statement-level triggers (without FOR EACH ROW) fire exactly once per DML statement."},
+  {q:"TABLE() function in SQL3 is used to:",opts:["Create a new table","Iterate/unnest a collection column","Define a type","Drop a table"],ans:1,exp:"TABLE(col) unnests a VARRAY or NESTED TABLE collection into queryable rows."},
+  {q:"MULTISET UNION with ALL keyword:",opts:["Eliminates duplicates","Includes duplicates (like UNION ALL)","Performs a join","Sorts elements"],ans:1,exp:"MULTISET UNION ALL includes duplicates when combining two nested table collections."},
+  {q:"CREATE OR REPLACE TYPE differs from CREATE TYPE because:",opts:["It's faster","It replaces existing type if it exists","It requires CASCADE","It creates object tables only"],ans:1,exp:"CREATE OR REPLACE TYPE overwrites the existing definition if the type already exists."},
+  {q:"ORDER MEMBER function returns an integer where 0 means:",opts:["Less than","Greater than","Equal","Not comparable"],ans:2,exp:"ORDER MEMBER: -1 = less than, 0 = equal, 1 = greater than when comparing two objects."},
+  {q:"To index an ADT attribute in Oracle, the syntax is:",opts:["CREATE INDEX i ON t(alias.attr)","CREATE INDEX i ON t(attr)","CREATE INDEX i ON t(TYPE.attr)","CREATE INDEX i ON TYPE(attr)"],ans:1,exp:"CREATE INDEX idx ON Table(ADT_col.attribute) — no correlation variable needed in index creation."},
+  {q:"CAST(MULTISET(SELECT...) AS NT_Type) is used to:",opts:["Delete a nested table","Copy rows from a subquery into a nested table type","Create an index","Add a trigger"],ans:1,exp:"This SQL3 construct converts a subquery result into the specified nested table collection type."},
+  {q:"In inheritance, a table of the supertype can store subtype instances because:",opts:["They share the same OID","Object tables are polymorphic by design","Subtypes have the same schema","Oracle forces it"],ans:1,exp:"Object tables are polymorphic — they accept instances of the declared type and all its subtypes."},
+
+  // SET B: MONGODB & NOSQL (28-55)
+  {q:"MongoDB _id field is:",opts:["Optional","Mandatory, auto-generated as ObjectId if not set","Always a string","Must be numeric"],ans:1,exp:"_id is mandatory and auto-generated as ObjectId unless the user explicitly sets it."},
+  {q:"MongoDB field names cannot:",opts:["Be strings","Start with $ or contain a dot","Be long strings","Have uppercase letters"],ans:1,exp:"$ is reserved for operators; dot (.) is used for nested field access in queries — both invalid in field names."},
+  {q:"Embedded documents in MongoDB are best for:",opts:["Many-to-many relationships","One-to-one or one-to-many relationships","Storing binary data","Indexing only"],ans:1,exp:"Embedded docs suit 1-to-1 or 1-to-many — data co-located, fewer queries needed."},
+  {q:"$unwind in aggregation pipeline:",opts:["Filters documents","Flattens array into separate documents","Groups documents","Sorts documents"],ans:1,exp:"$unwind deconstructs an array field into one document per array element."},
+  {q:"$group with _id: null aggregates:",opts:["Nothing","All documents into one group","By null fields","Only null documents"],ans:1,exp:"_id: null in $group treats all documents as a single group for aggregate computation."},
+  {q:"Which stage filters documents like SQL WHERE?",opts:["$group","$project","$match","$filter"],ans:2,exp:"$match filters the document stream to pass only matching documents to the next stage."},
+  {q:"$push operator in update:",opts:["Removes an element from array","Appends an element to array","Replaces array","Sorts array"],ans:1,exp:"$push appends a value to an existing array field (creates array if absent)."},
+  {q:"$pull removes from array:",opts:["All elements","First element","Elements matching condition","Last element"],ans:2,exp:"$pull removes all elements that match the specified condition from the array."},
+  {q:"$lookup performs:",opts:["An inner join","A left outer join","A right outer join","A cross join"],ans:1,exp:"$lookup performs a left outer join from another collection into the current pipeline."},
+  {q:"replaceOne() in MongoDB:",opts:["Updates only specified fields","Completely replaces the matched document","Merges two documents","Inserts if not found"],ans:1,exp:"replaceOne() fully replaces the matched document. Use updateOne with $set to preserve fields."},
+  {q:"upsert:true in updateOne:",opts:["Updates all matching docs","Inserts a new document if filter matches nothing","Replaces the collection","Raises an error if missing"],ans:1,exp:"With upsert:true, if no document matches the filter, MongoDB inserts a new one."},
+  {q:"$elemMatch matches:",opts:["Any element equals a value","At least one array element satisfying ALL conditions simultaneously","Array size","All elements"],ans:1,exp:"$elemMatch requires a single array element to meet all specified conditions at once."},
+  {q:"bulkWrite() executes:",opts:["Only one operation","Multiple operations in a single batch","Only inserts","Only deletes"],ans:1,exp:"bulkWrite batches multiple insertOne, updateOne, deleteOne, replaceOne in one network call."},
+  {q:"$exists:true in a query checks:",opts:["Field value is true","Field is present in the document","Field is not null","Field has a specific type"],ans:1,exp:"$exists:true matches documents that contain the specified field, regardless of its value."},
+  {q:"CAP theorem states distributed systems can guarantee at most:",opts:["1 of 3 properties","2 of 3 properties","All 3 simultaneously","None of the 3"],ans:1,exp:"Consistency, Availability, Partition tolerance — only 2 of 3 can be guaranteed at any time."},
+  {q:"BASE stands for:",opts:["Basic Available Soft Eventual","Basically Available, Soft state, Eventual consistency","Big Async Simple Engine","Batch Async Stored Events"],ans:1,exp:"BASE = the NoSQL consistency model: Basically Available, Soft state, Eventually consistent."},
+  {q:"Which NoSQL type is best for highly connected/relational data?",opts:["Key-Value","Document","Wide-Column","Graph"],ans:3,exp:"Graph databases (Neo4j, ArangoDB) excel at traversing entity relationships efficiently."},
+  {q:"MongoDB stores data internally as:",opts:["JSON text","XML","BSON (Binary JSON)","CSV"],ans:2,exp:"MongoDB uses BSON format internally for efficient binary storage of JSON-like documents."},
+  {q:"$size array operator:",opts:["Gets array length","Matches arrays with exact number of elements","Resizes array","Sorts by size"],ans:1,exp:"$size matches documents where the specified array has exactly the given number of elements."},
+  {q:"HDFS files are split into chunks of typically:",opts:["1 MB","16 MB","64 MB","1 GB"],ans:2,exp:"HDFS splits files into 64 MB chunks (blocks) by default for distributed storage."},
+  {q:"In MapReduce, the Reduce phase receives:",opts:["Raw input data","Grouped key → list of values after Shuffle","Single values","File names"],ans:1,exp:"After Shuffle & Sort, Reducer gets each distinct key with all its associated values."},
+  {q:"Cassandra is classified as which CAP type?",opts:["CP","CA","AP","None"],ans:2,exp:"Cassandra is AP — highly available and partition tolerant, with tunable eventual consistency."},
+  {q:"MongoDB's $expr operator allows:",opts:["Text search","Using aggregation expressions in find() queries","Creating indexes","Defining schemas"],ans:1,exp:"$expr enables field-to-field comparisons in find() like { $expr:{ $gt:['$price','$cost'] } }."},
+  {q:"A text index in MongoDB enables:",opts:["Regex search only","$text search for full-text search","Sorting by text","Unique constraints"],ans:1,exp:"A 'text' index type enables full-text search using the $text operator."},
+  {q:"$facet aggregation stage:",opts:["Filters documents","Joins collections","Runs multiple sub-pipelines on the same input simultaneously","Sorts documents"],ans:2,exp:"$facet enables multi-dimensional aggregation — multiple pipelines in one pass over the data."},
+  {q:"findOneAndUpdate with returnDocument:'after' returns:",opts:["Original document","Updated document","Both versions","Neither"],ans:1,exp:"returnDocument:'after' returns the document AFTER the update has been applied."},
+  {q:"A partial index in MongoDB:",opts:["Indexes all documents","Only indexes documents matching partialFilterExpression","Indexes only string fields","Works only on arrays"],ans:1,exp:"Partial indexes reduce index size and overhead by only indexing documents meeting a filter condition."},
+  {q:"$merge stage differs from $out because:",opts:["$out is faster","$merge can update existing documents; $out replaces entire collection","$merge is deprecated","They are identical"],ans:1,exp:"$merge can insert new OR update/merge existing documents. $out always replaces the target collection."},
+
+  // SET C: DISTRIBUTED DB (56-83)
+  {q:"Horizontal fragmentation uses which relational operation?",opts:["Projection π","Selection σ","Join ⋈","Union ∪"],ans:1,exp:"Horizontal fragmentation = rows selected by σ predicate (e.g., σ(City='Algiers')(Customer))."},
+  {q:"Vertical fragmentation reconstruction uses:",opts:["Union ∪","Selection σ","Natural Join ⋈","Cartesian product ×"],ans:2,exp:"Vertical fragments (projections) are rejoined via natural join to reconstruct the original relation."},
+  {q:"Derived Horizontal Fragmentation uses:",opts:["Projection π","Selection σ","Semi-join ⋉","Full outer join"],ans:2,exp:"DHF: child_fragment = Relation ⋉ parent_fragment — semi-join preserves only matching tuples."},
+  {q:"Full replication means each fragment is stored:",opts:["At one site only","At some sites","At all sites","Nowhere (virtual)"],ans:2,exp:"Full replication: every fragment is copied to every site — maximum availability, highest storage cost."},
+  {q:"The data allocation problem is classified as:",opts:["P (polynomial)","NP-complete","Linear","Trivial"],ans:1,exp:"Finding the optimal distribution of fragments across sites is NP-complete."},
+  {q:"Hybrid fragmentation combines:",opts:["Replication and allocation","Horizontal and vertical fragmentation","PHF and DHF only","No replication and full replication"],ans:1,exp:"Hybrid = horizontal followed by vertical (or vice versa) fragmentation techniques."},
+  {q:"Replication improves read performance because:",opts:["Writes are faster","Multiple sites can serve read queries simultaneously (parallel reads)","Data is smaller","Writes auto-sync"],ans:1,exp:"With replicas, multiple sites can process read-only transactions in parallel."},
+  {q:"Oracle PARTITION BY REFERENCE implements:",opts:["PHF","DHF (Derived Horizontal Fragmentation)","Vertical fragmentation","Full replication"],ans:1,exp:"PARTITION BY REFERENCE derives child table partitioning from the parent table via FK — this is DHF."},
+  {q:"Location transparency means:",opts:["Data has no location","Users access data without knowing its physical site","All data is on one site","Locations are public"],ans:1,exp:"Location (network) transparency hides where data physically resides from users."},
+  {q:"Fragmentation transparency means:",opts:["Users see all fragments","Users query as if the table is whole, unaware of fragmentation","Fragments are visible","Users manage fragments"],ans:1,exp:"Fragmentation transparency hides how data is split — users query the global schema."},
+  {q:"Replication transparency means:",opts:["Users manage replicas manually","The system hides replica existence and handles consistency","Replicas are visible to users","Users pick which replica to read"],ans:1,exp:"Replication transparency hides that multiple copies exist — the system routes queries automatically."},
+  {q:"Bottom-up distributed DB design starts from:",opts:["A global schema","Existing local databases that are integrated","A fragmentation plan","Allocation strategy"],ans:1,exp:"Bottom-up integrates pre-existing local databases into a unified distributed database."},
+  {q:"Top-down distributed DB design order is:",opts:["Allocate → Fragment → Replicate → Design","Design → Fragment → Replicate → Allocate","Fragment → Design → Allocate → Replicate","Replicate → Design → Fragment → Allocate"],ans:1,exp:"Top-down: 1. Define global schema 2. Fragment 3. Replicate 4. Allocate to sites."},
+  {q:"Oracle PARTITION BY RANGE implements:",opts:["DHF","Vertical fragmentation","PHF — splits rows by a value range","Full replication"],ans:2,exp:"Range partitioning = Primary Horizontal Fragmentation based on a range predicate on an attribute."},
+  {q:"Oracle PARTITION BY LIST implements:",opts:["DHF","Vertical fragmentation","PHF — splits rows by discrete value list","Full replication"],ans:2,exp:"List partitioning = PHF using a predefined list of values (e.g., specific cities)."},
+  {q:"Each vertical fragment must include:",opts:["A foreign key","The primary key","Any candidate key","No key (optional)"],ans:1,exp:"PK inclusion in every vertical fragment is required to enable reconstruction via natural join."},
+  {q:"A distributed query is:",opts:["A query on a single node","A query spanning multiple sub-queries on local databases","A special SELECT only","A stored procedure"],ans:1,exp:"Distributed queries are broken down into sub-queries that execute on local databases across sites."},
+  {q:"No-replication allocation strategy stores each fragment at:",opts:["All sites","Some sites","One site only","A master site"],ans:2,exp:"No replication: each fragment resides at exactly one site — lowest storage, single point of failure."},
+  {q:"The main disadvantage of full replication is:",opts:["Poor availability","Complex update propagation + high storage","Slow reads","No parallel access"],ans:1,exp:"All sites must receive every update synchronously — complex coordination + high storage overhead."},
+  {q:"PHF (Primary Horizontal Fragmentation) predicate uses:",opts:["Only JOIN conditions","Attribute θ Value (θ ∈ {=, >, <, ≥, ≤, ≠})","Only primary key ranges","Foreign key references"],ans:1,exp:"PHF predicates: Attr θ Value where θ is a comparison operator and Value is from the attribute domain."},
+  {q:"DHF optimizes which type of queries?",opts:["Simple SELECT","SELECT with aggregation","JOIN queries between related tables","GROUP BY queries"],ans:2,exp:"DHF ensures child fragments contain only tuples relevant to parent fragments, optimizing joins between S and T."},
+  {q:"HDFS NameNode stores:",opts:["Actual file data blocks","Filesystem metadata (where blocks are, file tree)","User credentials only","MapReduce results"],ans:1,exp:"NameNode manages the filesystem namespace and knows which DataNodes hold each file's blocks."},
+  {q:"HDFS default block replication factor is:",opts:["1","2","3","5"],ans:2,exp:"HDFS replicates each block on 3 DataNodes by default for fault tolerance."},
+  {q:"MapReduce Map phase output is:",opts:["Final aggregated results","Intermediate key-value pairs","Sorted grouped values","File paths"],ans:1,exp:"Map(input) → intermediate [(k1,v1),(k2,v2),...] key-value pairs passed to Shuffle."},
+  {q:"Soft state in BASE means:",opts:["Data is never updated","System state can change over time even without new inputs (propagation)","Consistency is enforced","Writes are blocked"],ans:1,exp:"Soft state = system state may evolve as updates propagate across nodes without new external inputs."},
+  {q:"Eventual consistency guarantees:",opts:["Immediate consistency","Replicas diverge permanently","All replicas converge to the same value over time if no new updates","Strong consistency"],ans:2,exp:"Eventual consistency: given no new updates, all replicas will eventually reflect the last written value."},
+  {q:"Logical data independence in distributed DB means:",opts:["Physical location changes don't affect queries","Schema changes don't break existing applications","All nodes are identical","Fragments are visible"],ans:1,exp:"Logical data independence: user applications are unaffected by changes in the logical schema structure."},
+  {q:"Physical data independence in distributed DB means:",opts:["Schema changes don't affect queries","Users don't care how/where data is physically stored","Nodes are physically identical","All data is in RAM"],ans:1,exp:"Physical data independence: moving data to different servers or changing storage formats doesn't impact queries."},
+
+  // SET D: MIXED & TRICKY (84-111)
+  {q:"In SQL3, SELECT NAME, CITY FROM PEOPLE is:",opts:["Correct for NF² tables","Correct for object tables","WRONG — requires alias and dot notation P.ADDRESS.CITY","Only valid with INDEX"],ans:2,exp:"You cannot access CITY directly — it's inside ADDRESS (an ADT). Must use P.ADDRESS.CITY with alias P."},
+  {q:"A MongoDB collection enforces which of these?",opts:["Fixed schema for all documents","Unique _id per document","Maximum document size of 1KB","Foreign key constraints"],ans:1,exp:"MongoDB only enforces that _id is unique per collection. Schemas are flexible (schema-less)."},
+  {q:"CAST and MULTISET in SQL3 are primarily used for:",opts:["Creating indexes","Converting subquery results into nested table types","Deleting nested tables","Creating object views only"],ans:1,exp:"CAST(MULTISET(SELECT...) AS NT_Type) constructs a nested table collection from a subquery result."},
+  {q:"Which NoSQL type stores data as nodes and edges?",opts:["Key-Value","Document","Wide-Column","Graph"],ans:3,exp:"Graph databases store entities as nodes and relationships as edges — ideal for connected data."},
+  {q:"In distributed DB, lossless decomposition means:",opts:["Data can be lost in fragments","No data loss during fragmentation — R can be perfectly reconstructed","Fragments overlap","Only one fragment allowed"],ans:1,exp:"Lossless decomposition: the original relation can be reconstructed from its fragments without any data loss."},
+  {q:"A MongoDB document can store an array of embedded documents. This best models:",opts:["Many-to-many via references","One-to-many embedded relationships","Strict relational schema","Vertical fragmentation"],ans:1,exp:"Arrays of embedded documents model 1-to-many inline — like a student's multiple courses embedded in their doc."},
+  {q:"In SQL3, which pseudo-record holds pre-update values?",opts:[":NEW",":OLD",":BEFORE",":CURRENT"],ans:1,exp:":OLD holds the values of the row BEFORE the DML operation in row-level triggers."},
+  {q:"The 5th 'V' of Big Data (Value) means:",opts:["Volume of storage","Speed of processing","Uncertainty in data","Turning raw data into meaningful business insights"],ans:3,exp:"Value = the business value extracted from big data — insights, trends, decisions driven by analysis."},
+  {q:"Which SQL3 type has a fixed maximum size declared at creation?",opts:["NESTED TABLE","VARRAY","REF column","BLOB"],ans:1,exp:"VARRAY(maxSize) OF type — the maximum number of elements must be declared at type creation."},
+  {q:"In MongoDB aggregation, $match should ideally be placed:",opts:["At the end","After $group","As early as possible in the pipeline","After $unwind only"],ans:2,exp:"Placing $match early reduces the number of documents flowing through subsequent expensive stages."},
+  {q:"Stonebraker's 4 transparency rules for DDBMS include all EXCEPT:",opts:["Location transparency","Fragmentation transparency","Encryption transparency","Replication transparency"],ans:2,exp:"Stonebraker's rules: Data independence, Location, Replication, Fragmentation — encryption is NOT one of them."},
+  {q:"An object table created from a NOT FINAL type can store:",opts:["Only exact type instances","Supertype and all subtype instances (polymorphic)","Only subtype instances","No instances (abstract)"],ans:1,exp:"Object tables are polymorphic — they store the declared type AND all its subtypes, enabling polymorphism."},
+  {q:"Which Big Data V refers to uncertainty due to data incompleteness?",opts:["Volume","Velocity","Variety","Veracity"],ans:3,exp:"Veracity refers to uncertainty, incompleteness, and inconsistency in data — its trustworthiness."},
+  {q:"In MongoDB $group, the accumulator $avg computes:",opts:["Maximum value","Sum of values","Average of values in the group","Minimum value"],ans:2,exp:"$avg in $group calculates the arithmetic mean of the specified field across all documents in the group."},
+  {q:"Oracle's NESTED TABLE PROJECTS STORE AS TABLE_PROJECTS clause:",opts:["Creates a separate physical storage table for the nested table data","Stores nested table inline","Creates an index","Drops the nested table"],ans:0,exp:"NESTED TABLE col STORE AS store_name creates a separate internal table to physically store the nested data."},
+  {q:"Which is NOT a valid MongoDB update operator?",opts:["$set","$push","$inc","$join"],ans:3,exp:"$join is NOT a MongoDB update operator. It's an aggregation-like concept but $lookup is used for joins."},
+  {q:"In distributed DB design, allocation answers the question:",opts:["How to split the table?","Which site gets which fragment?","How to replicate?","How to query?"],ans:1,exp:"Allocation determines where (on which site) each fragment is stored — the assignment problem."},
+  {q:"Primary Horizontal Fragmentation (PHF) predicates are applied to:",opts:["Another relation's attributes","The relation's own attributes","Only the primary key","Foreign key attributes"],ans:1,exp:"PHF is based on selection predicates directly applied to the relation's own attributes."},
+  {q:"In SQL3, TREAT() is used for:",opts:["Upcasting (subtype → supertype)","Downcasting (supertype → subtype)","Deleting objects","Creating types"],ans:1,exp:"TREAT(VALUE(p) AS SubType) performs safe downcasting from supertype to subtype."},
+  {q:"MongoDB's $inc operator:",opts:["Sets field to 0","Increments/decrements a numeric field","Inserts a new field","Removes a field"],ans:1,exp:"$inc:{field: N} increments the field by N (negative N decrements it)."},
+  {q:"A Wide-Column NoSQL store (like Cassandra) is optimized for:",opts:["Complex JOIN queries","Large write-heavy workloads and horizontal scaling","Storing binary files","Graph traversal"],ans:1,exp:"Wide-column stores scale horizontally and handle large write-heavy workloads efficiently (IoT, time-series)."},
+  {q:"In SQL3 inheritance, methods in a subtype can be:",opts:["Only overloaded","Only overridden","Both overloaded (same name, different params) AND overriding (OVERRIDING keyword)","Neither modified"],ans:2,exp:"Subtypes can both overload (same name, different params) and override (OVERRIDING) parent methods."},
+  {q:"DHF (Derived Horizontal Fragmentation) ensures:",opts:["Child fragments contain all parent tuples","Child fragments contain only tuples relevant to corresponding parent fragments","Parent fragments contain child data","No referential integrity"],ans:1,exp:"DHF via semi-join: each child fragment contains only tuples matching the corresponding parent fragment."},
+  {q:"In MapReduce, Shuffle & Sort phase:",opts:["Runs the Map function","Groups all intermediate (k,v) pairs by key before Reduce","Writes final output","Distributes input to nodes"],ans:1,exp:"Shuffle & Sort groups all emitted key-value pairs by key, delivering each key's values to one Reducer."},
+  {q:"MongoDB $unset operator:",opts:["Sets field to undefined","Removes a field from the document","Unwinds an array","Unsets an index"],ans:1,exp:"$unset removes the specified field from the document entirely."},
+  {q:"In SQL3, a STATIC member function differs from a MEMBER function because:",opts:["It runs faster","It's called on the type (TypeName.method()) not on an instance","It has no parameters","It can only return NUMBER"],ans:1,exp:"STATIC methods belong to the type itself; MEMBER methods require an object instance (use SELF)."},
+  {q:"What does 'disjoint fragments' requirement in fragmentation mean?",opts:["All fragments overlap","Data is not unnecessarily duplicated across fragments (except PK in vertical)","Fragments must be equal size","Each tuple appears in all fragments"],ans:1,exp:"Disjointness: no tuple (or column except PK) should appear in multiple fragments unnecessarily."},
+  {q:"MongoDB's $rename operator:",opts:["Renames the collection","Renames a field within a document","Renames the database","Renames an index"],ans:1,exp:"$rename:{oldField:'newField'} renames a field across matched documents."},
+];
+
+// SET SIZES
+const mcqSetSizes=[28,28,28,28];
+let curMCQSet=0, mcqAnswers={}, mcqFeedback={};
+function getMCQSet(idx){ return allMCQ.slice(idx*28, idx*28+28); }
+function loadMCQSet(idx,btn){
+  curMCQSet=idx; mcqAnswers={}; mcqFeedback={};
+  document.querySelectorAll('#mcqTabs .set-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMCQ();
+  document.getElementById('mcqResult').classList.remove('show');
+}
+function renderMCQ(){
+  const qs=getMCQSet(curMCQSet);
+  const offset=curMCQSet*28;
+  let html='';
+  qs.forEach((q,i)=>{
+    html+=`<div class="question-card"><div class="question-number">Q${offset+i+1}</div><div class="question-text">${q.q}</div>`;
+    q.opts.forEach((opt,oi)=>{
+      let cls='';
+      if(mcqFeedback[i]){if(oi===q.ans)cls='correct';else if(mcqAnswers[i]===oi)cls='wrong';}
+      else if(mcqAnswers[i]===oi) cls=''; // just highlight it
+      const selected=mcqAnswers[i]===oi&&!mcqFeedback[i]?'border-color:var(--accent2);background:rgba(6,182,212,.07);':'';
+      html+=`<button class="option-btn ${cls}" onclick="selectMCQ(${i},${oi})" ${mcqFeedback[i]?'disabled':''} style="${selected}"><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</button>`;
+    });
+    html+=`<div class="feedback-box ${mcqFeedback[i]?(mcqAnswers[i]===q.ans?'correct-fb':'wrong-fb')+' show':''}">${mcqFeedback[i]?'<strong>'+(mcqAnswers[i]===q.ans?'✓ Correct':'✗ Incorrect')+':</strong> '+q.exp:''}</div></div>`;
+  });
+  document.getElementById('mcqContainer').innerHTML=html;
+  const correct=Object.entries(mcqAnswers).filter(([i,a])=>a===qs[+i].ans).length;
+  document.getElementById('mcqScore').textContent=`Score: ${correct} / ${qs.length}`;
+}
+function selectMCQ(i,oi){
+  if(mcqFeedback[i])return;
+  mcqAnswers[i]=oi; mcqFeedback[i]=true;
+  renderMCQ();
+}
+function checkAllMCQ(){
+  const qs=getMCQSet(curMCQSet);
+  qs.forEach((_,i)=>{if(mcqAnswers[i]===undefined)mcqAnswers[i]=-1; mcqFeedback[i]=true;});
+  renderMCQ();
+  const correct=Object.entries(mcqAnswers).filter(([i,a])=>+a===qs[+i].ans).length;
+  const pct=Math.round(correct/qs.length*100);
+  const r=document.getElementById('mcqResult');
+  r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${correct} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Excellent — exam ready! 🎉":pct>=60?"Good effort! Review wrong answers.":"Revisit the concepts section and retry."}</div><button class="quiz-btn-primary" onclick="resetMCQ()">Reset</button>`;
+  r.classList.add('show');
+}
+function resetMCQ(){mcqAnswers={};mcqFeedback={};renderMCQ();document.getElementById('mcqResult').classList.remove('show');}
+renderMCQ();
+
+// ===== TRUE/FALSE DATA =====
+const allTF=[
+  // SET A: SQL3 (0-27)
+  {s:"CREATE OR REPLACE TYPE replaces an existing type if it already exists.",ans:true,exp:"Unlike CREATE TYPE which errors on duplicate, CREATE OR REPLACE TYPE overwrites the definition."},
+  {s:"A NF² table has system-generated OID management like an object table.",ans:false,exp:"NF² tables contain ADT columns but do NOT have OIDs. Only object tables (OF TypeName) do."},
+  {s:"An object table is created using: CREATE TABLE t OF TypeName.",ans:true,exp:"This is the correct SQL3/Oracle syntax for creating a polymorphic object table."},
+  {s:"You can access an ADT attribute directly without a correlation variable: SELECT ADDRESS.CITY FROM PEOPLE.",ans:false,exp:"A correlation variable is required: SELECT P.ADDRESS.CITY FROM PEOPLE P — this is mandatory."},
+  {s:"The TABLE() clause can flatten both VARRAY and NESTED TABLE into queryable rows.",ans:true,exp:"TABLE(collection_col) unnests any collection type (VARRAY or NESTED TABLE) into individual rows."},
+  {s:"VARRAY maintains the insertion order of its elements.",ans:true,exp:"VARRAY is ordered; elements stay in the order they were inserted (unlike NESTED TABLE)."},
+  {s:"VARRAY is stored in a separate physical table from the parent row.",ans:false,exp:"VARRAY is stored inline within the parent row. NESTED TABLE is stored in a separate table."},
+  {s:"A NESTED TABLE can grow dynamically with no predefined maximum size.",ans:true,exp:"NESTED TABLE is unbounded — it can grow dynamically. VARRAY requires a declared max size."},
+  {s:"NESTED TABLE preserves the insertion order of its elements.",ans:false,exp:"Nested tables have NO guaranteed order. Only VARRAY preserves insertion order."},
+  {s:"CAST(MULTISET(SELECT...) AS NT_Type) copies rows from a subquery into a nested table type.",ans:true,exp:"This is the standard SQL3 technique for bulk-copying subquery results into a nested table collection."},
+  {s:"REF() can be used on regular relational table columns containing ADT values.",ans:false,exp:"REF() only works on object tables (rows with OIDs), not on ADT-typed columns in regular tables."},
+  {s:"DEREF() is the inverse of REF() — it returns the actual object from an OID.",ans:true,exp:"DEREF(ref_col) navigates a REF pointer to retrieve the referenced object instance."},
+  {s:"When a referenced object is deleted, its REF becomes a DANGLING REF.",ans:true,exp:"A dangling REF points to a non-existent (deleted) object — checked with IS DANGLING predicate."},
+  {s:"SCOPE IS restricts a REF to reference objects from any object table of the given type.",ans:false,exp:"SCOPE IS limits the REF to one SPECIFIC named object table, not any table of that type."},
+  {s:"Forward declaration (CREATE TYPE name;) breaks circular REF dependencies.",ans:true,exp:"When types mutually reference each other, one must be forward-declared first to break the cycle."},
+  {s:"VALUE(alias) in SQL3 returns the OID of the current row.",ans:false,exp:"VALUE() returns the object INSTANCE; REF() returns the OID. They are opposites."},
+  {s:"By default, an object type is NOT FINAL (i.e., it can be subtyped).",ans:false,exp:"Types are FINAL by default in Oracle SQL3. You must explicitly declare NOT FINAL to allow subtyping."},
+  {s:"UNDER keyword creates a subtype in SQL3.",ans:true,exp:"CREATE TYPE Sub UNDER Parent(...); creates the inheritance relationship in SQL3."},
+  {s:"A NOT INSTANTIABLE type can still be used to create subtypes.",ans:true,exp:"NOT INSTANTIABLE = abstract. Subtypes can still be created from it using UNDER."},
+  {s:"TREAT() is used for upcasting (subtype to supertype) in SQL3.",ans:false,exp:"TREAT() is for DOWNCASTING (supertype → subtype). Upcasting happens implicitly in SQL3."},
+  {s:"OVERRIDING keyword is optional when re-implementing a parent method in a subtype.",ans:false,exp:"OVERRIDING is REQUIRED when a subtype re-implements a parent method — it's not optional."},
+  {s:"MAP MEMBER function enables ORDER BY and comparison on objects.",ans:true,exp:"MAP MEMBER maps an object to a scalar, allowing ORDER BY, comparisons, and sorting."},
+  {s:"A BEFORE INSERT trigger can modify :NEW values before the row is inserted.",ans:true,exp:"BEFORE triggers can change :NEW column values — the changed values are what gets actually inserted."},
+  {s:"AFTER DELETE triggers have access to :NEW values.",ans:false,exp:"After DELETE there is no new row — only :OLD is available. :NEW is NULL in DELETE triggers."},
+  {s:"A statement-level trigger fires once per modified row.",ans:false,exp:"Statement-level triggers (no FOR EACH ROW) fire exactly once per DML statement, regardless of row count."},
+  {s:"INSTEAD OF triggers can be created on tables as well as views.",ans:false,exp:"INSTEAD OF triggers are only for VIEWS. Tables use BEFORE or AFTER triggers."},
+  {s:"RAISE_APPLICATION_ERROR codes must be between -20000 and -20999.",ans:true,exp:"Oracle reserves -20000 to -20999 for user-defined custom error codes — custom codes must fall in this range."},
+  {s:"ALTER TYPE ... ADD ATTRIBUTE with CASCADE immediately populates new attributes with existing data.",ans:false,exp:"CASCADE updates the type/table structure but sets new attributes to NULL — no auto-population of values."},
+
+  // SET B: MONGODB & NOSQL (28-55)
+  {s:"MongoDB _id field is optional — documents can exist without it.",ans:false,exp:"_id is MANDATORY in every MongoDB document. MongoDB auto-generates it as ObjectId if not specified."},
+  {s:"$match in aggregation must always be the LAST stage.",ans:false,exp:"$match can appear anywhere. Placing it EARLY (first) is best practice to reduce documents in subsequent stages."},
+  {s:"$unwind removes documents with a missing or empty array field by default.",ans:true,exp:"By default, $unwind removes docs with null/missing/empty arrays. Use preserveNullAndEmptyArrays:true to keep them."},
+  {s:"MongoDB supports multi-document ACID transactions.",ans:true,exp:"Multi-document ACID transactions were introduced in MongoDB 4.0 for replica sets."},
+  {s:"$lookup performs a right outer join by default.",ans:false,exp:"$lookup performs a LEFT outer join — all source (from) documents are preserved regardless of matches."},
+  {s:"$group with _id: null aggregates all documents into a single group.",ans:true,exp:"_id: null in $group treats the entire collection as one group for aggregate computation."},
+  {s:"replaceOne() preserves existing fields not mentioned in the replacement document.",ans:false,exp:"replaceOne() COMPLETELY replaces the matched document. Use updateOne with $set to preserve other fields."},
+  {s:"upsert:true in updateOne inserts a new document when no match is found.",ans:true,exp:"With upsert:true, if the filter matches nothing, MongoDB inserts a new document."},
+  {s:"$pull removes ALL elements from an array, leaving it empty.",ans:false,exp:"$pull removes only elements MATCHING the specified condition, not all elements."},
+  {s:"bulkWrite() performs multiple write operations in a single batch network call.",ans:true,exp:"bulkWrite batches multiple insertOne, updateOne, deleteOne, replaceOne operations in one round-trip."},
+  {s:"$elemMatch matches a document if any array element satisfies ALL given conditions simultaneously.",ans:true,exp:"$elemMatch requires a SINGLE array element to meet all conditions at once — unlike multiple top-level conditions."},
+  {s:"MongoDB collections enforce a strict schema across all documents.",ans:false,exp:"MongoDB collections are schema-flexible (schema-less) — documents can have different fields."},
+  {s:"Text indexes in MongoDB are case-sensitive by default.",ans:false,exp:"Text indexes are case-INSENSITIVE by default and also handle stemming and stop words."},
+  {s:"$facet runs multiple independent aggregation sub-pipelines on the same dataset.",ans:true,exp:"$facet enables multi-dimensional aggregation — all sub-pipelines process the same input documents."},
+  {s:"findOneAndUpdate returns the OLD document by default.",ans:true,exp:"By default (returnDocument:'before' or returnNewDocument:false), it returns the pre-update document."},
+  {s:"A partial index indexes all documents in a collection.",ans:false,exp:"A partial index only indexes documents satisfying the partialFilterExpression — reduces index size."},
+  {s:"$merge stage can update existing documents in the target collection.",ans:true,exp:"$merge with whenMatched:'merge' updates matching docs; $out always replaces the whole collection."},
+  {s:"CAP theorem states distributed systems can guarantee all 3 properties simultaneously.",ans:false,exp:"CAP theorem proves only 2 of 3 can be guaranteed: Consistency, Availability, Partition tolerance."},
+  {s:"BASE stands for Basically Available, Strict consistency, Eventually consistent.",ans:false,exp:"BASE = Basically Available, SOFT state, Eventually consistent. Soft state (not Strict) is the S."},
+  {s:"Eventual consistency means all nodes immediately reflect every write.",ans:false,exp:"Eventual consistency means nodes WILL converge eventually — but NOT immediately. There's an inconsistency window."},
+  {s:"MongoDB field names can contain dots for sub-field access within the document itself.",ans:false,exp:"Dots cannot appear in field names. Dots are used only in QUERIES for nested field access paths."},
+  {s:"Cassandra is classified as an AP NoSQL system (Available + Partition tolerant).",ans:true,exp:"Cassandra is AP — highly available and partition tolerant, with tunable eventual consistency."},
+  {s:"Key-Value stores allow querying by value without knowing the key.",ans:false,exp:"Key-Value stores treat values as opaque — you MUST use the key to access a value. No value-based querying."},
+  {s:"$exists:false matches documents that DO NOT have the specified field.",ans:true,exp:"$exists:false finds documents missing the field entirely — useful for schema evolution queries."},
+  {s:"MongoDB's $inc can both increment and decrement a numeric field.",ans:true,exp:"$inc:{field: -5} decrements by 5. Positive values increment, negative values decrement."},
+  {s:"$regex operator in MongoDB performs pattern matching on field values.",ans:true,exp:"$regex:/pattern/ tests whether a field's value matches the regular expression."},
+  {s:"Graph databases are optimal for storing large unstructured text documents.",ans:false,exp:"Graph DBs excel at RELATIONSHIP TRAVERSAL. Document stores (MongoDB, CouchDB) handle unstructured text."},
+  {s:"Wide-Column stores like Cassandra are ideal for large write-heavy workloads.",ans:true,exp:"Wide-column stores scale horizontally and are optimized for high-throughput write-heavy scenarios (IoT, events)."},
+
+  // SET C: DISTRIBUTED DB (56-83)
+  {s:"A distributed database is physically distributed but logically connected.",ans:true,exp:"Core definition: physically distributed across sites, but logically unified with global schema."},
+  {s:"Fragmentation transparency means users must specify which fragment to query.",ans:false,exp:"Fragmentation transparency HIDES fragmentation from users — they query the global schema transparently."},
+  {s:"Horizontal fragmentation splits a relation by columns.",ans:false,exp:"Horizontal fragmentation splits by ROWS (tuples) using selection σ. Vertical splits by columns."},
+  {s:"Each vertical fragment must include the primary key.",ans:true,exp:"PK inclusion in every vertical fragment enables lossless reconstruction via natural join."},
+  {s:"Derived Horizontal Fragmentation is based on a semi-join with a parent relation's fragment.",ans:true,exp:"DHF: child_frag = Relation ⋉ parent_fragment — ensures referential alignment between fragments."},
+  {s:"Full replication copies each fragment to ALL sites.",ans:true,exp:"Full replication = maximum availability but maximum storage cost and update complexity."},
+  {s:"The data allocation problem is solvable in polynomial time.",ans:false,exp:"Optimal fragment allocation is NP-complete — no known polynomial-time exact solution exists."},
+  {s:"Oracle PARTITION BY RANGE implements Primary Horizontal Fragmentation (PHF).",ans:true,exp:"Range partitioning splits rows by a value range predicate — directly equivalent to PHF."},
+  {s:"Oracle PARTITION BY REFERENCE implements Derived Horizontal Fragmentation (DHF).",ans:true,exp:"PARTITION BY REFERENCE derives child table partitioning from parent table partitions via FK."},
+  {s:"Replication increases write complexity because updates must propagate to all replicas.",ans:true,exp:"Every write must be sent to all replicas for consistency — higher coordination overhead."},
+  {s:"Location transparency allows users to query data regardless of its physical site.",ans:true,exp:"Location transparency hides where data physically resides — users query uniformly."},
+  {s:"Horizontal scaling in distributed systems means upgrading one node's hardware.",ans:false,exp:"Horizontal scaling = adding more NODES. Upgrading one node = vertical scaling (scale up)."},
+  {s:"Bottom-up distributed DB design starts by defining a global schema first.",ans:false,exp:"Bottom-up INTEGRATES existing local databases. Top-down STARTS from the global schema."},
+  {s:"In MapReduce, the Reducer receives values grouped by key after the Shuffle phase.",ans:true,exp:"Shuffle & Sort groups all (k,v) pairs by key, delivering each key's complete value list to a Reducer."},
+  {s:"HDFS stores files on a single DataNode for simplicity.",ans:false,exp:"HDFS distributes file blocks across multiple DataNodes and replicates each block 3× by default."},
+  {s:"Hybrid fragmentation can be: horizontal → vertical OR vertical → horizontal.",ans:true,exp:"Both combinations are valid. The reconstruction operation differs: join+union vs union+join."},
+  {s:"No-replication strategy means each fragment is stored at every site.",ans:false,exp:"No replication = each fragment at EXACTLY ONE site. Full replication = fragment at ALL sites."},
+  {s:"DHF (Derived Horizontal Fragmentation) optimizes JOIN queries between related tables.",ans:true,exp:"DHF ensures child and parent fragments are co-located, eliminating or reducing cross-site joins."},
+  {s:"HDFS NameNode stores the actual data blocks of files.",ans:false,exp:"DataNodes store the actual data blocks. NameNode stores METADATA (file tree, block locations)."},
+  {s:"Stonebraker's transparency rules include Encryption transparency.",ans:false,exp:"Stonebraker's 4 rules: Data independence, Network/Location, Replication, Fragmentation — no Encryption."},
+  {s:"PHF predicates can only use the equality operator (=).",ans:false,exp:"PHF uses: Attr θ Value where θ ∈ {=, >, <, ≥, ≤, ≠} — any comparison operator is valid."},
+  {s:"In distributed DB design, the allocation problem inputs include fragments, sites, and queries.",ans:true,exp:"Allocation input: F (fragments), S (sites), Q (queries) → optimal distribution maximizing performance."},
+  {s:"Replication transparency means the user must manually choose which replica to read.",ans:false,exp:"Replication transparency HIDES replica existence — the system automatically routes requests to replicas."},
+  {s:"In vertical fragmentation, each fragment can reconstruct R independently without joins.",ans:false,exp:"Vertical fragments can ONLY reconstruct R together using natural join — each fragment is incomplete."},
+  {s:"MapReduce was introduced by Google and implemented in Apache Hadoop.",ans:true,exp:"Google published MapReduce in 2004. Apache Hadoop implemented the open-source version."},
+  {s:"HDFS default chunk/block size is 64 MB.",ans:true,exp:"HDFS default block size is 64MB. Users can configure chunk size and replication factor."},
+  {s:"The CAP theorem applies only to single-node systems.",ans:false,exp:"CAP theorem applies specifically to DISTRIBUTED systems — it's irrelevant for single-node databases."},
+  {s:"In distributed DB, a sub-query of a distributed query runs on a specific local database.",ans:true,exp:"A DDBMS breaks distributed queries into sub-queries, each executing on the relevant local database."},
+
+  // SET D: MIXED TRICKY (84-109)
+  {s:"In SQL3, you can create an index directly on a nested table element without TABLE().",ans:false,exp:"Indexes on nested table content require the full path notation; TABLE() is needed for DML but not index creation."},
+  {s:"MongoDB's $group stage can compute sum, avg, min, max, and count.",ans:true,exp:"$group accumulators: $sum, $avg, $min, $max, $count, $push, $addToSet, $first, $last."},
+  {s:"In SQL3, ORDER MEMBER function is used for type-level sorting comparisons between two instances.",ans:true,exp:"ORDER MEMBER(other_instance) returns -1/0/1 for less/equal/greater — enables object comparison."},
+  {s:"A MongoDB document can have a maximum of 16 MB in size.",ans:true,exp:"BSON document size limit is 16 MB in MongoDB. For larger files, use GridFS."},
+  {s:"In SQL3, a STATIC MEMBER function requires an object instance to be called.",ans:false,exp:"STATIC functions are called on the TYPE ITSELF (TypeName.method()), not on an instance."},
+  {s:"Cassandra is a Wide-Column NoSQL store.",ans:true,exp:"Cassandra is a Wide-Column store (column-family) — rows with dynamic, flexible column sets."},
+  {s:"In MongoDB, $addFields completely replaces all existing document fields.",ans:false,exp:"$addFields ADDS new fields or modifies existing ones — it does NOT remove existing fields."},
+  {s:"In SQL3, both VARRAY and NESTED TABLE can contain ADT types as elements.",ans:true,exp:"Collections can contain: elementary types, ADTs, REFs to ADTs, or even nested collections."},
+  {s:"MongoDB $sort stage can sort by multiple fields simultaneously.",ans:true,exp:"$sort:{field1:1, field2:-1} sorts by field1 ascending, then field2 descending as tiebreaker."},
+  {s:"In distributed DB, physical data independence means schema changes don't affect queries.",ans:false,exp:"Physical independence = storage/location changes don't affect queries. Logical independence = schema changes don't break apps."},
+  {s:"In SQL3, BLOB is used to store large text in UTF-8 format.",ans:false,exp:"BLOB stores BINARY data (images, video). CLOB stores large text in UTF-8. NCLOB for multilingual."},
+  {s:"In MongoDB, $regex is case-sensitive by default.",ans:true,exp:"$regex is case-sensitive by default. Use /i flag or $options:'i' for case-insensitive matching."},
+  {s:"In SQL3, a trigger's WHEN clause can reference both :OLD and :NEW values.",ans:true,exp:"WHEN (:NEW.price < :OLD.price) is valid syntax for conditional row-level trigger execution."},
+  {s:"MongoDB's aggregation pipeline stages are applied in sequence, each passing output to the next.",ans:true,exp:"Pipeline stages are sequential: output of stage N becomes input of stage N+1."},
+  {s:"In distributed DB, the semi-join ⋉ returns tuples from BOTH joined relations.",ans:false,exp:"Semi-join (⋉) returns only tuples from the LEFT relation that have matching values in the right — no right-side attributes."},
+  {s:"In SQL3, the NOT FINAL clause is required on both parent and child types.",ans:false,exp:"NOT FINAL is only needed on the PARENT type to allow subtyping. Child types use UNDER."},
+  {s:"MongoDB's bulkWrite operations are always executed in the specified order.",ans:false,exp:"By default, bulkWrite is ordered:true (sequential). Set ordered:false for parallel (unordered) execution."},
+  {s:"In SQL3, VALUE() and REF() return the same thing.",ans:false,exp:"VALUE() returns the object instance; REF() returns the OID pointer. They are fundamentally different."},
+  {s:"In MongoDB, you can create a unique index to enforce field uniqueness.",ans:true,exp:"createIndex({field:1},{unique:true}) ensures no two documents have the same value for that field."},
+  {s:"HDFS NameNode is a single point of failure in classic Hadoop architecture.",ans:true,exp:"In classic Hadoop, there's one NameNode — if it fails, the entire cluster becomes inaccessible. HDFS 2.x adds HA."},
+  {s:"In SQL3, the GRANT EXECUTE permission is needed to use another user's ADT constructor.",ans:true,exp:"If you don't own the ADT, you need GRANT EXECUTE ON ADT_NAME TO USER to use its constructor."},
+  {s:"MongoDB $count stage returns the total document count as a field in one document.",ans:true,exp:"$count:'fieldName' outputs a single document with the count of input documents as the specified field."},
+  {s:"In SQL3, BEFORE triggers on statement-level can modify :NEW values.",ans:false,exp:"Only ROW-LEVEL (FOR EACH ROW) BEFORE triggers can modify :NEW values. Statement-level triggers cannot."},
+  {s:"In MongoDB, an embedded document approach results in fewer network round trips than references.",ans:true,exp:"Embedded docs are fetched in a single query. References require multiple queries or $lookup — more round trips."},
+  {s:"Hybrid fragmentation's reconstruction is always: union then join.",ans:false,exp:"It depends on order: horizontal→vertical reconstructs with join then union. Vertical→horizontal needs union then join."},
+  {s:"In MongoDB, $rename can rename a nested field using dot notation.",ans:true,exp:"$rename:{'address.street':'address.streetName'} renames nested fields using dot-path notation."},
+];
+
+const tfSetSize=28;
+let curTFSet=0, tfAnswers={}, tfRevealed={};
+function getTFSet(idx){ return allTF.slice(idx*tfSetSize, idx*tfSetSize+tfSetSize); }
+function loadTFSet(idx,btn){
+  curTFSet=idx; tfAnswers={}; tfRevealed={};
+  document.querySelectorAll('#tfTabs .set-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTF();
+  document.getElementById('tfResult').classList.remove('show');
+}
+function renderTF(){
+  const qs=getTFSet(curTFSet);
+  const offset=curTFSet*tfSetSize;
+  let html='';
+  qs.forEach((q,i)=>{
+    const ans=tfAnswers[i], rev=tfRevealed[i];
+    const correct=(ans===q.ans);
+    const tStyle=ans===true?(rev?(correct?'background:rgba(16,185,129,.3);border-color:var(--green);':'background:rgba(239,68,68,.3);border-color:var(--red);'):'background:rgba(59,130,246,.2);border-color:var(--accent);'):'';
+    const fStyle=ans===false?(rev?(correct?'background:rgba(16,185,129,.3);border-color:var(--green);':'background:rgba(239,68,68,.3);border-color:var(--red);'):'background:rgba(59,130,246,.2);border-color:var(--accent);'):'';
+    html+=`<div class="tf-card">
+      <div class="tf-statement"><strong>${offset+i+1}.</strong> ${q.s}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn2" style="${tStyle}" onclick="setTF(${i},true)" ${rev?'disabled':''}>✓ TRUE</button>
+        <button class="tf-btn2" style="${fStyle}" onclick="setTF(${i},false)" ${rev?'disabled':''}>✗ FALSE</button>
+      </div>
+      ${rev?`<div class="tf-result show" style="color:${correct?'var(--green)':'var(--red)'}"><strong>${correct?'✓ Correct!':'✗ Incorrect.'}</strong> ${q.exp}</div>`:''}
+    </div>`;
+  });
+  document.getElementById('tfContainer').innerHTML=html;
+  const correct=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].ans).length;
+  document.getElementById('tfScore').textContent=`Score: ${correct} / ${qs.length}`;
+}
+function setTF(i,val){if(tfRevealed[i])return; tfAnswers[i]=val; tfRevealed[i]=true; renderTF();}
+function checkAllTF(){
+  const qs=getTFSet(curTFSet);
+  qs.forEach((_,i)=>{if(tfAnswers[i]===undefined)tfAnswers[i]=null; tfRevealed[i]=true;});
+  renderTF();
+  const correct=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].ans).length;
+  const pct=Math.round(correct/qs.length*100);
+  const r=document.getElementById('tfResult');
+  r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${correct} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Great mastery! 🎉":pct>=60?"Good work — review wrong answers.":"Revisit the Brain Refresher."}</div><button class="quiz-btn-primary" onclick="resetTF()">Reset</button>`;
+  r.classList.add('show');
+}
+function resetTF(){tfAnswers={};tfRevealed={};renderTF();document.getElementById('tfResult').classList.remove('show');}
+renderTF();
+
+// ===== SHORT ANSWER =====
+const shortQs=[
+  {q:"Why was the Object-Relational Model created? What does it combine?",ideal:"The relational model lacked support for complex types (multimedia, spatial) and OOP features. The object model lacked relational robustness. ORDBMS combines both: keeps SQL, relational foundations, ACID, and optimization — plus adds UDTs, UDFs, inheritance, OIDs, and collections. Standard: SQL-99/SQL3."},
+  {q:"Explain the difference between a Relational table, NF² table, and Object table.",ideal:"Relational table: simple data, no ADT, standard SQL. NF² (Not First Normal Form): contains ADT-typed columns (complex attributes) but NO OID mechanism — not a pure object table. Object table (CREATE TABLE t OF TypeName): based on a UDT, has system-generated OIDs per row, is polymorphic (can store subtypes)."},
+  {q:"What is the difference between VARRAY and NESTED TABLE? When would you use each?",ideal:"VARRAY: fixed max size (declared), stored inline in the parent row, ordered, dense, harder to modify individually (PL/SQL needed). NESTED TABLE: unbounded, stored in a separate physical table (STORE AS clause), can be sparse after deletions, no guaranteed order, easily modified with TABLE(). Use VARRAY for small fixed collections; NESTED TABLE for varying/large collections needing individual element access."},
+  {q:"Explain REF, DEREF, VALUE, and SCOPE IS in SQL3.",ideal:"REF(alias): returns the OID (pointer) of an object table row. DEREF(ref_col): dereferences an OID to retrieve the actual object. VALUE(alias): returns the full object instance (not OID) — useful in views and polymorphic queries. SCOPE IS tableName: restricts a REF column to only reference rows from a specific object table, preventing cross-table REF errors."},
+  {q:"When and why is a forward declaration needed in SQL3?",ideal:"Forward declarations are needed when two types mutually reference each other (circular dependency) — e.g., TCar references TPerson and TPerson references TCar. CREATE TYPE name; declares an incomplete type without attributes. This placeholder allows the first type to reference the name before its full definition exists, breaking the circular dependency."},
+  {q:"Explain the three types of methods in SQL3 UDFs (MEMBER, STATIC, MAP MEMBER).",ideal:"MEMBER: operates on an object instance using SELF (the implicit current object). Called as obj.method(). STATIC: belongs to the type, not an instance. Called as TypeName.method() — no SELF. MAP MEMBER: maps an object to a scalar value for comparison and ORDER BY operations. ORDER MEMBER: compares two objects, returning -1 (less), 0 (equal), 1 (greater)."},
+  {q:"How does SQL3 inheritance work? Explain NOT FINAL, UNDER, OVERRIDING, NOT INSTANTIABLE.",ideal:"NOT FINAL: declares a type can be subtyped (default is FINAL = cannot inherit). UNDER: creates a subtype inheriting all parent attributes and methods. OVERRIDING: required keyword when a subtype re-implements a parent method. NOT INSTANTIABLE: abstract type — cannot be directly instantiated, only subtyped. Object tables of supertype are polymorphic — store both supertype and subtype instances."},
+  {q:"Explain the ECA model for triggers. What is the difference between row-level and statement-level triggers?",ideal:"ECA = Event (INSERT/UPDATE/DELETE on a table/view) → Condition (optional WHEN clause) → Action (PL/SQL block). Row-level (FOR EACH ROW): fires once per affected row; has :OLD and :NEW pseudorecords. Statement-level (no FOR EACH ROW): fires once per DML statement regardless of row count; :OLD/:NEW not meaningful. INSTEAD OF triggers are for views only."},
+  {q:"Explain how associations (1..* and *..*) are implemented in SQL3.",ideal:"1..* (Father-Son): Parent type gets a Nested Table of REFs to child instances. Child type gets a REF to the parent. Forward declaration is required when types mutually reference each other. *..*: Both sides get a Nested Table of REFs to the other side. Each association with an association class must be split into two separate associations. Both ROLES (both directions) must always be defined."},
+  {q:"What are the 5 Vs of Big Data? Give a brief explanation of each.",ideal:"Volume: enormous quantity of data generated every second. Velocity: data generated and processed at unprecedented speeds. Variety: structured (SQL tables), semi-structured (JSON), and unstructured (video, images, text). Veracity: uncertainty due to data incompleteness, inconsistency, and trustworthiness issues. Value: turning raw big data into meaningful business insights and decisions."},
+  {q:"Explain HDFS architecture and how MapReduce works.",ideal:"HDFS: files split into 64MB blocks, each replicated 3× across different DataNodes on different racks. NameNode: manages filesystem metadata (file tree, block locations). DataNodes: store and serve actual data blocks. MapReduce: Map phase — distributes input chunks, each node runs Map(input) → [(k,v)] intermediate pairs. Shuffle & Sort — groups all pairs by key. Reduce phase — Reduce(k,[v]) → aggregated result. Enables parallel batch processing of massive datasets."},
+  {q:"Explain the CAP theorem and how NoSQL systems handle it.",ideal:"CAP theorem: A distributed database system cannot simultaneously guarantee all three of: Consistency (every read sees latest write), Availability (every request gets a response), Partition Tolerance (system works despite network partitions). NoSQL chooses AP (Cassandra, MongoDB in some configs: high availability, eventual consistency) or CP (HBase: consistent but may sacrifice availability during partitions). The BASE model (Basically Available, Soft state, Eventual consistency) is the NoSQL alternative to ACID."},
+  {q:"Compare MongoDB Embedded Documents vs References. When do you use each?",ideal:"Embedded documents: store related data inside the parent document. Pros: single query retrieves all data (fewer round trips), faster reads. Cons: possible data redundancy, document size limit. Best for: 1-to-1 or 1-to-many where child data is always accessed with parent. References: store ObjectId pointer to another document/collection. Pros: no redundancy, normalized. Cons: requires $lookup or multiple queries. Best for: many-to-many relationships or large/frequently updated referenced data."},
+  {q:"Explain the MongoDB aggregation pipeline with at least 5 stages.",ideal:"Pipeline = series of stages where each stage's output is the next stage's input. $match: filters documents (like WHERE). $unwind: flattens array field into separate documents (one per element). $group: groups by _id with accumulators ($sum, $avg, $count). $project: shapes output — include/exclude/add computed fields. $sort: orders documents. $limit/$skip: pagination. $lookup: left-outer join from another collection. $addFields: adds/modifies fields. $count: counts documents. $facet: runs multiple sub-pipelines on same input."},
+  {q:"What is the difference between Horizontal, Vertical, and Hybrid Fragmentation?",ideal:"Horizontal: splits by ROWS using selection σ. Each fragment has same schema as R. Reconstruction: Union ∪. PHF uses predicates on own attributes; DHF uses semi-join ⋉ on a parent fragment. Vertical: splits by COLUMNS using projection π. Each fragment includes primary key. Reconstruction: Natural Join ⋈. Hybrid: combines both. Horizontal→Vertical: reconstruct with join then union. Vertical→Horizontal: reconstruct with union then join."},
+  {q:"Explain Primary Horizontal Fragmentation (PHF) vs Derived Horizontal Fragmentation (DHF).",ideal:"PHF: fragments a relation based on selection predicates applied directly to its OWN attributes. Example: Customer_Algiers = σ(City='Algiers')(Customer). Optimizes SELECT queries — only relevant fragment scanned. DHF: fragments a child relation based on the fragmentation of a related PARENT relation, using semi-join (⋉). Example: Sales1 = Sales ⋉ Customer1. Ensures child tuples co-locate with matching parent fragments. Optimizes JOIN queries between related tables. Oracle: PARTITION BY LIST/RANGE = PHF; PARTITION BY REFERENCE = DHF."},
+  {q:"Explain the 4 Stonebraker Transparency rules for DDBMS.",ideal:"1. Data Transparency (Independence): Logical independence — schema changes don't break apps. Physical independence — users don't care where/how data is stored. 2. Network/Location Transparency: Data accessed the same way regardless of physical site — users don't need to know data location. 3. Replication Transparency: Users unaware of data replication — system handles update propagation to all copies. 4. Fragmentation Transparency: Users query the global schema without knowing how data is split into fragments."},
+  {q:"Compare the three allocation strategies in distributed DB design.",ideal:"Full Replication: each fragment at ALL sites. Pros: max availability, parallel reads anywhere. Cons: very high storage, complex update propagation (every write to all sites). No Replication: each fragment at ONE site only. Pros: simple updates, low storage. Cons: single point of failure, no parallel read. Partial Replication: each fragment at SOME sites. Balance between availability/performance and cost/complexity. Allocation problem (choosing optimal assignment) is NP-complete."},
+  {q:"What is an Object View in SQL3? Why is it useful?",ideal:"An Object View applies an OO structure on top of existing relational tables WITHOUT changing the physical storage. Created with: CREATE VIEW v OF TypeName WITH OBJECT IDENTIFIER (col) AS (SELECT ... CAST(MULTISET(...) AS CollType)). Useful because: allows new object-based applications to coexist with old relational data, preserves existing relational investment while exposing an OO interface to users. CAST + MULTISET construct collection-valued attributes from relational joins."},
+  {q:"What are the main types of NoSQL databases? Give examples and use cases for each.",ideal:"Key-Value (Dynamo, Riak, Voldemort): simplest model — key→opaque value. Fast lookups, easily scaled. Best for: user profiles, shopping carts, sessions. Document (MongoDB, CouchDB): JSON/BSON documents, flexible schema, embedded docs. Best for: web apps, catalogs, event logging. Wide-Column (Cassandra, HBase, ScyllaDB): dynamic columns per row, horizontal scale. Best for: IoT data, time-series, write-heavy workloads. Graph (Neo4j, ArangoDB, Neptune): nodes + edges. Best for: social networks, recommendation engines, fraud detection."},
+  {q:"In SQL3, what is the difference between the VARRAY and NESTED TABLE insertion methods?",ideal:"VARRAY: inserted using the constructor directly — VARRAY_TYPE('v1','v2','v3') as part of the parent INSERT VALUES clause. Individual element insertion isn't possible via SQL; PL/SQL or full replacement needed. NESTED TABLE: Can be inserted with constructor in parent INSERT, OR individually using INSERT INTO TABLE(SELECT col FROM t WHERE cond) VALUES(...). Group copy uses CAST(MULTISET(...) AS NT_Type). Can be updated/deleted individually using TABLE() + UPDATE/DELETE syntax."},
+  {q:"Explain the role of Keystone, Nova, Neutron, Cinder, Swift, and Glance in OpenStack.",ideal:"Keystone: Identity service — authentication, authorization, token management for all OpenStack services. Nova: Compute service — creates, schedules, manages VM lifecycle (start/stop/delete). Neutron: Networking service — manages virtual networks, subnets, routers, floating IPs. Cinder: Block storage — provides persistent raw storage volumes attachable to VMs (like hard drives). Swift: Object storage — stores large unstructured data (files, backups, media) as objects with metadata. Glance: Image service — stores, discovers, retrieves VM disk images used by Nova to create instances."},
+  {q:"What is the difference between $out and $merge in MongoDB aggregation?",ideal:"$out: writes pipeline results to a collection — COMPLETELY REPLACES the target collection. Destroys any existing data in that collection. $merge: writes results with more control — can INSERT new documents OR UPDATE/MERGE existing ones (whenMatched:'merge'/'replace'/'keepExisting', whenNotMatched:'insert'/'discard'). $merge is more flexible for incremental updates; $out is simpler for full replacement. Both are terminal stages."},
+  {q:"Explain the concept of multi-tenancy in SQL3 object tables and MongoDB collections.",ideal:"SQL3 Object Tables (polymorphic): A single object table of a supertype can hold instances of the type AND all its subtypes — multiple 'tenant' types coexist in one table. Queries use TREAT() and IS OF() to distinguish. MongoDB Collections: Schema-less — multiple document 'shapes' can coexist in one collection (e.g., students and professors in one 'people' collection). Documents with different fields share the same collection. Both enable flexible, heterogeneous storage in a single container."},
+  {q:"Explain RAISE_APPLICATION_ERROR in SQL3 triggers. What are its constraints?",ideal:"RAISE_APPLICATION_ERROR(error_number, message) is a built-in Oracle procedure used in triggers (and PL/SQL) to raise a user-defined error with a custom message. Constraints: error_number MUST be between -20000 and -20999 (Oracle reserves this range for user-defined errors to avoid conflicts with system error codes). When raised in a BEFORE trigger, it aborts the DML operation and rolls back. The error message can be up to 2048 bytes. Can be used in WHEN clause or inside BEGIN...END block."},
+  {q:"Describe how $graphLookup works in MongoDB and when you would use it.",ideal:"$graphLookup performs a recursive traversal through a collection to find connected documents. Parameters: from (collection to search), startWith (starting value), connectFromField (field providing next value), connectToField (field being matched), as (output array field), maxDepth (optional traversal limit). Use cases: organizational hierarchies (find all subordinates of a manager), category trees (all subcategories), social networks (friends of friends), dependency graphs. Equivalent to recursive CTEs in SQL."},
+  {q:"What is the significance of the 'disjoint fragments' requirement in fragmentation?",ideal:"Disjoint fragments means data is NOT unnecessarily duplicated across fragments — each tuple (horizontal) or column (vertical, except the primary key) appears in exactly one fragment. Exception: primary key is duplicated in ALL vertical fragments to enable lossless reconstruction via natural join. Importance: prevents update anomalies (same data in multiple fragments would need synchronization), reduces storage overhead, simplifies consistency maintenance. Without disjointness, fragmentation would be equivalent to replication."},
+  {q:"Explain the complete MongoDB CRUD syntax with all major options.",ideal:"Create: insertOne({doc}) / insertMany([docs]) — writeConcern option for replication acknowledgment. Read: find({filter},{projection}).sort().skip().limit() — findOne for single doc. Projection: 1=include, 0=exclude. Update: updateOne/updateMany({filter},{$set/$inc/$push/$pull/$unset/$rename},{options}) — upsert:true inserts if missing. replaceOne completely replaces document. Delete: deleteOne/deleteMany({filter}). BulkWrite: batches multiple ops. findOneAndUpdate/Delete/Replace: atomic find+modify returning old or new doc. All update operators: $set, $unset, $inc, $push, $pull, $addToSet, $rename, $mul, $min, $max."},
+  {q:"What is the difference between Strong Consistency and Eventual Consistency?",ideal:"Strong Consistency: after an update completes, ALL subsequent reads from ANY node return the updated value immediately. No inconsistency window. Examples: traditional RDBMS, HBase (CP system). Eventual Consistency: does NOT guarantee that subsequent reads immediately see the updated value. There is an 'inconsistency window' during which different nodes may return different values. However, if no new updates occur, ALL nodes will EVENTUALLY converge to the same (latest) value. Examples: Cassandra, DynamoDB, MongoDB in some configs. Trade-off: eventual consistency enables higher availability and partition tolerance (CAP theorem)."},
+  {q:"Explain the bottom-up vs top-down approaches in distributed database design.",ideal:"Top-down: starts from scratch — 1. Define global schema and integrity constraints. 2. Fragment relations into horizontal/vertical/hybrid fragments. 3. Decide replication strategy (full/partial/none). 4. Allocate fragments to sites based on access patterns. Used in homogeneous systems designed from scratch. Bottom-up: integrates existing heterogeneous local databases into a unified distributed system. Data distribution is pre-existing. Challenges: schema heterogeneity, conflict resolution, view integration. Used when organizations merge or existing systems need unified access."},
+  {q:"What are the main drawbacks of NoSQL databases compared to RDBMS?",ideal:"1. No standardized query language — each NoSQL DB has its own API/syntax (MongoDB's BSON queries ≠ Cassandra's CQL ≠ Redis commands). 2. Complex queries are challenging — JOINs across collections are limited or must be done via $lookup or application-side joining. 3. Lack of ACID guarantees (mostly BASE) — complex multi-document transactions are harder or unavailable. 4. Fragmented ecosystem — different NoSQL families for different needs, requiring different expertise. 5. No standardized schema enforcement — data integrity is the application's responsibility. 6. Weaker tooling — less mature monitoring, reporting, BI tools compared to SQL."},
+  {q:"Describe how object views bridge relational and object-relational models in SQL3.",ideal:"Object views allow an OO interface to be presented on top of existing relational tables WITHOUT any physical migration. Steps: 1. Keep existing relational tables (PERSON, LIVE). 2. Create ADTs (TADDRESS, TPERSON). 3. Create object view: CREATE VIEW VPERSON OF TPERSON WITH OBJECT IDENTIFIER (NUM) AS (SELECT ...). WITH OBJECT IDENTIFIER specifies which relational column serves as the OID basis. CAST(MULTISET(SELECT...) AS CollType) constructs collection-valued attributes from relational joins. Benefits: existing apps using relational tables continue working; new OO-based apps use the view; no data migration needed."},
+  {q:"What is the role of the WHEN clause in SQL3 triggers? How does it differ from the trigger body?",ideal:"The WHEN clause provides an additional filtering condition evaluated BEFORE the trigger body executes. It's evaluated for EACH ROW (only valid with FOR EACH ROW triggers). If the WHEN condition is false, the trigger body is skipped entirely. The WHEN clause uses direct column references (:OLD.col, :NEW.col) WITHOUT the colon in Oracle's WHEN clause syntax (WHEN (OLD.price > NEW.price)). The trigger BODY (BEGIN...END) uses :OLD and :NEW with colons. The WHEN clause is more efficient than putting the condition inside the body because Oracle evaluates it before entering PL/SQL context."},
+  {q:"Explain MapReduce with a complete word-count example.",ideal:"Input: text files distributed across HDFS nodes. Map phase: each node processes its chunk — Map('line') → [(word,1),(word,1),...] for each word in the line. Every occurrence of a word emits (word, 1). Shuffle & Sort: framework groups all pairs by key — ('apple',[1,1,1]), ('banana',[1,1]), etc. Reduce phase: Reduce('apple',[1,1,1]) → ('apple', 3). Sum all values for each key. Output: ('apple',3), ('banana',2)... written to HDFS. Advantages: automatic parallelism, fault tolerance (re-runs failed Map/Reduce tasks), scales to petabytes on commodity hardware."},
+  {q:"What is $unwind in MongoDB? What happens to documents without the specified array field?",ideal:"$unwind deconstructs an array field — for each element in the array, it creates a SEPARATE document with all original fields but the array field replaced by that single element. Example: {name:'Ali', items:['book','pen']} → two docs: {name:'Ali',items:'book'} and {name:'Ali',items:'pen'}. By DEFAULT: documents with a NULL array, missing array field, or empty array ([]) are REMOVED from the pipeline output. To preserve them: use {$unwind:{path:'$field', preserveNullAndEmptyArrays:true}}. This also adds an 'arrayIndex' option to include the element's original index."},
+  {q:"In Oracle SQL3, explain what happens when you DROP a type that is used by a table.",ideal:"Oracle PREVENTS dropping a type if it is used by any dependent objects (tables, other types, procedures). You get an error like 'ORA-02303: cannot drop or replace a type with type or table dependents'. Solutions: 1. ALTER TYPE: modify the type in place using ALTER TYPE ... ADD/DROP/MODIFY ATTRIBUTE ... CASCADE (CASCADE propagates to dependents). 2. DROP TYPE name FORCE: forces the drop even with dependents — but this INVALIDATES dependent objects (marks them as invalid), potentially breaking tables that use the type. The safest approach is always ALTER TYPE with CASCADE to maintain consistency."},
+  {q:"What is the difference between $lookup and embedded documents for modeling relationships in MongoDB?",ideal:"Embedded documents: store related data directly inside the parent document as a nested object or array. No join needed at query time — single document read. Best for: 1-to-1 or 1-to-many where child data is always needed with parent. Trade-off: document size limit (16MB), data duplication if referenced by multiple parents. $lookup (aggregation join): references via ObjectId in one collection, fetches from another. Best for: many-to-many, large/frequently updated referenced data, data accessed independently. $lookup is LEFT outer join — all source documents kept. Trade-off: slower (two collection reads), but normalized (no duplication). Reference-based models = more like relational design."},
+  {q:"Explain the challenges of implementing ACID in distributed databases.",ideal:"ACID in distributed systems faces several fundamental challenges: Atomicity across sites: if a transaction spans multiple sites, a failure at one site after others committed breaks atomicity. Solution: Two-Phase Commit (2PC) protocol coordinates all-or-nothing commitment. Consistency: maintaining global constraints across fragments/replicas is expensive. Isolation: distributed locking protocols (2-phase locking across sites) add latency and deadlock risk. Durability: ensuring all replicas have durably stored committed data before acknowledging. These challenges explain why NoSQL adopts BASE (eventual consistency) — it sacrifices full ACID for availability and partition tolerance (CAP theorem trade-off)."},
+  {q:"What is the GRANT EXECUTE permission in SQL3 and when is it required?",ideal:"When a user does NOT own an ADT (user-defined type), they cannot use that ADT's constructor or call its methods without explicit permission. The type owner must grant: GRANT EXECUTE ON ADT_NAME TO USER_NAME. This allows the grantee to instantiate objects of that type using its constructor, call its member methods, and reference it in their own types/tables. Without this permission, using another user's ADT in INSERT VALUES or queries results in an 'insufficient privileges' error. In CREATE TYPE statements, prefixing the ADT name with the owner: OWNER.ADT_NAME is required."},
+];
+
+function renderShort(){
+  document.getElementById('shortContainer').innerHTML=shortQs.map((q,i)=>`
+    <div class="question-card">
+      <div class="question-number">SHORT ANSWER ${i+1}</div>
+      <div class="question-text">${q.q}</div>
+      <textarea class="short-input" id="sa-${i}" rows="4" placeholder="Write your answer here..."></textarea>
+      <button class="fc-btn" onclick="revealShort(${i})" id="sabtn-${i}">Reveal Model Answer</button>
+      <div class="def-box" id="saAns-${i}" style="display:none;margin-top:.6rem"><strong style="color:var(--green)">Model Answer:</strong><br><br>${q.ideal}</div>
+    </div>`).join('');
+}
+function revealShort(i){
+  const d=document.getElementById(`saAns-${i}`);
+  const shown=d.style.display!=='none';
+  d.style.display=shown?'none':'block';
+  document.getElementById(`sabtn-${i}`).textContent=shown?'Reveal Model Answer':'Hide Answer';
+}
+renderShort();
+
+// ===== SCENARIOS =====
+const scenarios=[
+  {text:"A company wants to store employee records where each employee can have multiple addresses, and addresses must be queried individually (filtering by city). Which SQL3 collection type is most appropriate?",opts:["VARRAY of TAddress","NESTED TABLE of TAddress","BLOB column","Separate relational table only"],ans:1,exp:"NESTED TABLE allows individual element queries with TABLE(), filtering, and unbounded growth. VARRAY cannot be individually queried by city without PL/SQL."},
+  {text:"Two SQL3 types mutually reference each other: TTeacher has REF TCourse and TCourse has REF TTeacher. What must you do first?",opts:["Create TTeacher first, then TCourse","Create TCourse first, then TTeacher","Forward-declare one type (CREATE TYPE name;) before defining either","Use VARRAY instead of REF"],ans:2,exp:"Circular REF dependency requires a forward declaration: CREATE TYPE TTeacher; — incomplete type that allows TCourse to be defined first, then TTeacher fully defined."},
+  {text:"A MongoDB application needs to find all orders where at least one item has both price > 100 AND quantity >= 2 simultaneously. Which operator should be used?",opts:["$and with two separate $match","$all","$elemMatch","$size"],ans:2,exp:"$elemMatch ensures both conditions apply to the SAME array element. Without $elemMatch, MongoDB checks conditions across different elements."},
+  {text:"A distributed database stores Customer table split by city: Algiers and Bechar. A new Sales table references Customer. Which fragmentation type should Sales use?",opts:["Vertical fragmentation","Primary Horizontal Fragmentation","Derived Horizontal Fragmentation (DHF)","Full replication"],ans:2,exp:"DHF via semi-join: Sales1 = Sales ⋉ Customer_Algiers, Sales2 = Sales ⋉ Customer_Bechar. Ensures co-location for JOIN optimization."},
+  {text:"A developer wants to run an aggregation that simultaneously computes the average salary per department AND counts employees per job title from the same dataset.",opts:["Two separate aggregate() calls","$group with multiple _id values","$facet with two sub-pipelines","$match followed by $group"],ans:2,exp:"$facet runs multiple independent aggregation sub-pipelines on the same input dataset in a single pass — perfect for multi-dimensional analytics."},
+  {text:"A trigger is needed to automatically log all salary changes but ONLY when the new salary is higher than the old salary. What is the most efficient approach?",opts:["Use IF :NEW.salary > :OLD.salary inside the trigger body","Use a WHEN clause: WHEN (:NEW.salary > :OLD.salary)","Use a separate procedure","Use a BEFORE trigger with RAISE_APPLICATION_ERROR"],ans:1,exp:"The WHEN clause is evaluated BEFORE the trigger body executes. It's more efficient — Oracle skips PL/SQL context entirely if WHEN is false."},
+  {text:"A startup needs their data accessible even during network partitions, accepting that some reads might return slightly stale data. Which CAP combination and NoSQL system fits?",opts:["CP system like HBase","AP system like Cassandra with eventual consistency","CA system (not possible with partitions)","ACID-strict RDBMS"],ans:1,exp:"AP (Available + Partition tolerant) with eventual consistency — Cassandra provides high availability and partition tolerance, sacrificing immediate consistency."},
+  {text:"A company has existing relational tables PERSON and LIVES_AT. They want new applications to see a TPERSON object with embedded addresses, without migrating data. What do they use?",opts:["Recreate tables as object tables","Create an Object View using CREATE VIEW ... OF ... WITH OBJECT IDENTIFIER","Use NESTED TABLE directly","Use CAST only"],ans:1,exp:"Object View applies OO structure on top of relational tables with zero physical migration. CAST(MULTISET(...)) constructs the collection attribute from the join."},
+  {text:"A MongoDB aggregation needs to compute the percentage of total revenue each region contributes. Which pipeline sequence is correct?",opts:["$match → $sort → $limit","$group by region (rev) → $group by null (total + push regions) → $unwind → $project (pct)","$lookup → $facet → $out","$bucket → $sort → $count"],ans:1,exp:"Step 1: $group by region to get regional revenue. Step 2: $group by null to get total + push all regions. Step 3: $unwind regions. Step 4: $project to compute pct = (region_rev / total) * 100."},
+  {text:"An Oracle DBA needs to partition a large Orders table so that child Sales records automatically inherit the same partitioning scheme without manual partition definition.",opts:["PARTITION BY RANGE on Orders","PARTITION BY LIST on Sales","PARTITION BY REFERENCE on Sales using FK to Orders","PARTITION BY HASH on Orders"],ans:2,exp:"PARTITION BY REFERENCE makes the child table (Sales) automatically inherit the parent table's (Orders) partitioning via the foreign key constraint — this is DHF in Oracle."},
+];
+
+let sAnswers=new Array(scenarios.length).fill(null);
+function renderScenario(){
+  document.getElementById('scenarioContainer').innerHTML=scenarios.map((s,i)=>`
+    <div class="question-card">
+      <div class="question-number">SCENARIO ${i+1}</div>
+      <div class="question-text">${s.text}</div>
+      ${s.opts.map((opt,oi)=>{
+        let cls='';
+        if(sAnswers[i]!==null&&oi===s.ans)cls='correct';
+        else if(sAnswers[i]===oi&&oi!==s.ans)cls='wrong';
+        return `<button class="option-btn ${cls}" onclick="selScenario(${i},${oi})" ${sAnswers[i]!==null?'disabled':''}><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</button>`;
+      }).join('')}
+      <div class="feedback-box ${sAnswers[i]!==null?(sAnswers[i]===s.ans?'correct-fb':'wrong-fb')+' show':''}">
+        ${sAnswers[i]!==null?'<strong>'+(sAnswers[i]===s.ans?'✓ Correct! ':'✗ Incorrect. ')+' </strong>'+s.exp:''}
+      </div>
+    </div>`).join('');
+}
+function selScenario(i,oi){if(sAnswers[i]!==null)return; sAnswers[i]=oi; renderScenario();}
+function checkScenario(){
+  const correct=sAnswers.filter((a,i)=>a===scenarios[i].ans).length;
+  const pct=Math.round(correct/scenarios.length*100);
+  const r=document.getElementById('scenarioResult');
+  r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${correct}/${scenarios.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Excellent judgment! 🎉":"Review the concepts and reasoning behind each scenario."}</div><button class="quiz-btn-primary" onclick="resetScenario()">Retry</button>`;
+  r.classList.add('show');
+}
+function resetScenario(){sAnswers.fill(null);renderScenario();document.getElementById('scenarioResult').classList.remove('show');}
+renderScenario();
+</script>
+</body>
+</html>

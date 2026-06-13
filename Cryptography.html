@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cryptographie — Résumé Complet</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #222; }
+.container { max-width: 960px; margin: 0 auto; padding: 20px; }
+.header { background: linear-gradient(135deg, #1a237e, #1565c0); color: white; border-radius: 12px; padding: 26px; margin-bottom: 20px; }
+.header h1 { font-size: 21px; margin-bottom: 5px; }
+.header p { font-size: 13px; opacity: 0.85; }
+.dl-btn { margin-top: 12px; background: white; color: #1565c0; border: none; border-radius: 8px; padding: 8px 18px; font-weight: 700; cursor: pointer; font-size: 13px; }
+h2 { color: #1a237e; font-size: 16px; margin: 22px 0 10px; border-bottom: 2px solid #1565c0; padding-bottom: 5px; }
+.section { background: white; border-radius: 10px; margin-bottom: 8px; overflow: hidden; border: 1px solid #e0e0e0; }
+.sec-header { padding: 12px 16px; color: white; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; justify-content: space-between; user-select: none; }
+.sec-body { padding: 14px 16px; display: none; }
+.sec-body.open { display: block; }
+.def { border-left: 4px solid #1565c0; padding: 5px 10px; margin-bottom: 8px; font-size: 13px; }
+.def b { color: #1565c0; }
+.note { background: #f8f9fa; border-left: 3px solid #90a4ae; padding: 7px 10px; border-radius: 5px; margin-bottom: 7px; font-size: 13px; }
+.remark { background: #fff3e0; border-left: 3px solid #ff9800; padding: 7px 10px; border-radius: 5px; margin-bottom: 7px; font-size: 13px; color: #e65100; }
+.calc { background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; padding: 11px 13px; margin-bottom: 9px; }
+.calc-title { font-weight: 700; color: #2e7d32; margin-bottom: 7px; font-size: 13px; }
+.calc-step { font-family: 'Courier New', monospace; font-size: 12px; color: #1b5e20; margin-bottom: 3px; white-space: pre-wrap; }
+.formula { background: #e3f2fd; border: 1px solid #90caf9; border-radius: 6px; padding: 8px 12px; margin-bottom: 8px; font-family: 'Courier New', monospace; font-size: 13px; color: #0d47a1; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 12px; }
+th { background: #1565c0; color: white; padding: 6px 8px; text-align: left; }
+td { padding: 5px 8px; border-bottom: 1px solid #e0e0e0; }
+tr:nth-child(even) { background: #f5f5f5; }
+.q-filters { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 12px; }
+.f-btn { padding: 5px 13px; border-radius: 20px; border: none; cursor: pointer; font-weight: 600; font-size: 12px; background: #e0e0e0; color: #555; }
+.q-card { background: white; border-radius: 9px; margin-bottom: 7px; border: 1px solid #e0e0e0; overflow: hidden; }
+.q-head { padding: 11px 14px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+.badge { border-radius: 11px; padding: 2px 9px; font-size: 11px; font-weight: 700; color: white; white-space: nowrap; margin-top: 1px; }
+.q-text { font-size: 13px; font-weight: 600; flex: 1; }
+.arrow { color: #999; font-size: 13px; margin-top: 2px; }
+.q-ans { background: #f9fafb; padding: 11px 14px; border-top: 1px solid #eee; font-size: 13px; color: #444; line-height: 1.7; display: none; }
+.q-ans.open { display: block; }
+.footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 20px; padding: 14px; }
+.tag { display: inline-block; background: #e3f2fd; color: #1565c0; border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700; margin-right: 4px; }
+@media print {
+  body { background: white; font-size: 12px; }
+  .dl-btn, .q-filters, .arrow { display: none !important; }
+  .sec-body, .q-ans { display: block !important; }
+  .container { padding: 8px; }
+  .section, .q-card { break-inside: avoid; margin-bottom: 5px; }
+  .header { border-radius: 0; padding: 16px; }
+  h2 { margin: 14px 0 7px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>📘 Cryptographie — Résumé Complet · USTHB 3A ING SECU 2026</h1>
+  <p>Chiffres classiques · Symétrique · Asymétrique · Hachage · Homomorphe · Protocoles · Questions d'examen</p>
+  <button class="dl-btn" onclick="window.print()">🖨️ Imprimer / Sauvegarder en PDF</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>📜 PARTIE I — Chiffres Classiques & Cryptanalyse</h2>
+
+<!-- CESAR -->
+<div class="section">
+  <div class="sec-header" style="background:#6d4c41" onclick="tog(this)">1. Chiffre de César <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Substitution monoalphabétique — décalage fixe k de l'alphabet.</div>
+    <div class="formula">Chiffrement : C = (M + k) mod 26
+Déchiffrement : M = (C − k) mod 26</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple k=3</div>
+      <div class="calc-step">Clair  : A B C D E F ... X Y Z</div>
+      <div class="calc-step">Chiffré: D E F G H I ... A B C</div>
+      <div class="calc-step">"BONJOUR" → "ERQMRXU"</div>
+    </div>
+    <div class="remark">⚠️ Seulement 25 clés possibles → attaque force brute triviale (essayer les 25 décalages).</div>
+  </div>
+</div>
+
+<!-- SUBSTITUTION -->
+<div class="section">
+  <div class="sec-header" style="background:#6d4c41" onclick="tog(this)">2. Chiffrement par Substitution Monoalphabétique <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Chaque lettre est remplacée par une autre selon une permutation fixe de l'alphabet. Clé = permutation des 26 lettres → 26! clés possibles.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple</div>
+      <div class="calc-step">Clé : A→Q, B→W, C→E, D→R, E→T, ...</div>
+      <div class="calc-step">"ACE" → "QET"</div>
+    </div>
+    <div class="remark">⚠️ Vulnérable à l'analyse de fréquences (en français : E,A,I,S,T les plus fréquentes).</div>
+    <div class="note">📌 <b>Analyse de fréquences :</b> Comparer la fréquence des lettres dans le chiffré avec les fréquences connues de la langue (fr: E≈17%, A≈8%, I≈7%...).</div>
+  </div>
+</div>
+
+<!-- AFFINE -->
+<div class="section">
+  <div class="sec-header" style="background:#6d4c41" onclick="tog(this)">3. Chiffrement Affine <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Généralisation de César. Clé = (a, b) avec pgcd(a, 26) = 1.</div>
+    <div class="formula">Chiffrement : C = (a·M + b) mod 26
+Déchiffrement : M = a⁻¹·(C − b) mod 26</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple a=5, b=8</div>
+      <div class="calc-step">"A" (M=0) → C = (5·0 + 8) mod 26 = 8 → "I"</div>
+      <div class="calc-step">"F" (M=5) → C = (5·5 + 8) mod 26 = 33 mod 26 = 7 → "H"</div>
+      <div class="calc-step">Déchiffrement : a⁻¹ = 5⁻¹ mod 26 = 21 (car 5×21=105=4×26+1)</div>
+      <div class="calc-step">M = 21·(C − 8) mod 26</div>
+    </div>
+    <div class="note">📌 a doit être premier avec 26. Valeurs valides : 1,3,5,7,9,11,15,17,19,21,23,25 → 12 valeurs × 26 valeurs de b = 312 clés.</div>
+  </div>
+</div>
+
+<!-- VIGENERE -->
+<div class="section">
+  <div class="sec-header" style="background:#6d4c41" onclick="tog(this)">4. Chiffrement de Vigenère (Polyalphabétique) <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Substitution polyalphabétique — clé de longueur L répétée. Chaque lettre utilise un décalage différent selon la lettre de clé correspondante.</div>
+    <div class="formula">Cᵢ = (Mᵢ + Kᵢ) mod 26
+Mᵢ = (Cᵢ − Kᵢ) mod 26</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple : clé = "CLE", message = "BONJOUR"</div>
+      <div class="calc-step">Message : B  O  N  J  O  U  R</div>
+      <div class="calc-step">Clé     : C  L  E  C  L  E  C   (répétée)</div>
+      <div class="calc-step">Val clé : 2  11 4  2  11 4  2</div>
+      <div class="calc-step">Chiffré : D  Z  R  L  Z  Y  T</div>
+    </div>
+    <div class="remark">⚠️ Attaqué par le <b>Test de Kasiski</b> pour trouver la longueur de clé, puis analyse de fréquences sur chaque position.</div>
+  </div>
+</div>
+
+<!-- KASISKI -->
+<div class="section">
+  <div class="sec-header" style="background:#4e342e" onclick="tog(this)">5. Test de Kasiski + Indice de Coïncidence <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Test de Kasiski :</b> Chercher des séquences répétées dans le texte chiffré. La distance entre deux occurrences d'une même séquence est un multiple de la longueur de clé L.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple Test de Kasiski</div>
+      <div class="calc-step">Texte chiffré : ...XYZ...pos 10......XYZ...pos 40......XYZ...pos 64...</div>
+      <div class="calc-step">Distances : 40-10=30,  64-40=24,  64-10=54</div>
+      <div class="calc-step">pgcd(30, 24, 54) = 6  →  longueur de clé probable = 6</div>
+      <div class="calc-step">(ou diviseurs : 2, 3, 6 sont candidats)</div>
+    </div>
+    <div class="def"><b>Indice de Coïncidence (IC) :</b> Probabilité que deux lettres choisies au hasard dans le texte soient identiques.</div>
+    <div class="formula">IC = Σᵢ nᵢ(nᵢ−1) / N(N−1)
+
+IC anglais ≈ 0.065  |  IC français ≈ 0.074
+IC aléatoire ≈ 0.038</div>
+    <div class="note">📌 Pour trouver L : tester différentes longueurs de clé. Pour la bonne longueur, les sous-textes auront un IC ≈ 0.065 (lang naturelle). Si IC ≈ 0.038, la longueur est mauvaise.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Trouver la clé après avoir trouvé L</div>
+      <div class="calc-step">1. Diviser le texte chiffré en L colonnes (lettres de même rang)</div>
+      <div class="calc-step">2. Chaque colonne = chiffré par César avec décalage kᵢ</div>
+      <div class="calc-step">3. Pour chaque colonne : calculer IC ou coïncidence avec fréquences</div>
+      <div class="calc-step">   → Le décalage qui maximise la corrélation avec les fréquences = kᵢ</div>
+      <div class="calc-step">4. Clé = k₁k₂...kL (en lettres)</div>
+    </div>
+  </div>
+</div>
+
+<!-- MOT PROBABLE -->
+<div class="section">
+  <div class="sec-header" style="background:#4e342e" onclick="tog(this)">6. Méthode du Mot Probable (Crib Dragging) <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Attaque à texte clair connu. On suppose qu'un mot probable (crib) apparaît dans le message clair. On le fait glisser sur le texte chiffré pour tester les positions.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Méthode</div>
+      <div class="calc-step">1. Choisir un mot probable M' (ex: "SECRET", "BONJOUR", "CONFIDENTIEL")</div>
+      <div class="calc-step">2. Pour chaque position i du texte chiffré C :</div>
+      <div class="calc-step">   Calculer K_partielle = C[i..i+|M'|] XOR M'  (pour OTP/Vigenère)</div>
+      <div class="calc-step">   ou  k_décalage = C[i] - M'[0] mod 26  (pour César/Vigenère)</div>
+      <div class="calc-step">3. Vérifier si la clé partielle obtenue est cohérente</div>
+      <div class="calc-step">   (lettres lisibles, répétition de clé logique...)</div>
+      <div class="calc-step">4. Si cohérent → déchiffrer tout le message avec cette clé</div>
+    </div>
+    <div class="remark">⚠️ Très efficace contre Vigenère si on connaît la langue du message et des mots du vocabulaire courant.</div>
+  </div>
+</div>
+
+<!-- PLAYFAIR -->
+<div class="section">
+  <div class="sec-header" style="background:#6d4c41" onclick="tog(this)">7. Chiffrement de Playfair <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Chiffrement par digrammes (paires de lettres) sur une grille 5×5. I et J sont fusionnés. Clé = mot-clé qui construit la grille.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Construction de la grille (clé = "PLAYFAIR")</div>
+      <div class="calc-step">Écrire les lettres uniques du mot-clé puis les lettres restantes :</div>
+      <div class="calc-step">P L A Y F</div>
+      <div class="calc-step">I R B C D</div>
+      <div class="calc-step">E G H K M</div>
+      <div class="calc-step">N O Q S T</div>
+      <div class="calc-step">U V W X Z</div>
+    </div>
+    <div class="calc">
+      <div class="calc-title">🧮 Règles de chiffrement</div>
+      <div class="calc-step">Préparer : diviser en digrammes. Si doublon → insérer X. Si impair → ajouter X à la fin.</div>
+      <div class="calc-step">Règle 1 — Même ligne : remplacer par la lettre à droite (circulaire)</div>
+      <div class="calc-step">Règle 2 — Même colonne : remplacer par la lettre en dessous (circulaire)</div>
+      <div class="calc-step">Règle 3 — Rectangle : chaque lettre → lettre du même rang, colonne de l'autre</div>
+    </div>
+    <div class="note">📌 26²/2 ≈ 338 digrammes possibles. Plus résistant à l'analyse de fréquences simples.</div>
+  </div>
+</div>
+
+<!-- HILL -->
+<div class="section">
+  <div class="sec-header" style="background:#6d4c41" onclick="tog(this)">8. Chiffrement de Hill <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Chiffrement par blocs algébrique. Clé = matrice K (n×n) inversible mod 26.</div>
+    <div class="formula">Chiffrement : C = K · M mod 26
+Déchiffrement : M = K⁻¹ · C mod 26</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple n=2, K=[[6,24],[1,16]], message "ACT"→ par blocs de 2</div>
+      <div class="calc-step">A=0,C=2 → [6 24; 1 16]·[0;2] = [48;32] mod 26 = [22;6] → "WG"</div>
+      <div class="calc-step">T=19 → traité avec le bloc suivant</div>
+    </div>
+    <div class="remark">⚠️ Vulnérable à l'attaque à texte clair connu (KPA) : n paires (clair,chiffré) permettent de retrouver K.</div>
+  </div>
+</div>
+
+<!-- RAIL FENCE -->
+<div class="section">
+  <div class="sec-header" style="background:#6d4c41" onclick="tog(this)">9. Chiffrement Rail Fence (Transposition) <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Transposition — les lettres sont réarrangées en zigzag sur n rails, puis lues ligne par ligne.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple : "BONJOUR CRYPTO" sur 3 rails</div>
+      <div class="calc-step">Rail 1 : B . . J . . . C . . P . O</div>
+      <div class="calc-step">Rail 2 : . O . . O . R . R . . T .</div>
+      <div class="calc-step">Rail 3 : . . N . . U . . . Y . . .</div>
+      <div class="calc-step">Chiffré : BJCOPOO RRTNUY</div>
+    </div>
+    <div class="note">📌 Chiffrement par transposition : les lettres ne changent pas, seul leur ordre change. Facile à casser par anagramme/statistiques.</div>
+  </div>
+</div>
+
+<!-- ONE TIME PAD -->
+<div class="section">
+  <div class="sec-header" style="background:#4e342e" onclick="tog(this)">10. One-Time Pad (OTP) — Chiffrement Parfait <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Clé aléatoire de même longueur que le message, utilisée une seule fois. Chiffrement par XOR (binaire) ou addition mod 26 (lettres).</div>
+    <div class="formula">Chiffrement : C = M XOR K  (ou C = M + K mod 26)
+Déchiffrement : M = C XOR K  (ou M = C - K mod 26)</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple</div>
+      <div class="calc-step">M = "BONJOUR" = [1,14,9,9,14,20,17]</div>
+      <div class="calc-step">K = "XKQTMPA" = [23,10,16,19,12,15,0]  (aléatoire)</div>
+      <div class="calc-step">C = [(1+23),(14+10),(9+16),...] mod 26 = [24,24,25,...] = "YYZ..."</div>
+    </div>
+    <div class="note">📌 <b>Sécurité parfaite (Shannon)</b> : si K est vraiment aléatoire, utilisé une seule fois et gardé secret → indéchiffrable même avec puissance de calcul infinie.</div>
+    <div class="remark">⚠️ Problème pratique : distribution sécurisée de la clé (aussi longue que le message). Si K réutilisé → C₁ XOR C₂ = M₁ XOR M₂ → compromis total.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>🔐 PARTIE II — Cryptographie Symétrique Moderne</h2>
+
+<!-- RESEAU FEISTEL -->
+<div class="section">
+  <div class="sec-header" style="background:#1565c0" onclick="tog(this)">11. Réseau de Feistel <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Structure fondamentale de nombreux chiffrements par blocs (DES, 3DES...). Le bloc est divisé en deux moitiés L et R. À chaque ronde :</div>
+    <div class="formula">Lᵢ = Rᵢ₋₁
+Rᵢ = Lᵢ₋₁ XOR f(Rᵢ₋₁, Kᵢ)</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Structure d'une ronde Feistel</div>
+      <div class="calc-step">Entrée : (L₀, R₀)</div>
+      <div class="calc-step">Ronde i : L_i = R_{i-1}  |  R_i = L_{i-1} XOR f(R_{i-1}, K_i)</div>
+      <div class="calc-step">Sortie après n rondes : (Lₙ, Rₙ)</div>
+    </div>
+    <div class="note">📌 <b>Avantage majeur :</b> La fonction f n'a pas besoin d'être inversible. Le déchiffrement utilise la même structure avec les sous-clés dans l'ordre inverse.</div>
+    <div class="note">📌 <b>Déchiffrement :</b> même algorithme, sous-clés K_n, K_{n-1}, ..., K_1 (ordre inversé).</div>
+  </div>
+</div>
+
+<!-- DES -->
+<div class="section">
+  <div class="sec-header" style="background:#1565c0" onclick="tog(this)">12. DES — Data Encryption Standard <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Caractéristiques :</b> Réseau de Feistel, 16 rondes, blocs de 64 bits, clé de 56 bits (64 bits dont 8 de parité). Standard NIST depuis 1977.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Structure DES</div>
+      <div class="calc-step">1. Permutation initiale IP sur le bloc de 64 bits</div>
+      <div class="calc-step">2. 16 rondes Feistel avec sous-clés K₁...K₁₆ (48 bits chacune)</div>
+      <div class="calc-step">   Fonction f : Expansion (32→48 bits) → XOR Kᵢ → 8 S-Boxes → Permutation P</div>
+      <div class="calc-step">3. Permutation finale IP⁻¹</div>
+    </div>
+    <div class="note">📌 <b>S-Boxes :</b> Tables de substitution non-linéaires 6→4 bits. Seule partie non-linéaire du DES → sécurité essentielle contre cryptanalyse linéaire.</div>
+    <div class="remark">⚠️ DES cassé en 1998 (EFF DES Cracker en 22 heures). Clé de 56 bits trop courte pour les standards actuels.</div>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur</th></tr>
+      <tr><td>Taille bloc</td><td>64 bits</td></tr>
+      <tr><td>Taille clé effective</td><td>56 bits</td></tr>
+      <tr><td>Nombre de rondes</td><td>16</td></tr>
+      <tr><td>Structure</td><td>Réseau de Feistel</td></tr>
+      <tr><td>Statut</td><td>❌ CASSÉ (1998)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- DESX & 3DES -->
+<div class="section">
+  <div class="sec-header" style="background:#1565c0" onclick="tog(this)">13. DESX & Triple DES (3DES) <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>DESX :</b> Renforcement de DES par blanchiment de clé. C = K₂ XOR DES_K₁(K₃ XOR M). Clé effective ≈ 120 bits. Simple et efficace contre force brute.</div>
+    <div class="def"><b>Triple DES (3DES) :</b> Applique DES trois fois. Mode EDE (Encrypt-Decrypt-Encrypt).</div>
+    <div class="formula">3DES-EDE : C = E_{K3}(D_{K2}(E_{K1}(M)))
+Déchiffrement : M = D_{K1}(E_{K2}(D_{K3}(C)))</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Variantes 3DES</div>
+      <div class="calc-step">3DES-EEE : 3 clés différentes K1,K2,K3 → clé effective 168 bits</div>
+      <div class="calc-step">3DES-EDE : K1=K3 → clé effective 112 bits (le plus utilisé)</div>
+      <div class="calc-step">Si K1=K2=K3 → équivalent à DES simple (rétrocompatibilité)</div>
+    </div>
+    <div class="remark">⚠️ Attaque "Meet in the Middle" sur Double-DES : sécurité n'est pas 2×56=112 bits mais seulement ~57 bits. C'est pourquoi on utilise 3DES et non 2DES.</div>
+    <div class="note">📌 3DES encore utilisé dans certains systèmes bancaires mais remplacé progressivement par AES.</div>
+  </div>
+</div>
+
+<!-- AES -->
+<div class="section">
+  <div class="sec-header" style="background:#1565c0" onclick="tog(this)">14. AES — Advanced Encryption Standard <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Caractéristiques :</b> Standard NIST depuis 2001. Basé sur le chiffre Rijndael (Vincent Rijmen & Joan Daemen). Structure par substitution-permutation (SPN), NON Feistel. Blocs de 128 bits.</div>
+    <table>
+      <tr><th>Version</th><th>Clé</th><th>Rondes</th></tr>
+      <tr><td>AES-128</td><td>128 bits</td><td>10</td></tr>
+      <tr><td>AES-192</td><td>192 bits</td><td>12</td></tr>
+      <tr><td>AES-256</td><td>256 bits</td><td>14</td></tr>
+    </table>
+    <div class="calc">
+      <div class="calc-title">🧮 Structure d'une ronde AES (sauf dernière)</div>
+      <div class="calc-step">1. SubBytes    : substitution octet par octet via S-Box (GF(2⁸))</div>
+      <div class="calc-step">2. ShiftRows   : décalage circulaire des lignes de la matrice état</div>
+      <div class="calc-step">3. MixColumns  : multiplication dans GF(2⁸) par matrice fixe (diffusion)</div>
+      <div class="calc-step">4. AddRoundKey : XOR avec la sous-clé de ronde</div>
+      <div class="calc-step">[Dernière ronde : pas de MixColumns]</div>
+    </div>
+    <div class="note">📌 <b>État AES :</b> Matrice 4×4 octets = 128 bits. Chaque ronde opère sur cet état.</div>
+    <div class="note">📌 <b>SubBytes</b> assure la confusion (non-linéarité). <b>ShiftRows + MixColumns</b> assurent la diffusion.</div>
+    <div class="note">📌 AES est résistant aux meilleures attaques connues. Recommandé par le NIST et utilisé mondialement (TLS, WiFi, disques chiffrés...).</div>
+  </div>
+</div>
+
+<!-- RC4 -->
+<div class="section">
+  <div class="sec-header" style="background:#1565c0" onclick="tog(this)">15. RC4 — Chiffrement par Flux <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Principe :</b> Chiffrement par flux (stream cipher). Génère un flux de clés pseudo-aléatoire (keystream) XORé avec le plaintext. Clé variable 40–2048 bits.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Algorithme RC4</div>
+      <div class="calc-step">1. KSA (Key Scheduling Algorithm) — Initialisation :</div>
+      <div class="calc-step">   S = [0,1,...,255]</div>
+      <div class="calc-step">   j = 0</div>
+      <div class="calc-step">   for i = 0 to 255 :</div>
+      <div class="calc-step">     j = (j + S[i] + K[i mod len(K)]) mod 256</div>
+      <div class="calc-step">     swap(S[i], S[j])</div>
+      <div class="calc-step">2. PRGA (Pseudo-Random Generation) — Génération keystream :</div>
+      <div class="calc-step">   i = 0, j = 0</div>
+      <div class="calc-step">   Pour chaque octet :</div>
+      <div class="calc-step">     i = (i+1) mod 256</div>
+      <div class="calc-step">     j = (j + S[i]) mod 256</div>
+      <div class="calc-step">     swap(S[i], S[j])</div>
+      <div class="calc-step">     output S[(S[i]+S[j]) mod 256] XOR plaintext_byte</div>
+    </div>
+    <div class="remark">⚠️ RC4 est maintenant considéré comme non sûr (biais dans les premiers octets du keystream). Interdit dans TLS depuis 2015 (RFC 7465).</div>
+    <div class="note">📌 Très simple et rapide. Utilisé historiquement dans WEP (WiFi), SSL, Skype.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>🔑 PARTIE III — Cryptographie Asymétrique</h2>
+
+<!-- DIFFIE HELLMAN -->
+<div class="section">
+  <div class="sec-header" style="background:#006064" onclick="tog(this)">16. Échange de Clés Diffie-Hellman <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Objectif :</b> Permettre à deux parties de créer une clé secrète partagée sur un canal public non sécurisé, sans jamais l'échanger directement.</div>
+    <div class="def"><b>Sécurité :</b> Basée sur la difficulté du logarithme discret dans Zₙ*.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Protocole Diffie-Hellman</div>
+      <div class="calc-step">Paramètres publics : n premier, g générateur de Zₙ*</div>
+      <div class="calc-step">Alice : choisit x secret → calcule X = gˣ mod n → envoie X à Bob</div>
+      <div class="calc-step">Bob   : choisit y secret → calcule Y = gʸ mod n → envoie Y à Alice</div>
+      <div class="calc-step">Alice : K = Yˣ mod n = gˣʸ mod n</div>
+      <div class="calc-step">Bob   : K = Xʸ mod n = gˣʸ mod n</div>
+      <div class="calc-step">→ Clé partagée K = gˣʸ mod n  (sans jamais échanger x ou y)</div>
+    </div>
+    <div class="remark">⚠️ Vulnérable à l'attaque Man-in-the-Middle (MITM) si pas d'authentification. Ne fournit pas en lui-même d'authentification.</div>
+    <div class="note">📌 Ce n'est pas un chiffrement mais un protocole d'échange de clés. La clé K peut ensuite servir pour AES par exemple.</div>
+  </div>
+</div>
+
+<!-- RSA -->
+<div class="section">
+  <div class="sec-header" style="background:#006064" onclick="tog(this)">17. RSA — Rivest Shamir Adleman <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Sécurité :</b> Basée sur la difficulté de factoriser de grands entiers (problème NP difficile en pratique).</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Génération des clés RSA</div>
+      <div class="calc-step">1. Choisir deux grands premiers p et q</div>
+      <div class="calc-step">2. Calculer n = p × q   (module RSA)</div>
+      <div class="calc-step">3. Calculer φ(n) = (p−1)(q−1)</div>
+      <div class="calc-step">4. Choisir e tel que 1 < e < φ(n) et pgcd(e, φ(n)) = 1</div>
+      <div class="calc-step">5. Calculer d = e⁻¹ mod φ(n)   (algorithme d'Euclide étendu)</div>
+      <div class="calc-step">Clé publique : (e, n)  |  Clé privée : (d, n)</div>
+    </div>
+    <div class="formula">Chiffrement : C = Mᵉ mod n
+Déchiffrement : M = Cᵈ mod n
+(Fonctionne car Mᵉᵈ = M mod n par Euler)</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Exemple RSA petit (pédagogique)</div>
+      <div class="calc-step">p=61, q=53 → n=3233, φ(n)=3120</div>
+      <div class="calc-step">e=17 (pgcd(17,3120)=1) → d=2753 (car 17×2753=46801=15×3120+1)</div>
+      <div class="calc-step">Chiffrement M=65 : C=65¹⁷ mod 3233 = 2790</div>
+      <div class="calc-step">Déchiffrement C=2790 : M=2790²⁷⁵³ mod 3233 = 65 ✓</div>
+    </div>
+    <div class="note">📌 <b>RSA homomorphe multiplicatif :</b> E(x)·E(y) = xᵉyᵉ = (xy)ᵉ = E(xy) mod n.</div>
+    <div class="remark">⚠️ RSA brut (textbook RSA) sans padding est dangereux. En pratique : OAEP padding obligatoire. Clés ≥ 2048 bits recommandées.</div>
+  </div>
+</div>
+
+<!-- ELGAMAL -->
+<div class="section">
+  <div class="sec-header" style="background:#006064" onclick="tog(this)">18. ElGamal — Chiffrement &amp; Signature <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Sécurité :</b> Basée sur la difficulté du logarithme discret dans Zₚ*.</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Génération des clés</div>
+      <div class="calc-step">1. Choisir p premier, a générateur de Zₚ* (aᶻ ≠ 1 mod p ∀z ∈ (1..p-2))</div>
+      <div class="calc-step">2. Choisir s ∈ (1..p-2) secret</div>
+      <div class="calc-step">3. Calculer y = aˢ mod p</div>
+      <div class="calc-step">Clé publique : (y, a, p)  |  Clé privée : s</div>
+    </div>
+    <div class="calc">
+      <div class="calc-title">🧮 Chiffrement ElGamal</div>
+      <div class="calc-step">Choisir k aléatoire (éphémère, secret, changé à chaque fois !)</div>
+      <div class="calc-step">C1 = aᵏ mod p</div>
+      <div class="calc-step">C2 = M · yᵏ mod p</div>
+      <div class="calc-step">Message chiffré : (C1, C2)</div>
+    </div>
+    <div class="calc">
+      <div class="calc-title">🧮 Déchiffrement ElGamal</div>
+      <div class="calc-step">M = C2 · (C1ˢ)⁻¹ mod p</div>
+      <div class="calc-step">Car : C1ˢ = aᵏˢ = yᵏ  →  C2/yᵏ = M·yᵏ/yᵏ = M ✓</div>
+    </div>
+    <div class="calc">
+      <div class="calc-title">🧮 Signature ElGamal</div>
+      <div class="calc-step">Signer m : choisir k < p-1 avec pgcd(k, p-1)=1</div>
+      <div class="calc-step">r = gᵏ mod p</div>
+      <div class="calc-step">s = k⁻¹(H(m) − xr) mod p−1</div>
+      <div class="calc-step">Signature = (r, s)</div>
+      <div class="calc-step">Vérifier : u=yʳrˢ mod p, v=gᴴ⁽ᵐ⁾ mod p → Accepter si u=v</div>
+    </div>
+    <div class="note">📌 <b>Homomorphisme multiplicatif :</b> E(M₁)·E(M₂) = E(M₁·M₂). Voir preuve dans Partie V.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>🔒 PARTIE IV — Hachage, Signature, Partage de Secret & Protocoles</h2>
+
+<!-- HACHAGE -->
+<div class="section">
+  <div class="sec-header" style="background:#b71c1c" onclick="tog(this)">19. Fonctions de Hachage <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Définition :</b> Fonction H : {0,1}* → {0,1}ⁿ produisant une empreinte de taille fixe.</div>
+    <div class="def"><b>Résistance à la pré-image :</b> Connaissant H(m), infaisable de trouver m' tel que H(m')=H(m).</div>
+    <div class="def"><b>Résistance aux collisions :</b> Infaisable de trouver x≠x' tels que H(x)=H(x').</div>
+    <div class="formula">Construction Merkle-Daingard :
+CV₀ = IV (valeur initiale)
+CVᵢ = f(CVᵢ₋₁, Yᵢ)  pour i=1..t
+h(M) = CVₜ</div>
+    <table>
+      <tr><th>Algorithme</th><th>Sortie</th><th>Statut</th></tr>
+      <tr><td>MD5</td><td>128 bits</td><td>❌ Cassé</td></tr>
+      <tr><td>SHA-1</td><td>160 bits</td><td>❌ Cassé</td></tr>
+      <tr><td>SHA-256</td><td>256 bits</td><td>✅ Sûr</td></tr>
+      <tr><td>SHA-512</td><td>512 bits</td><td>✅ Sûr</td></tr>
+      <tr><td>SHA-3</td><td>variable</td><td>✅ Standard depuis 2012</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SIGNATURE -->
+<div class="section">
+  <div class="sec-header" style="background:#b71c1c" onclick="tog(this)">20. Signature Numérique (RSA, ElGamal, DSA) <span>▼</span></div>
+  <div class="sec-body">
+    <div class="calc">
+      <div class="calc-title">🧮 Protocole complet A→B</div>
+      <div class="calc-step">A: E=H(M) → S=Enc(E, privA) → envoie Enc(M||S, pubB)</div>
+      <div class="calc-step">B: déchiffre privB → M'+S' → déchiffre S' avec pubA → H'</div>
+      <div class="calc-step">Si H'=H(M') → Authentique ✓ et Intègre ✓</div>
+    </div>
+    <div class="calc">
+      <div class="calc-title">🧮 Signature RSA</div>
+      <div class="calc-step">S = H(M)ᵈ mod n  |  Vérif : H(M) = Sᵉ mod n</div>
+    </div>
+    <div class="calc">
+      <div class="calc-title">🧮 DSA (Digital Signature Algorithm)</div>
+      <div class="calc-step">Params : p,q premiers (q|p-1), g générateur d'ordre q, y=gˣ mod p</div>
+      <div class="calc-step">Sign  : r=(gᵏ mod p) mod q,  s=k⁻¹(H(m)+xr) mod q</div>
+      <div class="calc-step">Vérif : w=s⁻¹ mod q, u=wH(m) mod q, v=rw mod q</div>
+      <div class="calc-step">         z=(gᵘyᵛ mod p) mod q → Accepter si z=r</div>
+    </div>
+  </div>
+</div>
+
+<!-- SHAMIR -->
+<div class="section">
+  <div class="sec-header" style="background:#558b2f" onclick="tog(this)">21. Partage de Secret — Shamir (k,n) <span>▼</span></div>
+  <div class="sec-body">
+    <div class="def"><b>Schéma à seuil (k,n) :</b> n parts, k suffisent, k-1 → zéro information (sécurité parfaite).</div>
+    <div class="formula">f(x) = a₀ + a₁x + ... + aₖ₋₁xᵏ⁻¹  (mod p)
+S = a₀ = f(0)
+Parts : (i, f(i)) pour i=1..n</div>
+    <div class="calc">
+      <div class="calc-title">🧮 Reconstruction (interpolation de Lagrange)</div>
+      <div class="calc-step">f(x) = Σⱼ yⱼ·lⱼ(x)</div>
+      <div class="calc-step">lⱼ(x) = Π_{j'≠j} (x−xⱼ')/(xⱼ−xⱼ')</div>
+      <div class="calc-step">S = f(0) = Σⱼ yⱼ · Π_{j'≠j} (0−xⱼ')/(xⱼ−xⱼ')</div>
+    </div>
+  </div>
+</div>
+
+<!-- IDENTIFICATION -->
+<div class="section">
+  <div class="sec-header" style="background:#6a1b9a" onclick="tog(this)">22. Protocoles d'Identification (Schnorr, FFS) <span>▼</span></div>
+  <div class="sec-body">
+    <div class="calc">
+      <div class="calc-title">🧮 Schnorr — Zero-Knowledge</div>
+      <div class="calc-step">Secret s, clé publique h=gˢ mod p</div>
+      <div class="calc-step">1. Prouveur : r aléatoire → x=gʳ → envoie x</div>
+      <div class="calc-step">2. Vérifieur : envoie challenge c</div>
+      <div class="calc-step">3. Prouveur : y=r+sc → envoie y</div>
+      <div class="calc-step">4. Vérifieur : vérifie x = gʸ·h⁻ᶜ mod p ✓</div>
+    </div>
+    <div class="calc">
+      <div class="calc-title">🧮 Feige-Fiat-Shamir</div>
+      <div class="calc-step">n=pq, vᵢ résidus quad., sᵢ=√(vᵢ⁻¹) mod n</div>
+      <div class="calc-step">1. Prouveur : r aléatoire → x=r² mod n</div>
+      <div class="calc-step">2. Vérifieur : bits b₁..bₖ</div>
+      <div class="calc-step">3. Prouveur : y = r·∏sᵢᵇⁱ mod n</div>
+      <div class="calc-step">4. Vérifieur : x₀=y²·∏vᵢᵇⁱ mod n → vérifie x₀=x</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOMOMORPHE -->
+<div class="section">
+  <div class="sec-header" style="background:#00897b" onclick="tog(this)">23. Chiffrement Homomorphe — Récapitulatif <span>▼</span></div>
+  <div class="sec-body">
+    <div class="formula">Définition : A(E(x), E(y)) = E(A(x,y))</div>
+    <table>
+      <tr><th>Système</th><th>Type</th><th>Opération clairs</th><th>Opération chiffrés</th></tr>
+      <tr><td>RSA</td><td>Partiel (×)</td><td>x·y</td><td>E(x)·E(y) mod n</td></tr>
+      <tr><td>ElGamal</td><td>Partiel (×)</td><td>M₁·M₂</td><td>E(M₁)·E(M₂) composante/composante</td></tr>
+      <tr><td>Paillier</td><td>Partiel (+)</td><td>m₁+m₂</td><td>E(m₁)·E(m₂) mod N²</td></tr>
+      <tr><td>FHE</td><td>Total (+,×)</td><td>tout</td><td>tout</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>❓ Questions d'Examen — Tous Niveaux</h2>
+
+<div class="q-filters">
+  <button class="f-btn" style="background:#555;color:white" onclick="filterQ('tous',this)">Tous</button>
+  <button class="f-btn" onclick="filterQ('facile',this)">🟢 Facile</button>
+  <button class="f-btn" onclick="filterQ('moyen',this)">🟠 Moyen</button>
+  <button class="f-btn" onclick="filterQ('difficile',this)">🔴 Difficile</button>
+  <button class="f-btn" onclick="filterQ('hard',this)">🟣 Très Difficile</button>
+</div>
+<div id="qcount" style="font-size:12px;color:#666;margin-bottom:10px;"></div>
+<div id="qlist"></div>
+
+<div class="footer">USTHB — Faculté d'Informatique · Cryptographie Avancée 2025 · Bonne chance ! 💪</div>
+</div>
+
+<script>
+const questions = [
+  // CLASSIQUES
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Classique",q:"Chiffrer 'HELLO' avec César k=3.",a:"H→K, E→H, L→O, L→O, O→R → 'KHOOR'. Formule : C=(M+3) mod 26."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Classique",q:"Quelle est la faiblesse principale du chiffrement de César ?",a:"Seulement 25 clés possibles → force brute triviale (essayer tous les décalages). Aussi vulnérable à l'analyse de fréquences."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Classique",q:"Qu'est-ce que la substitution monoalphabétique ? Combien de clés ?",a:"Chaque lettre remplacée par une autre selon une permutation fixe. 26! ≈ 4×10²⁶ clés. Vulnérable à l'analyse de fréquences car la structure statistique de la langue est préservée."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Classique",q:"Quelle est la différence entre chiffrement par substitution et par transposition ?",a:"Substitution : les lettres changent de valeur (identité), leur position reste. Transposition (Rail Fence) : les lettres gardent leur valeur mais leur position change."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Classique",q:"Qu'est-ce que le One-Time Pad ? Pourquoi est-il 'parfaitement sûr' ?",a:"Clé aléatoire de même longueur que le message, utilisée une seule fois. Sécurité parfaite (Shannon) : même avec puissance infinie, l'attaquant ne peut distinguer un clair d'un autre car tous sont équiprobables."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Classique",q:"Pourquoi Vigenère est-il plus fort que César ?",a:"Vigenère est polyalphabétique : chaque lettre est chiffrée avec un décalage différent selon la position dans la clé. Cela brise les fréquences simples et rend l'analyse de fréquences directe inefficace."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Classique",q:"Chiffrement affine : a=7, b=3. Chiffrer 'B' (M=1). Trouver a⁻¹ mod 26.",a:"C=(7×1+3) mod 26 = 10 → 'K'. a⁻¹=7⁻¹ mod 26 : 7×15=105=4×26+1 → a⁻¹=15. Déchiffrement : M=15×(C-3) mod 26."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Classique",q:"Expliquer le Test de Kasiski pour trouver la longueur de clé Vigenère.",a:"Chercher des séquences répétées dans le chiffré. Les distances entre répétitions sont multiples de L (longueur de clé). Calculer pgcd des distances → L probable. Puis IC pour confirmer."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Classique",q:"Qu'est-ce que l'indice de coïncidence ? Valeur pour texte naturel vs aléatoire ?",a:"IC = Σnᵢ(nᵢ-1)/N(N-1) = probabilité que deux lettres aléatoires soient identiques. Texte naturel (fr) ≈ 0.074, (en) ≈ 0.065. Texte aléatoire ≈ 0.038. Utilisé pour déterminer si un sous-texte est monoalphabétique."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Classique",q:"Décrire la méthode du mot probable (crib dragging).",a:"Attaque à texte clair connu. On suppose un mot probable M' dans le clair. On le fait glisser sur C, on calcule K_partielle = C XOR M'. Si la clé obtenue est cohérente (répétition, lettres valides), on a trouvé la clé et on déchiffre le reste."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Classique",q:"Quelles sont les 3 règles de chiffrement Playfair ?",a:"1. Même ligne : remplacer par lettre à droite (circulaire). 2. Même colonne : remplacer par lettre en dessous (circulaire). 3. Rectangle : chaque lettre prend la lettre au même rang dans la colonne de l'autre lettre du digramme."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Classique",q:"Pourquoi le OTP est-il impraticable malgré sa sécurité parfaite ?",a:"1. La clé doit être aussi longue que le message. 2. Elle doit être transmise de façon sécurisée (problème circulaire). 3. Elle ne peut être utilisée qu'une seule fois. Si réutilisée : C₁⊕C₂=M₁⊕M₂ → compromis total."},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Classique",q:"Exemple complet Kasiski : le triplet 'QXZ' apparaît aux positions 15, 51, 87. Trouver la longueur de clé probable.",a:"Distances : 51-15=36, 87-51=36, 87-15=72. pgcd(36,36,72)=36. Diviseurs : 2,3,4,6,9,12,18,36. Longueurs probables : 6 ou 9 (les plus courantes). Confirmer avec IC sur les sous-textes correspondants."},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Classique",q:"Chiffrement de Hill 2×2 : K=[[3,3],[2,5]], message 'HI' (H=7,I=8). Chiffrer.",a:"Vecteur M=[7,8]ᵀ. C=K·M mod 26 = [3×7+3×8, 2×7+5×8] mod 26 = [21+24, 14+40] mod 26 = [45,54] mod 26 = [19,2] → 'TC'."},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Classique",q:"Pourquoi Hill est-il vulnérable à KPA ?",a:"Avec n paires (clair,chiffré) de vecteurs de taille n : C=K·M mod 26 → K=C·M⁻¹ mod 26. Si M est inversible mod 26, K est directement retrouvé. n=2 paires suffisent pour une clé 2×2."},
+  // SYMETRIQUE
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Symétrique",q:"Qu'est-ce qu'un réseau de Feistel ? Donner les formules d'une ronde.",a:"Structure de chiffrement par blocs. Bloc divisé en L,R. Ronde i : Lᵢ=Rᵢ₋₁, Rᵢ=Lᵢ₋₁ XOR f(Rᵢ₋₁,Kᵢ). Avantage : f n'a pas besoin d'être inversible, déchiffrement = même structure avec clés inversées."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Symétrique",q:"Caractéristiques principales de DES.",a:"Réseau Feistel, 16 rondes, blocs 64 bits, clé effective 56 bits. Standard NIST 1977. Cassé en 1998 (56 bits trop court)."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Symétrique",q:"Caractéristiques principales de AES.",a:"Substitution-Permutation Network (non Feistel), blocs 128 bits, clés 128/192/256 bits → 10/12/14 rondes. Standard NIST 2001. Encore sûr."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Symétrique",q:"Citer les 4 opérations d'une ronde AES.",a:"SubBytes (substitution non-linéaire via S-Box), ShiftRows (décalage lignes), MixColumns (diffusion colonnes dans GF(2⁸)), AddRoundKey (XOR sous-clé). La dernière ronde omet MixColumns."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Symétrique",q:"Qu'est-ce que l'attaque Meet-in-the-Middle ? Pourquoi Double-DES n'est pas 2× plus sûr ?",a:"Double-DES : C=E_K2(E_K1(M)). Attaquant chiffre M avec toutes les K1 → table T. Déchiffre C avec toutes les K2 → cherche collision dans T. Complexité 2⁵⁷ au lieu de 2¹¹². → Sécurité effective ≈ 57 bits seulement."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Symétrique",q:"Expliquer 3DES-EDE et ses variantes.",a:"EDE : C=E_K3(D_K2(E_K1(M))). Si K1=K3 : 112 bits effectifs. Si K1=K2=K3 : équivalent DES (rétrocompatibilité). Variante EEE avec K1,K2,K3 tous différents → 168 bits."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Symétrique",q:"Quel est le rôle des S-Boxes dans DES et AES ?",a:"S-Boxes : seule composante non-linéaire. Sans elles, le chiffrement serait linéaire et cassable par cryptanalyse linéaire. Dans DES : 8 S-Boxes 6→4 bits. Dans AES (SubBytes) : une S-Box 8→8 bits basée sur GF(2⁸)."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Symétrique",q:"Pourquoi RC4 est-il maintenant interdit dans TLS ?",a:"Biais statistiques dans les premiers octets du keystream (attaque de Fluhrer-Mantin-Shamir). Aussi, les deux premiers octets fuient des infos sur la clé. Interdit par RFC 7465 depuis 2015."},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Symétrique",q:"Décrire en détail la fonction f de DES (fonction de ronde Feistel).",a:"1. Expansion E : 32 bits → 48 bits (certains bits dupliqués). 2. XOR avec sous-clé Kᵢ (48 bits). 3. 8 S-Boxes en parallèle : chacune 6 bits → 4 bits (non-linéarité). 4. Permutation P : réorganise les 32 bits de sortie (diffusion)."},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Symétrique",q:"Qu'est-ce que la confusion et la diffusion (principes de Shannon) ? Comment AES les réalise-t-il ?",a:"Confusion : rendre la relation clé-chiffré complexe → SubBytes (S-Box non-linéaire). Diffusion : chaque bit du clair affecte tous les bits du chiffré → ShiftRows + MixColumns (chaque bit affecte 128 bits après 2 rondes : 'avalanche effect')."},
+  // ASYMETRIQUE
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Asymétrique",q:"Décrire le protocole Diffie-Hellman étape par étape.",a:"Publier (n,g). Alice: x secret, envoie X=gˣ mod n. Bob: y secret, envoie Y=gʸ mod n. Alice: K=Yˣ mod n. Bob: K=Xʸ mod n. Clé partagée = gˣʸ mod n."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Asymétrique",q:"Quelle est la sécurité de RSA basée sur quel problème ?",a:"La difficulté de factoriser de grands entiers (n=p×q). Connaître n ne permet pas de trouver p et q efficacement pour de grands nombres (problème NP-difficile en pratique)."},
+  {l:"facile",lbl:"Facile",c:"#4caf50",cat:"Asymétrique",q:"Générer des clés RSA avec p=11, q=13.",a:"n=143, φ(n)=10×12=120. Choisir e=7 (pgcd(7,120)=1). d=7⁻¹ mod 120 : 7×103=721=6×120+1 → d=103. Clé publique (7,143), clé privée (103,143)."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Asymétrique",q:"Quelle est la sécurité d'ElGamal basée sur quel problème ?",a:"La difficulté du logarithme discret dans Zₚ* : connaissant g, p et gˣ mod p, retrouver x est computationnellement infaisable pour de grands p."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Asymétrique",q:"DH est vulnérable à quelle attaque ? Comment y remédier ?",a:"Attaque Man-in-the-Middle (MITM) : un attaquant intercède entre Alice et Bob, fait deux échanges DH séparés. Remède : authentifier les clés publiques échangées (certificats, signatures numériques, PKI)."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Asymétrique",q:"Chiffrer M=10 avec RSA (e=7, n=143).",a:"C = 10⁷ mod 143. 10²=100, 10⁴=100²=10000 mod 143=10000-69×143=10000-9867=133, 10⁷=10⁴×10²×10¹=133×100×10 mod 143=133×1000 mod 143. 1000 mod 143 = 1000-6×143=1000-858=142. 133×142 mod 143 = (143-10)(143-1) mod 143 = 10×1 mod 143 = 10... vérifier avec calcul exact."},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Asymétrique",q:"Prouver que RSA fonctionne : pourquoi Mᵉᵈ ≡ M mod n ?",a:"ed ≡ 1 mod φ(n) → ed = 1+kφ(n). Par le théorème d'Euler : Mᶠ⁽ⁿ⁾ ≡ 1 mod n si pgcd(M,n)=1. Donc Mᵉᵈ = M^(1+kφ(n)) = M·(Mᶠ⁽ⁿ⁾)ᵏ ≡ M·1ᵏ = M mod n. ✓"},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Asymétrique",q:"Déchiffrer ElGamal : C=(C1,C2)=(10,20), s=5, a=2, p=23. Retrouver M.",a:"Calculer C1ˢ=10⁵ mod 23. 10²=100 mod 23=8, 10⁴=64 mod 23=18, 10⁵=180 mod 23=180-7×23=180-161=19. M=C2·(C1ˢ)⁻¹=20×19⁻¹ mod 23. 19⁻¹ mod 23 : 19×17=323=14×23+1 → 19⁻¹=17. M=20×17 mod 23=340 mod 23=340-14×23=340-322=18."},
+  // AVANCE
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Homomorphe",q:"Définition formelle du chiffrement homomorphe.",a:"(E,D) est homomorphe par rapport à A si : A(E(x),E(y))=E(A(x,y)). Permet calculs sur données chiffrées sans déchiffrement."},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Homomorphe",q:"ElGamal est-il additif ou multiplicatif ? Prouver.",a:"Multiplicatif. E(M₁)=(aᵏ¹,M₁yᵏ¹), E(M₂)=(aᵏ²,M₂yᵏ²). Produit composante/composante = (aᵏ¹⁺ᵏ²,(M₁M₂)yᵏ¹⁺ᵏ²) = E(M₁·M₂). Donc E(M₁)·E(M₂)=E(M₁·M₂). ✓"},
+  {l:"moyen",lbl:"Moyen",c:"#ff9800",cat:"Homomorphe",q:"Paillier est-il additif ou multiplicatif ? Prouver.",a:"Additif. c₁=gᵐ¹r₁ᴺ, c₂=gᵐ²r₂ᴺ mod N². c₁·c₂=gᵐ¹⁺ᵐ²(r₁r₂)ᴺ mod N²=E(m₁+m₂). Donc multiplication des chiffrés = addition des clairs. ✓"},
+  {l:"difficile",lbl:"Difficile",c:"#f44336",cat:"Homomorphe",q:"Comparer RSA, ElGamal et Paillier en termes d'homomorphisme.",a:"RSA : multiplicatif, E(x)·E(y)=(xy)ᵉ mod n=E(xy). ElGamal : multiplicatif, produit composante/composante des paires. Paillier : additif, produit des chiffrés → somme des clairs. Aucun des trois n'est totalement homomorphe (FHE)."},
+  {l:"hard",lbl:"Très Difficile",c:"#9c27b0",cat:"Homomorphe",q:"Comment utiliser l'homomorphisme de Paillier pour un vote électronique ?",a:"Chaque votant chiffre son vote (0 ou 1) : cᵢ=E(vᵢ). On multiplie tous les chiffrés : Π cᵢ = E(Σ vᵢ). Le serveur déchiffre le produit → obtient le total des votes sans voir les votes individuels. La multiplication des chiffrés = addition des clairs grâce à Paillier."},
+  {l:"hard",lbl:"Très Difficile",c:"#9c27b0",cat:"Symétrique",q:"Pourquoi la sécurité de DES n'est pas améliorée de façon exponentielle par 3DES ?",a:"3DES résout le problème MITM du Double-DES. Avec 3DES (3 clés indépendantes), la sécurité est ≈168 bits théoriques mais environ 112 bits effectifs à cause d'attaques de type meet-in-the-middle sur 2 des 3 passes. C'est pour ça qu'AES-256 est préféré."},
+  {l:"hard",lbl:"Très Difficile",c:"#9c27b0",cat:"Classique",q:"Si l'IC d'un texte de 100 lettres donne 0.041, que conclure ? Comment trouver la longueur de clé ?",a:"IC≈0.041 proche de 0.038 (aléatoire), donc le texte est probablement polyalphabétique (Vigenère). On teste différentes longueurs L=2,3,4,...: pour chaque L, diviser en L colonnes et calculer l'IC moyen des colonnes. La longueur pour laquelle IC_moyen ≈ 0.065 (fr: 0.074) est la longueur de clé. Confirmer par Kasiski si des répétitions existent."},
+  {l:"hard",lbl:"Très Difficile",c:"#9c27b0",cat:"Asymétrique",q:"Expliquer pourquoi le RSA sans padding (textbook RSA) est dangereux, et citer 2 attaques.",a:"1. Déterministe : E(M₁)=E(M₂) si M₁=M₂ → pas de sécurité sémantique (CPA). 2. Homomorphisme exploitable : attaquant envoie C'=C·2ᵉ mod n, obtient M'=2M, déduit M. 3. Messages courts : si M < n^(1/e), alors C=Mᵉ mod n=Mᵉ (sans modulo), racine e-ième directe. Solution : OAEP padding randomisé."},
+  {l:"hard",lbl:"Très Difficile",c:"#9c27b0",cat:"Asymétrique",q:"Schnorr est zero-knowledge : expliquer formellement et distinguer des 3 propriétés ZK.",a:"Un protocole ZK satisfait : 1. Complétude : si le prouveur connaît s, le vérifieur accepte toujours. 2. Solidité (soundness) : un tricheur sans s ne peut convaincre qu'avec probabilité négligeable. 3. Zero-knowledge : le vérifieur n'apprend rien d'autre que la véracité → il existe un simulateur qui produit des transcriptions indistinguables sans connaître s. Dans Schnorr : r masque s, le vérifieur voit (x,c,y) mais ne peut retrouver s."},
+];
+
+function renderQ(list){
+  const d=document.getElementById('qlist');
+  document.getElementById('qcount').textContent=list.length+' question(s) — cliquer pour voir la réponse';
+  d.innerHTML='';
+  list.forEach((q,i)=>{
+    d.innerHTML+=`<div class="q-card">
+      <div class="q-head" onclick="tQ(this)">
+        <span class="badge" style="background:${q.c}">${q.lbl}</span>
+        <span class="tag">${q.cat}</span>
+        <span class="q-text">${q.q}</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="q-ans">✅ ${q.a}</div>
+    </div>`;
+  });
+}
+
+function tQ(el){
+  const a=el.nextElementSibling, ar=el.querySelector('.arrow');
+  const o=a.classList.toggle('open');
+  ar.textContent=o?'▲':'▼';
+}
+
+function filterQ(lv,btn){
+  document.querySelectorAll('.f-btn').forEach(b=>{b.style.background='#e0e0e0';b.style.color='#555';});
+  const cols={'tous':'#555','facile':'#4caf50','moyen':'#ff9800','difficile':'#f44336','hard':'#9c27b0'};
+  btn.style.background=cols[lv]; btn.style.color='white';
+  renderQ(lv==='tous'?questions:questions.filter(q=>q.l===lv));
+}
+
+function tog(h){
+  const b=h.nextElementSibling, sp=h.querySelector('span:last-child');
+  const o=b.classList.toggle('open');
+  sp.textContent=o?'▲':'▼';
+}
+
+renderQ(questions);
+</script>
+</body>
+</html>

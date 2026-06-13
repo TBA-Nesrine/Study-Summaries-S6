@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile OS & Android — 200+ Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--bg2:#0f1628;--panel:#141c30;--panel2:#1a2440;--border:#1e2e50;--accent:#8b5cf6;--accent2:#a78bfa;--accent3:#06b6d4;--gold:#f59e0b;--green:#10b981;--red:#ef4444;--text:#e2e8f0;--muted:#64748b;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+header{background:linear-gradient(135deg,#0a0e1a 0%,#1a0a2e 50%,#0a0e1a 100%);border-bottom:1px solid var(--border);padding:2rem;text-align:center}
+.course-tag{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;color:var(--accent2);background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);display:inline-block;padding:.3rem 1rem;border-radius:2px;margin-bottom:1rem}
+header h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,5vw,3.2rem);font-weight:700;color:var(--white);letter-spacing:-.02em;margin-bottom:.4rem}
+header h1 span{color:var(--accent)}
+header p{color:var(--muted);font-size:.85rem}
+.badge{background:var(--accent);font-size:.7rem;padding:.2rem .8rem;border-radius:20px;margin-left:.5rem;font-family:monospace;vertical-align:middle}
+nav{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;padding:1rem 2rem;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+nav button{font-family:'Space Mono',monospace;font-size:.7rem;padding:.5rem 1.1rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+nav button:hover,nav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.section{display:none;padding:2rem;max-width:1200px;margin:0 auto}
+.section.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Fraunces',serif;font-size:2rem;color:var(--white);margin-bottom:.3rem;font-weight:700}
+.section-sub{color:var(--muted);font-size:.85rem;margin-bottom:2rem;font-family:'Space Mono',monospace}
+/* brain */
+.chapter-title{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--accent2);border-bottom:2px solid var(--border);padding-bottom:.5rem;margin:1.5rem 0 1rem}
+.brain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem;margin-bottom:1.5rem}
+.brain-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1.4rem;transition:.2s;position:relative;overflow:hidden}
+.brain-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.brain-card.purple::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.brain-card.cyan::before{background:linear-gradient(90deg,var(--accent3),#06b6d4)}
+.brain-card.gold::before{background:linear-gradient(90deg,var(--gold),#f97316)}
+.brain-card.green::before{background:linear-gradient(90deg,var(--green),var(--accent3))}
+.brain-card.red::before{background:linear-gradient(90deg,var(--red),var(--gold))}
+.brain-card.blue::before{background:linear-gradient(90deg,#3b82f6,var(--accent))}
+.brain-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.brain-card h3{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--accent2);letter-spacing:.2em;margin-bottom:.5rem}
+.brain-card h2{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:.7rem;color:var(--white)}
+.brain-card p{font-size:.84rem;color:var(--text);line-height:1.6;margin-bottom:.5rem}
+.def-box{background:rgba(139,92,246,.08);border-left:3px solid var(--accent);padding:.7rem 1rem;border-radius:5px;margin:.5rem 0;font-size:.84rem;line-height:1.6}
+.def-box strong{color:var(--accent2)}
+.warn-box{background:rgba(239,68,68,.08);border-left:3px solid var(--red);padding:.7rem 1rem;border-radius:5px;margin:.5rem 0;font-size:.84rem;line-height:1.6;color:#fca5a5}
+.ok-box{background:rgba(16,185,129,.08);border-left:3px solid var(--green);padding:.7rem 1rem;border-radius:5px;margin:.5rem 0;font-size:.84rem;line-height:1.6}
+.calc-box{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.3);border-radius:8px;padding:1rem 1.2rem;margin:.8rem 0}
+.calc-box h4{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--accent3);letter-spacing:.1em;margin-bottom:.6rem}
+.calc-box pre{font-family:'Space Mono',monospace;font-size:.78rem;color:#a5f3fc;line-height:1.8;white-space:pre-wrap}
+.formula-box{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:.8rem 1rem;margin:.5rem 0;font-family:'Space Mono',monospace;font-size:.78rem;color:#fcd34d;line-height:1.8}
+.tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.tag{font-family:'Space Mono',monospace;font-size:.6rem;padding:.2rem .7rem;border-radius:3px;background:rgba(139,92,246,.15);color:var(--accent2);border:1px solid rgba(139,92,246,.3)}
+.tag.green{background:rgba(16,185,129,.15);color:var(--green);border-color:rgba(16,185,129,.3)}
+.tag.red{background:rgba(239,68,68,.15);color:var(--red);border-color:rgba(239,68,68,.3)}
+.tag.cyan{background:rgba(6,182,212,.15);color:var(--accent3);border-color:rgba(6,182,212,.3)}
+.tag.gold{background:rgba(245,158,11,.15);color:var(--gold);border-color:rgba(245,158,11,.3)}
+.comparison-table{width:100%;border-collapse:collapse;font-size:.8rem;background:var(--panel);border-radius:8px;overflow:hidden;margin:1.2rem 0;border:1px solid var(--border)}
+.comparison-table th,.comparison-table td{padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.comparison-table th{background:var(--panel2);color:var(--accent2);font-family:'Space Mono',monospace;letter-spacing:.08em;font-size:.7rem}
+.comparison-table tr:hover td{background:rgba(139,92,246,.04)}
+.flow{display:flex;flex-wrap:wrap;gap:0;align-items:center;margin:.8rem 0}
+.flow-step{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.4);border-radius:6px;padding:.4rem .8rem;font-size:.75rem;font-weight:600;color:var(--accent2)}
+.flow-arr{color:var(--accent);padding:0 .4rem;font-size:.9rem}
+/* flashcard */
+.flashcard-scene{perspective:1000px;margin-bottom:1rem}
+.flashcard{width:100%;max-width:640px;height:260px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);margin:0 auto}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:1.8rem;display:flex;flex-direction:column;justify-content:center;text-align:center;background:var(--panel);border:1px solid var(--border)}
+.fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#1a0a2e,#1a2440);border-color:var(--accent)}
+.fc-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--accent2);margin-bottom:1rem}
+.fc-question{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;color:var(--white);line-height:1.4}
+.fc-answer{font-size:.88rem;line-height:1.6;color:#cbd5e1}
+.fc-hint{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);margin-top:1rem}
+.fc-nav{display:flex;justify-content:center;align-items:center;gap:.8rem;margin:.8rem 0}
+.fc-btn{font-family:'Space Mono',monospace;background:var(--panel2);border:1px solid var(--border);padding:.5rem 1.1rem;border-radius:5px;color:var(--text);cursor:pointer;font-size:.7rem;transition:.2s}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fc-progress{width:100%;max-width:640px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin:0 auto .8rem}
+.fc-progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s}
+/* quiz */
+.score-badge{background:var(--panel2);border:1px solid var(--border);padding:.35rem 1rem;border-radius:20px;font-family:'Space Mono',monospace;font-size:.75rem;color:var(--accent2);margin-bottom:1rem;display:inline-block}
+.set-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.set-tab{font-family:'Space Mono',monospace;font-size:.65rem;padding:.35rem .9rem;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+.set-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.question-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1.3rem;margin-bottom:.8rem}
+.question-number{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent);letter-spacing:.15em;margin-bottom:.4rem}
+.question-text{font-size:.92rem;color:var(--white);margin-bottom:.9rem;line-height:1.5}
+.option-btn{background:var(--panel2);border:1px solid var(--border);padding:.65rem 1rem;border-radius:6px;cursor:pointer;margin:.25rem 0;width:100%;text-align:left;display:flex;align-items:center;gap:.8rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.87rem;transition:.15s}
+.option-btn:hover:not(:disabled){border-color:var(--accent2);background:rgba(139,92,246,.07)}
+.option-btn.correct{border-color:var(--green);background:rgba(16,185,129,.12);color:var(--green)}
+.option-btn.wrong{border-color:var(--red);background:rgba(239,68,68,.12);color:#fca5a5}
+.option-letter{font-family:'Space Mono',monospace;font-size:.62rem;width:20px;height:20px;border-radius:3px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feedback-box{margin-top:.5rem;padding:.6rem .9rem;border-radius:5px;font-size:.78rem;line-height:1.4;display:none}
+.feedback-box.show{display:block}
+.correct-fb{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.wrong-fb{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+/* tf */
+.tf-container{display:flex;flex-direction:column;gap:.7rem}
+.tf-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1rem 1.3rem}
+.tf-statement{font-size:.9rem;color:var(--text);margin-bottom:.7rem;line-height:1.5}
+.tf-buttons{display:flex;gap:.5rem}
+.tf-btn{font-family:'Space Mono',monospace;border:1px solid var(--border);background:var(--panel2);padding:.3rem .9rem;border-radius:4px;cursor:pointer;font-size:.68rem;transition:.2s;color:var(--text)}
+.tf-result{font-size:.78rem;margin-top:.5rem;display:none}
+.tf-result.show{display:block}
+.quiz-actions{display:flex;gap:.8rem;margin-top:1.5rem;flex-wrap:wrap}
+.quiz-btn-primary{font-family:'Space Mono',monospace;padding:.65rem 1.5rem;border-radius:5px;cursor:pointer;background:var(--accent);border:none;color:#fff;font-size:.7rem;transition:opacity .2s}
+.quiz-btn-primary:hover{opacity:.85}
+.quiz-btn-secondary{font-family:'Space Mono',monospace;padding:.65rem 1.5rem;border-radius:5px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.7rem;transition:.2s}
+.quiz-btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.result-panel{background:var(--panel);border:1px solid var(--accent);border-radius:12px;padding:2.5rem;text-align:center;margin-top:2rem;display:none}
+.result-panel.show{display:block;animation:fadeIn .4s}
+.result-score{font-family:'Fraunces',serif;font-size:3.5rem;color:var(--accent);font-weight:700}
+.result-label{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--muted);margin:.3rem 0 1rem}
+/* short */
+.short-input{width:100%;background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:.7rem 1rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;margin-bottom:.5rem}
+.short-input:focus{border-color:var(--accent)}
+/* pdf */
+.pdf-bar{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200}
+.pdf-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;padding:.7rem 1.2rem;border-radius:40px;color:#fff;font-family:'Space Mono',monospace;font-size:.7rem;cursor:pointer;box-shadow:0 4px 20px rgba(139,92,246,.3)}
+@media print{nav,.pdf-bar,.quiz-actions,.set-tabs,.fc-nav{display:none!important}.section{display:block!important}body{background:#fff;color:#111}}
+</style>
+</head>
+<body>
+<header>
+  <div class="course-tag">USTHB · ING3 SECU · 2025/2026</div>
+  <h1>Mobile OS & <span>Android</span> <span class="badge">200+ Questions</span></h1>
+  <p>Systèmes Embarqués · Architecture Android · Processus & Threads · Scheduling CFS · Mémoire · Permissions · Énergie</p>
+</header>
+<nav>
+  <button class="active" onclick="showSection('brain')">🧠 Cours Complet</button>
+  <button onclick="showSection('flashcards')">⚡ Flashcards</button>
+  <button onclick="showSection('mcq')">📝 MCQ (110+)</button>
+  <button onclick="showSection('tf')">✅ Vrai/Faux (110+)</button>
+  <button onclick="showSection('short')">✏️ Réponses courtes</button>
+  <button onclick="showSection('scenario')">🔍 Scénarios & Calculs</button>
+</nav>
+
+<!-- ===== BRAIN REFRESHER ===== -->
+<div id="brain" class="section active">
+  <h2 class="section-title">Cours Complet</h2>
+  <p class="section-sub">// Tout le programme — définitions, architecture, calculs, règles clés</p>
+
+  <div class="chapter-title">📦 CH1 — Systèmes Embarqués</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>DÉFINITION FONDAMENTALE</h3>
+      <h2>Système Embarqué</h2>
+      <div class="def-box"><strong>Système embarqué [Kadionik 2004] :</strong> Combinaison matériel + logiciel dédiée à une ou plusieurs fonctions spécifiques avec des contraintes sévères : consommation, température, taille, performances.</div>
+      <div class="def-box"><strong>Dispositif mobile :</strong> Appareil informatique portable possédant un écran et une interface E/S. Inclut : laptop, tablet PC, PDA, smartphone, MP3.</div>
+      <div class="tag-row"><span class="tag">Dédié</span><span class="tag gold">Contraint</span><span class="tag green">Autonome</span></div>
+    </div>
+    <div class="brain-card gold">
+      <h3>CONTRAINTES CLÉS</h3>
+      <h2>Les 5 Contraintes</h2>
+      <div class="def-box">
+        <strong>1. Faible coût :</strong> Solution optimale prix/performance. ~6$/processeur (2004).<br>
+        <strong>2. Faible consommation :</strong> Batterie, autonomie max, pas de gaspillage.<br>
+        <strong>3. Faible encombrement :</strong> Composants compacts sur faible surface.<br>
+        <strong>4. Temps réel :</strong> Réponse rapide aux événements, critique en contrôle.<br>
+        <strong>5. Environnement :</strong> Température, humidité, vibrations, radiations RF.
+      </div>
+    </div>
+    <div class="brain-card green">
+      <h3>CHIFFRES CLÉS</h3>
+      <h2>Marché des Processeurs</h2>
+      <div class="ok-box">✅ <strong>98%</strong> des processeurs vendus → embarqué (95% selon sources)<br>✅ <strong>2–5%</strong> → PC<br>✅ Prix moyen embarqué : <strong>6$</strong> vs <strong>300$</strong> PC (2004)</div>
+      <p>En 2004 : 14 milliards de processeurs pour l'embarqué, 260 millions pour PC.</p>
+    </div>
+    <div class="brain-card cyan">
+      <h3>CARTES PROGRAMMABLES</h3>
+      <h2>Arduino / Raspberry / Micro:bit</h2>
+      <div class="def-box">
+        <strong>Arduino (2005) :</strong> Licence libre, langage C-like, câble USB, simple.<br>
+        <strong>Raspberry Pi (2012) :</strong> Python, sans-fil, OS intégré, plus puissant.<br>
+        <strong>Micro:bit (2015) :</strong> Éducatif, capteurs intégrés, matrice LEDs, Python.
+      </div>
+    </div>
+    <div class="brain-card blue">
+      <h3>HISTORIQUE</h3>
+      <h2>Repères Chronologiques</h2>
+      <div class="def-box">
+        <strong>1967 :</strong> 1er système embarqué — guidage Apollo.<br>
+        <strong>1971 :</strong> 1er microprocesseur Intel commercialisé.<br>
+        <strong>1982 :</strong> 1er objet connecté — distributeur Coca-Cola.<br>
+        <strong>1984 :</strong> Airbus A320 — commandes électroniques.<br>
+        <strong>2007 :</strong> iPhone Apple — emblème du smartphone.<br>
+        <strong>2014 :</strong> Google Car — radar, caméras, GPS.
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-title">📱 CH2 — OS Mobile & Architecture Android</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>DÉFINITION</h3>
+      <h2>OS Mobile</h2>
+      <div class="def-box"><strong>OS Mobile :</strong> Logiciel permettant à un terminal mobile (smartphone, PDA, tablette, smartwatch) de fonctionner. Gère : connectivité sans fil (WiFi, Bluetooth, GPS), appels, téléchargement d'apps, personnalisation.</div>
+      <div class="ok-box">Parts de marché 2023 : Android <strong>44,6%</strong> · Windows <strong>28,41%</strong> · iOS <strong>17,29%</strong></div>
+      <div class="tag-row"><span class="tag">Propriétaire: iOS</span><span class="tag green">Open Source: Android</span></div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>INTRODUCTION</h3>
+      <h2>Android — Origine</h2>
+      <div class="def-box">
+        <strong>Android :</strong> Plateforme mobile = OS + librairies middleware (C/C++) + applications. Basé sur kernel Linux 2.6. Framework en Java.<br>
+        <strong>2005 :</strong> Google acquiert Android Inc.<br>
+        <strong>2007 :</strong> Lancement de l'OHA (Open Handset Alliance).<br>
+        <strong>2008 :</strong> Premier standard Android annoncé.
+      </div>
+      <div class="def-box"><strong>OHA :</strong> Alliance d'opérateurs (Vodafone), fabricants (HTC, LG), semi-conducteurs (Intel, ARM), éditeurs (Google).</div>
+    </div>
+    <div class="brain-card gold">
+      <h3>ARCHITECTURE</h3>
+      <h2>Les 5 Couches Android</h2>
+      <div class="def-box">
+        <strong>1. Applications</strong> — Email, SMS, Maps, Navigateur (Java/Kotlin)<br>
+        <strong>2. App Framework</strong> — Activity Mgr, Content Providers, Notification Mgr, Location Mgr, Package Mgr, Window Mgr, Telephony Mgr, Resource Mgr, View System (Java)<br>
+        <strong>3. Librairies</strong> — Bionic libc, SQLite, WebKit, OpenGL ES, SSL, SGL, SurfaceManager, Media Framework, FreeType (C/C++)<br>
+        <strong>4. Android Runtime</strong> — ART (ex-Dalvik), Core Libraries (.dex)<br>
+        <strong>5. Noyau Linux</strong> — Drivers, Binder IPC, Ashmem, Wakelock (C)
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin:1rem 0 .8rem;">Librairies Clés (Couche 3)</h3>
+  <table class="comparison-table">
+    <thead><tr><th>Librairie</th><th>Rôle</th><th>Détail important</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Bionic libc</strong></td><td>Bibliothèque C/C++ remplaçant glibc</td><td>Moitié de glibc, supporte ARM, pthread pour Dalvik. PAS de POSIX complet, STL, ni exceptions C++</td></tr>
+      <tr><td><strong>WebKit</strong></td><td>Moteur de rendu web</td><td>Dérivé de KHTML (Apple/Safari). Supporte CSS, JS, DOM, AJAX. Composé de WebCore + JavascriptCore</td></tr>
+      <tr><td><strong>SQLite</strong></td><td>Base de données relationnelle SQL</td><td>Stockage dans un fichier unique, taille &lt; 2Mo</td></tr>
+      <tr><td><strong>SurfaceManager</strong></td><td>Rendu graphique, double-buffer</td><td>Double buffer = jamais d'affichage de frames incomplètes. Combine 2D/3D. Binder pour buffers.</td></tr>
+      <tr><td><strong>Media Framework</strong></td><td>Audio/vidéo/image</td><td>Basé sur OpenCore de PacketVideo</td></tr>
+      <tr><td><strong>SSL</strong></td><td>Communications réseau sécurisées</td><td>Protocole de sécurité</td></tr>
+      <tr><td><strong>OpenGL ES</strong></td><td>OpenGL pour l'embarqué</td><td>Accélération matérielle 3D</td></tr>
+      <tr><td><strong>SGL</strong></td><td>Moteur graphique 2D</td><td>Rendu 2D rapide</td></tr>
+      <tr><td><strong>FreeType</strong></td><td>Rendu bitmap de polices vectorielles</td><td>Rendu de texte</td></tr>
+    </tbody>
+  </table>
+
+  <div class="brain-grid">
+    <div class="brain-card green">
+      <h3>ANDROID RUNTIME</h3>
+      <h2>Dalvik vs ART</h2>
+      <table class="comparison-table" style="margin:.5rem 0;font-size:.75rem">
+        <thead><tr><th>Feature</th><th>Dalvik</th><th>ART</th></tr></thead>
+        <tbody>
+          <tr><td>Compilation</td><td>JIT (runtime)</td><td>AOT (install, Android L+); JIT+AOT (Android N+)</td></tr>
+          <tr><td>VM Architecture</td><td>Registre-based</td><td>Registre-based</td></tr>
+          <tr><td>Format</td><td>.dex</td><td>.dex → code machine natif</td></tr>
+          <tr><td>GC</td><td>Stop-the-world</td><td>Concurrent Mark &amp; Sweep, pauses réduites</td></tr>
+        </tbody>
+      </table>
+      <div class="warn-box">⚠️ JIT = Just-In-Time (à l'exécution). AOT = Ahead-Of-Time (à l'installation). Android N+ = hybride JIT+AOT.</div>
+    </div>
+    <div class="brain-card purple">
+      <h3>PROCESSUS DE BOOT</h3>
+      <h2>Séquence Complète</h2>
+      <div class="flow" style="flex-direction:column;gap:.3rem">
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step">Boot ROM</div><span style="color:var(--muted);font-size:.75rem">→ détecte NAND, charge 1er bootloader en RAM interne</span></div>
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step">Bootloader 1</div><span style="color:var(--muted);font-size:.75rem">→ configure RAM externe, charge main bootloader</span></div>
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step">Bootloader 2</div><span style="color:var(--muted);font-size:.75rem">→ init fichiers système, pilotes réseau, lance kernel</span></div>
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step">Linux Kernel</div><span style="color:var(--muted);font-size:.75rem">→ init interruptions, mémoire, cache, scheduler → lance init (PID 1)</span></div>
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step">Init + init.rc</div><span style="color:var(--muted);font-size:.75rem">→ lit script init.rc, lance services système</span></div>
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step" style="border-color:var(--accent)">Zygote</div><span style="color:var(--muted);font-size:.75rem">→ démarre ART VM, précharge classes Java</span></div>
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step" style="border-color:var(--gold)">System Server</div><span style="color:var(--muted);font-size:.75rem">→ 1er composant Java, lance TOUS les services Android</span></div>
+        <div style="display:flex;align-items:center;gap:.4rem"><div class="flow-step" style="border-color:var(--green)">Applications</div><span style="color:var(--muted);font-size:.75rem">→ forkées depuis Zygote</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter-title">📐 CH3 — Composants d'Application Android</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>COMPOSANT 1</h3>
+      <h2>Activity & Cycle de Vie</h2>
+      <div class="def-box"><strong>Activity :</strong> Composant présentant une interface utilisateur. Gérée via un backstack (pile LIFO). Plusieurs activités composent une app.</div>
+      <div class="flow" style="font-size:.72rem;flex-wrap:wrap;gap:.2rem">
+        <div class="flow-step">onCreate</div><div class="flow-arr">→</div>
+        <div class="flow-step">onStart</div><div class="flow-arr">→</div>
+        <div class="flow-step">onResume</div><div class="flow-arr">→</div>
+        <div class="flow-step" style="background:rgba(16,185,129,.15);border-color:var(--green)">RUNNING</div><div class="flow-arr">→</div>
+        <div class="flow-step">onPause</div><div class="flow-arr">→</div>
+        <div class="flow-step">onStop</div><div class="flow-arr">→</div>
+        <div class="flow-step">onDestroy</div>
+      </div>
+      <div class="ok-box"><strong>onSaveInstanceState :</strong> appelé avant kill système (rotation, manque mémoire). <strong>onRestoreInstanceState :</strong> à la recréation. <strong>NON appelés</strong> si l'utilisateur appuie sur Back.</div>
+      <div class="warn-box">Priorités (+ haute → + basse) : Foreground → Visible → Service → Background → Empty</div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>COMPOSANT 2</h3>
+      <h2>Intent</h2>
+      <div class="def-box"><strong>Intent :</strong> Objet de messagerie pour demander une action. Attributs : Nom, Action, Data (URI/MIME), Catégorie, Extras (clé/valeur), Flags.</div>
+      <div class="def-box"><strong>Explicite :</strong> cible nommée directement → navigation interne à une app.</div>
+      <div class="def-box"><strong>Implicite :</strong> action décrite → système trouve le composant → dialog "Ouvrir avec" si plusieurs matchs.</div>
+      <div class="def-box"><strong>IntentFilter :</strong> dans le manifest, spécifie quels intents un composant peut gérer (action, category, data).</div>
+    </div>
+    <div class="brain-card gold">
+      <h3>COMPOSANTS 3, 4, 5</h3>
+      <h2>Service / Broadcast / ContentProvider</h2>
+      <div class="def-box"><strong>Service :</strong> Tâche arrière-plan sans UI. Types : Foreground (notification visible), Background (API 26+ restreint), Bound (client-serveur Binder). Ex: lecteur musique.</div>
+      <div class="def-box"><strong>BroadcastReceiver :</strong> Reçoit Intents diffusés. onReceive() doit être COURT (thread UI). NE PEUT PAS lancer Activity, Dialog, ou Service long.</div>
+      <div class="def-box"><strong>ContentProvider :</strong> Partage données entre apps via URIs (content://authority/path). Méthodes : query(), insert(), update(), delete(). Cursor = itérateur sur résultats.</div>
+    </div>
+  </div>
+
+  <div class="chapter-title">⚙️ CH4 — Processus, Threads & CFS Scheduling</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>THREADING ANDROID</h3>
+      <h2>Main Thread & Worker Threads</h2>
+      <div class="def-box"><strong>Main Thread (UI Thread) :</strong> Lancé au démarrage. Exécute : callbacks du cycle de vie, BroadcastReceiver.onReceive(), méthodes d'événements UI.</div>
+      <div class="warn-box">⚠️ RÈGLE DES 5 SECONDES : Ne jamais bloquer le main thread &gt; 5s → ANR (Application Not Responding)</div>
+      <div class="def-box"><strong>Solutions pour modifier l'UI depuis un worker :</strong><br>
+        • Activity.runOnUiThread(Runnable)<br>
+        • View.post(Runnable)<br>
+        • View.postDelayed(Runnable, long)<br>
+        • Handler (niveau supérieur, file de messages)<br>
+        • AsyncTask (déprécié API 30)
+      </div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>CFS SCHEDULING</h3>
+      <h2>Completely Fair Scheduler</h2>
+      <div class="def-box"><strong>CFS :</strong> Algorithme depuis Linux 2.6.23 pour processus SCHED_NORMAL. Utilise un arbre bicolore (red-black tree) trié par vruntime. Élit toujours le nœud le plus à GAUCHE (vruntime minimal).</div>
+      <div class="formula-box">
+        W(nice) ≈ 1024 / 1.25^nice<br>
+        W₀ (nice=0) = 1024<br>
+        Quantum_i = (W_i / ΣW) × TL<br>
+        ΔVruntime = Δt × (W₀ / W_i)<br>
+        → Processus élu : vruntime le plus PETIT
+      </div>
+      <div class="ok-box">Nice : -20 (priorité max) → +19 (priorité min). Défaut = 0.</div>
+    </div>
+    <div class="brain-card gold">
+      <h3>TABLE CFS</h3>
+      <h2>Nice → Poids → Quantum</h2>
+      <table class="comparison-table" style="margin:.5rem 0;font-size:.75rem">
+        <thead><tr><th>Nice</th><th>Poids</th><th>Quantum (TL=6ms)</th><th>ΔVruntime (Δt=1ms)</th></tr></thead>
+        <tbody>
+          <tr><td>-10</td><td>9548</td><td>≈ 4.051 ms</td><td>≈ 0.107 ms</td></tr>
+          <tr><td>-5</td><td>3121</td><td>≈ 1.328 ms</td><td>≈ 0.328 ms</td></tr>
+          <tr><td>0</td><td>1024</td><td>≈ 0.434 ms</td><td>= 1.000 ms</td></tr>
+          <tr><td>5</td><td>335</td><td>≈ 0.142 ms</td><td>≈ 3.057 ms</td></tr>
+          <tr><td>10</td><td>110</td><td>≈ 0.046 ms</td><td>≈ 9.309 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="calc-box">
+    <h4>🧮 EXERCICE CFS COMPLET — 3 threads (nice: -5, 0, +5), TL=3ms, dt=1ms, ΣW=3121+1024+335=4480</h4>
+    <pre>
+Quantum T1 (nice=-5, W=3121) = (3121/4480) × 3 ≈ 2.09 ms
+Quantum T2 (nice=0,  W=1024) = (1024/4480) × 3 ≈ 0.69 ms
+Quantum T3 (nice=+5, W=335)  = (335/4480)  × 3 ≈ 0.22 ms
+
+ΔVruntime T1 (Δt=1ms) = 1 × (1024/3121) ≈ 0.328 ms  → vruntime augmente lentement (haute priorité)
+ΔVruntime T2 (Δt=1ms) = 1 × (1024/1024) = 1.000 ms  → référence
+ΔVruntime T3 (Δt=1ms) = 1 × (1024/335)  ≈ 3.057 ms  → vruntime augmente vite (basse priorité)
+
+→ Ordre d'élection : T1 (vruntime le plus petit) est élu en premier.
+→ À chaque tick : mise à jour de vruntime, l'arbre bicolore est réorganisé.
+→ Au réveil : vruntime ← max(vruntime_processus, min_vruntime) pour éviter la famine.
+    </pre>
+  </div>
+
+  <div class="chapter-title">💾 CH5 — Gestion de la Mémoire</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>STRUCTURE RAM</h3>
+      <h2>Pages Mémoire (4KB)</h2>
+      <div class="def-box">
+        <strong>Cached privé :</strong><br>
+        • Original (non modifié) → libéré directement par kswapd<br>
+        • Modifié → compressé en zRAM par kswapd<br>
+        <strong>Cached partagé :</strong><br>
+        • Original → libéré directement<br>
+        • Modifié → écrit en storage (kswapd, msync(), munmap())<br>
+        <strong>Anonyme (MAP_ANONYMOUS) :</strong><br>
+        • Modifié → compressé en zRAM
+      </div>
+      <div class="def-box"><strong>zRAM :</strong> Partition de RAM compressée pour le swap. Pages anonymes/modifiées compressées ici.</div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>MÉTRIQUES MÉMOIRE</h3>
+      <h2>RSS / PSS / USS</h2>
+      <div class="def-box"><strong>RSS (Resident Set Size) :</strong> Privé + TOUT le partagé. <span style="color:var(--red)">SURESTIME.</span></div>
+      <div class="def-box"><strong>PSS (Proportional Set Size) :</strong> Privé + partagé/n. <span style="color:var(--green)">MEILLEURE MÉTRIQUE ⭐</span></div>
+      <div class="def-box"><strong>USS (Unique Set Size) :</strong> Privé seulement. <span style="color:var(--gold)">SOUS-ESTIME.</span></div>
+      <div class="formula-box">PSS(app) = pages_privées + Σ(pages_partagées / nb_utilisateurs)</div>
+    </div>
+    <div class="brain-card gold">
+      <h3>RÉCUPÉRATION MÉMOIRE</h3>
+      <h2>kswapd → onTrimMemory → LMK</h2>
+      <div class="def-box"><strong>Garbage Collector (CMS) :</strong> Young generation → Older generation → Permanent generation. Multi-thread, pauses courtes.</div>
+      <div class="def-box"><strong>kswapd :</strong> Démon kernel. Actif si RAM libre &lt; seuil min. Arrêt si RAM libre &gt; seuil max (high watermark).</div>
+      <div class="def-box"><strong>LMK :</strong> Dernier recours. Utilise oom_adj_score. Tue : Background (LRU d'abord) → Service → Visible → Foreground (dernier).</div>
+      <div class="warn-box">⚠️ kswapd ne s'arrête PAS quand la RAM est pleine. Il s'arrête quand la RAM libre DÉPASSE le seuil MAXIMUM.</div>
+    </div>
+  </div>
+
+  <div class="calc-box">
+    <h4>🧮 EXERCICE PSS COMPLET (TD43)</h4>
+    <pre>
+Apps : Within (3 pages privées), GMaps (2 pages privées), Viber (1 page privée)
+Location Service : 4 pages PARTAGÉES
+
+CAS 1 — Seulement GMaps utilise le Location Service :
+  PSS(Within)  = 3 + 0       = 3 pages
+  PSS(GMaps)   = 2 + 4/1     = 6 pages
+  PSS(Viber)   = 1 + 0       = 1 page
+  Total pages  = 3+2+4+1 = 10 pages × 4KB = 40KB
+
+CAS 2 — GMaps ET Viber partagent le Location Service :
+  PSS(Within)  = 3 + 0       = 3 pages
+  PSS(GMaps)   = 2 + 4/2     = 4 pages
+  PSS(Viber)   = 1 + 4/2     = 3 pages
+  Total pages  = 3+2+4+1 = 10 pages × 4KB = 40KB (inchangé)
+
+RAM = 50KB, Utilisée = 40KB → RAM libre = 10KB
+Seuil minimal = 12KB → RAM libre (10KB) &lt; seuil (12KB)
+→ kswapd activé + si insuffisant → LMK tue processus background (Within en premier car LRU)
+
+RÈGLE PSS DE WITHIN : Within n'utilise JAMAIS Location Service → PSS(Within) = 3 dans TOUS les cas !
+    </pre>
+  </div>
+
+  <div class="chapter-title">🔐 CH6 — Permissions & Gestion de l'Énergie</div>
+  <div class="brain-grid">
+    <div class="brain-card purple">
+      <h3>PERMISSIONS</h3>
+      <h2>3 Niveaux</h2>
+      <table class="comparison-table" style="margin:.5rem 0;font-size:.75rem">
+        <thead><tr><th>Niveau</th><th>Octroi</th><th>Exemple</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Normale</strong></td><td>Auto à l'installation</td><td>INTERNET, VIBRATE</td></tr>
+          <tr><td><strong>Signature</strong></td><td>Auto si même certificat</td><td>Permissions système internes</td></tr>
+          <tr><td><strong>Dangereuse</strong></td><td>Runtime prompt (API ≥ 23)</td><td>READ_CONTACTS, CAMERA, LOCATION</td></tr>
+        </tbody>
+      </table>
+      <div class="warn-box">API ≤ 22 : TOUTES permissions accordées auto à l'install, même dangereuses. C'est le targetSdkVersion qui compte, pas la version Android du device.</div>
+      <div class="def-box">Vérification : Context.checkCallingPermission(), Context.checkPermission(perm, pid, uid), PackageManager.checkPermission()</div>
+    </div>
+    <div class="brain-card cyan">
+      <h3>WAKE LOCKS</h3>
+      <h2>Gestion Énergie CPU</h2>
+      <table class="comparison-table" style="margin:.5rem 0;font-size:.75rem">
+        <thead><tr><th>Wake Lock</th><th>Effet</th></tr></thead>
+        <tbody>
+          <tr><td>PARTIAL_WAKE_LOCK</td><td>CPU ON, écran peut être OFF</td></tr>
+          <tr><td>SCREEN_DIM_WAKE_LOCK</td><td>Écran tamisé ON, clavier peut être OFF</td></tr>
+          <tr><td>SCREEN_BRIGHT_WAKE_LOCK</td><td>Écran pleine luminosité ON</td></tr>
+          <tr><td>FULL_WAKE_LOCK</td><td>Tout ON</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="brain-card gold">
+      <h3>DOZE MODE & STANDBY</h3>
+      <h2>Économie d'Énergie</h2>
+      <div class="def-box"><strong>Doze Mode :</strong> Déclenché si stationnaire + écran OFF + débranché. Restreint : réseau, CPU intensif, jobs, alarmes, syncs, wakelocks. Fenêtres maintenance à intervalles décroissants.</div>
+      <div class="ok-box">Quitte Doze si : mouvement détecté, écran ON, ou appareil en charge.</div>
+      <div class="def-box"><strong>App Standby Buckets (API 28+) :</strong><br>
+        Active (aucune restriction) → Working Set (restriction moyenne) → Frequent (forte) → Rare (stricte) → Never (sévère)<br>
+        Quittent le standby dès que l'appareil est en charge.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FLASHCARDS ===== -->
+<div id="flashcards" class="section">
+  <h2 class="section-title">Flashcards</h2>
+  <p class="section-sub">// Cliquer pour retourner — couvre tous les chapitres</p>
+  <div class="fc-progress"><div class="fc-progress-bar" id="fcProgressBar" style="width:0%"></div></div>
+  <div class="flashcard-scene">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-face">
+        <div class="fc-label" id="fcCategory"></div>
+        <div class="fc-question" id="fcQuestion"></div>
+        <div class="fc-hint">↕ Cliquer pour révéler</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-label">RÉPONSE</div>
+        <div class="fc-answer" id="fcAnswer"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()">← PRÉC</button>
+    <span id="fcCounter" style="font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted)">1/1</span>
+    <button class="fc-btn" onclick="nextCard()">SUIV →</button>
+    <button class="fc-btn" onclick="shuffleCards()">🔀 Mélanger</button>
+  </div>
+</div>
+
+<!-- ===== MCQ ===== -->
+<div id="mcq" class="section">
+  <h2 class="section-title">Quiz MCQ</h2>
+  <p class="section-sub">// 110 questions uniques — 4 sets de difficulté croissante</p>
+  <div class="set-tabs" id="mcqTabs">
+    <button class="set-tab active" onclick="loadMCQSet(0,this)">Set A: Embarqué & OS (1–28)</button>
+    <button class="set-tab" onclick="loadMCQSet(1,this)">Set B: Android & Composants (29–56)</button>
+    <button class="set-tab" onclick="loadMCQSet(2,this)">Set C: Threads & CFS (57–84)</button>
+    <button class="set-tab" onclick="loadMCQSet(3,this)">Set D: Mémoire, Perms & Énergie (85–110)</button>
+  </div>
+  <div class="score-badge" id="mcqScoreBadge">Score: 0 / 28</div>
+  <div id="mcqContainer"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllMCQ()">✅ Vérifier</button>
+    <button class="quiz-btn-secondary" onclick="resetMCQ()">🔄 Reset</button>
+  </div>
+  <div id="mcqResult" class="result-panel"></div>
+</div>
+
+<!-- ===== TRUE/FALSE ===== -->
+<div id="tf" class="section">
+  <h2 class="section-title">Vrai / Faux</h2>
+  <p class="section-sub">// 110 affirmations uniques — certaines sont des pièges !</p>
+  <div class="set-tabs" id="tfTabs">
+    <button class="set-tab active" onclick="loadTFSet(0,this)">Set A: Embarqué & OS (1–28)</button>
+    <button class="set-tab" onclick="loadTFSet(1,this)">Set B: Android & Composants (29–56)</button>
+    <button class="set-tab" onclick="loadTFSet(2,this)">Set C: Threads & Scheduling (57–84)</button>
+    <button class="set-tab" onclick="loadTFSet(3,this)">Set D: Mémoire, Perms & Énergie (85–110)</button>
+  </div>
+  <div class="score-badge" id="tfScoreBadge">Score: 0 / 28</div>
+  <div id="tfContainer" class="tf-container"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllTF()">✅ Soumettre</button>
+    <button class="quiz-btn-secondary" onclick="resetTF()">🔄 Reset</button>
+  </div>
+  <div id="tfResult" class="result-panel"></div>
+</div>
+
+<!-- ===== SHORT ANSWER ===== -->
+<div id="short" class="section">
+  <h2 class="section-title">Questions à Réponse Courte</h2>
+  <p class="section-sub">// Écrivez votre réponse puis révélez la réponse modèle</p>
+  <div id="shortContainer"></div>
+</div>
+
+<!-- ===== SCENARIO & CALCULS ===== -->
+<div id="scenario" class="section">
+  <h2 class="section-title">Scénarios & Calculs</h2>
+  <p class="section-sub">// Situations réelles + calculs CFS et PSS guidés</p>
+  <div id="scenarioContainer"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkScenario()">Vérifier</button>
+    <button class="quiz-btn-secondary" onclick="resetScenario()">Reset</button>
+  </div>
+  <div id="scenarioResult" class="result-panel"></div>
+</div>
+
+<div class="pdf-bar"><button class="pdf-btn" onclick="window.print()">📄 Sauvegarder PDF</button></div>
+
+<script>
+/* ===================== FLASHCARDS ===================== */
+const allCards = [
+  {cat:"Embarqué",q:"Définir un système embarqué.",a:"Combinaison matériel + logiciel dédiée à une ou plusieurs fonctions spécifiques avec contraintes sévères : consommation, température, taille, performances. [Kadionik 2004]"},
+  {cat:"Embarqué",q:"Quel % des processeurs vendus vont à l'embarqué ?",a:"98% (ou 95% selon sources). Seulement 2–5% pour PC. Prix moyen embarqué : 6$ vs 300$ PC (2004)."},
+  {cat:"Embarqué",q:"Quelles sont les 5 contraintes d'un système embarqué ?",a:"1. Faible coût 2. Faible consommation (batterie) 3. Faible encombrement (taille) 4. Temps réel (réponse rapide) 5. Contraintes environnementales (température, vibrations, RF)"},
+  {cat:"Embarqué",q:"Arduino, Raspberry Pi, Micro:bit — années et caractéristiques ?",a:"Arduino (2005): C-like, USB, licence libre. Raspberry Pi (2012): Python, sans-fil, OS intégré. Micro:bit (2015): Python, éducatif, capteurs, matrice LEDs."},
+  {cat:"OS Mobile",q:"Définir un OS Mobile.",a:"Logiciel permettant à un terminal mobile de fonctionner. Gère : connectivité sans fil (WiFi, BT, GPS), appels, téléchargement d'apps, personnalisation, mémoire, CPU, fichiers, sécurité, énergie."},
+  {cat:"OS Mobile",q:"Parts de marché OS 2023 ?",a:"Android : 44,6% — Windows : 28,41% — iOS : 17,29%"},
+  {cat:"Android",q:"Les 5 couches de l'architecture Android (de haut en bas) ?",a:"1. Applications (Java) 2. App Framework (Java) 3. Librairies (C/C++) 4. Android Runtime (.dex) 5. Noyau Linux (C)"},
+  {cat:"Android",q:"Qu'est-ce que l'OHA ?",a:"Open Handset Alliance — alliance internationale d'entreprises (opérateurs, fabricants, semi-conducteurs, éditeurs) qui développe Android depuis 2007."},
+  {cat:"Boot",q:"Séquence de boot Android complète ?",a:"Boot ROM → Bootloader 1 → Bootloader 2 → Linux Kernel → Init + init.rc → Zygote → System Server → Applications"},
+  {cat:"Boot",q:"Rôle de Zygote ?",a:"Lancé par init. Démarre la VM ART et précharge les classes Java. TOUS les processus d'applications sont forkés depuis Zygote → démarrage rapide."},
+  {cat:"Boot",q:"Rôle du System Server ?",a:"Premier composant Java. Lance TOUS les services Android : Power, Activity, Telephony, Package, Window, Bluetooth, Location, Audio, Notification..."},
+  {cat:"Librairies",q:"Pourquoi Bionic libc ≠ glibc ?",a:"Bionic = moitié de glibc, optimisé ARM, pthread pour Dalvik. PAS de POSIX complet, pas de STL (Standard Template Library), pas d'exceptions C++."},
+  {cat:"Librairies",q:"À quoi sert le double-buffer de SurfaceManager ?",a:"Empêche l'affichage de frames INCOMPLÈTES. Le buffer 2 n'est affiché que quand il est entièrement complet. Évite le 'tearing' visuel. Les deux buffers s'alternent."},
+  {cat:"Runtime",q:"Dalvik vs ART — différence clé ?",a:"Dalvik : JIT (compilation à l'exécution). ART : AOT (compilation à l'installation, Android L+). Android N+ : hybride JIT+AOT. ART a aussi un GC amélioré."},
+  {cat:"Activity",q:"Cycle de vie Activity — 7 callbacks dans l'ordre ?",a:"onCreate → onStart → onResume → [RUNNING] → onPause → onStop → onDestroy. Plus onRestart (de stopped vers started)."},
+  {cat:"Activity",q:"onSaveInstanceState vs onRestoreInstanceState ?",a:"Save : appelé avant kill système. Restore : à la recréation. Tous deux appelés lors de la ROTATION. NON appelés si l'utilisateur appuie volontairement sur Back."},
+  {cat:"Activity",q:"Hiérarchie de priorité des processus Android (5 niveaux) ?",a:"Foreground (plus haute) → Visible → Service → Background → Empty process (plus basse). Linux libère en tuant les priorités les plus basses en premier."},
+  {cat:"Intent",q:"Intent explicite vs implicite ?",a:"Explicite : cible nommée directement → navigation interne à l'app. Implicite : décrit une action, système trouve le composant → dialog 'Ouvrir avec' si plusieurs matchs."},
+  {cat:"Composants",q:"Limites de onReceive() d'un BroadcastReceiver ?",a:"Doit être COURT (s'exécute sur main thread). NE PEUT PAS : lancer Activity, Dialog, Service long. Pour traitement lent → déléguer à un Service."},
+  {cat:"Composants",q:"Comment ContentProvider identifie-t-il les données ?",a:"Via des URIs de la forme : content://authority/path. Utilise ContentResolver. Méthodes : query(), insert(), update(), delete(), getType()."},
+  {cat:"Threading",q:"Règle des 5 secondes Android ?",a:"Le main thread (UI Thread) ne doit jamais être bloqué plus de 5 secondes → sinon ANR (Application Not Responding). Solutions : Worker threads, Handler, AsyncTask."},
+  {cat:"Threading",q:"Comment modifier l'UI depuis un worker thread ?",a:"3 méthodes : 1. Activity.runOnUiThread(Runnable) 2. View.post(Runnable) 3. View.postDelayed(Runnable, long). Aussi : Handler (niveau supérieur)."},
+  {cat:"CFS",q:"Formule du Quantum dans CFS ?",a:"Quantum_i = (W_i / ΣW) × TL où W_i = poids du thread i, ΣW = somme des poids, TL = Target Latency (latence cible)."},
+  {cat:"CFS",q:"Formule du ΔVruntime dans CFS ?",a:"ΔVruntime = Δt × (W₀ / W_i) où W₀ = 1024 (poids nice=0), Δt = temps réel exécuté. Haute priorité → W_i grand → ΔVruntime petit."},
+  {cat:"CFS",q:"Comment CFS choisit-il le prochain thread à exécuter ?",a:"CFS élit toujours le nœud le plus à GAUCHE de l'arbre bicolore = thread avec le vruntime le PLUS PETIT = thread le moins exécuté virtuellement."},
+  {cat:"CFS",q:"Que se passe-t-il au vruntime d'un thread qui se réveille après un long sommeil ?",a:"Pour éviter la famine des autres : vruntime ← max(vruntime_thread, min_vruntime_arbre). Cela réinitialise son avantage sans permettre d'accaparer le CPU."},
+  {cat:"Mémoire",q:"Taille d'une page mémoire Android ?",a:"4KB (4 kilooctets). Héritée du kernel Linux. Toute la RAM est structurée en pages de 4KB."},
+  {cat:"Mémoire",q:"PSS vs RSS vs USS — lequel choisir ?",a:"RSS (surestime) = privé + tout partagé. PSS ⭐ (meilleur) = privé + partagé/n. USS (sous-estime) = privé seulement. PSS = métrique la plus juste."},
+  {cat:"Mémoire",q:"Cascade de récupération mémoire Android ?",a:"1. kswapd s'active (RAM < seuil min) → 2. onTrimMemory() demande aux apps de réduire → 3. LMK tue des processus. LMK : Background (LRU) → Service → Visible → Foreground."},
+  {cat:"Mémoire",q:"Qu'est-ce que zRAM ?",a:"Partition de RAM compressée utilisée pour le swap. Pages anonymes modifiées et pages cached modifiées compressées ici par kswapd."},
+  {cat:"Permissions",q:"3 niveaux de permissions Android ?",a:"Normale (auto, risque faible, ex: INTERNET). Signature (même certificat que le définisseur). Dangereuse (runtime prompt API≥23, ex: READ_CONTACTS)."},
+  {cat:"Permissions",q:"PIÈGE : App ciblant API 22 sur Android 12 — comment sont les permissions ?",a:"TOUTES accordées auto à l'installation, même les dangereuses. Le modèle runtime (prompt) ne s'applique QUE si targetSdkVersion ≥ 23. La version du device importe peu."},
+  {cat:"Énergie",q:"Doze Mode — déclencheur et restrictions ?",a:"Déclencheur : stationnaire + écran OFF + débranché depuis un moment. Restreint : réseau, CPU intensif, jobs, alarmes, syncs, wakelocks. Quitte si mouvement, écran ON, ou charge."},
+  {cat:"Énergie",q:"App Standby Buckets — 5 niveaux ?",a:"Active (aucune restriction) → Working Set (restriction moyenne) → Frequent (forte) → Rare (stricte) → Never (sévère). Quittent le mode dès que l'appareil est en charge."},
+  {cat:"Énergie",q:"PARTIAL_WAKE_LOCK — que garantit-il ?",a:"Que le CPU reste actif (ON) même si l'écran s'éteint. Utilisé par les services arrière-plan qui doivent continuer sans maintenir l'écran allumé."},
+];
+let filtered=[...allCards],fcIdx=0;
+function updateFlashcard(){let c=filtered[fcIdx];document.getElementById('fcCategory').innerText=c.cat;document.getElementById('fcQuestion').innerText=c.q;document.getElementById('fcAnswer').innerText=c.a;document.getElementById('fcCounter').innerText=`${fcIdx+1} / ${filtered.length}`;document.getElementById('fcProgressBar').style.width=((fcIdx+1)/filtered.length)*100+'%';document.getElementById('flashcard').classList.remove('flipped');}
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');}
+function nextCard(){fcIdx=(fcIdx+1)%filtered.length;updateFlashcard();}
+function prevCard(){fcIdx=(fcIdx-1+filtered.length)%filtered.length;updateFlashcard();}
+function shuffleCards(){for(let i=filtered.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[filtered[i],filtered[j]]=[filtered[j],filtered[i]];}fcIdx=0;updateFlashcard();}
+updateFlashcard();
+
+/* ===================== 110 MCQ ===================== */
+const allMCQ = [
+  // SET A: EMBARQUÉ & OS MOBILE (0–27)
+  {q:"Qu'est-ce qu'un système embarqué selon Kadionik (2004) ?",opts:["Un ordinateur de bureau performant","Une combinaison matériel+logiciel dédiée à des fonctions spécifiques avec contraintes sévères","Un OS mobile propriétaire","Un serveur cloud distant"],correct:1,exp:"Définition exacte : matériel + logiciel, fonctions spécifiques, contraintes (énergie, taille, température)."},
+  {q:"Quel pourcentage des processeurs vendus est destiné à l'embarqué ?",opts:["40%","60%","80%","98%"],correct:3,exp:"98% (95% selon certaines sources). Seulement 2–5% vont aux PC grand public."},
+  {q:"Prix moyen d'un processeur embarqué en 2004 vs un processeur PC ?",opts:["1$ vs 50$","6$ vs 300$","50$ vs 1000$","10$ vs 100$"],correct:1,exp:"Embarqué : ~6$ vs PC : ~300$. Le faible coût est une contrainte fondamentale de l'embarqué."},
+  {q:"En quelle année a eu lieu le premier système embarqué (mission Apollo) ?",opts:["1960","1965","1967","1971"],correct:2,exp:"1967 : premier système embarqué de guidage lors de la mission lunaire Apollo."},
+  {q:"Quelle carte programmable est sortie en 2005 avec une licence libre ?",opts:["Raspberry Pi","Micro:bit","Arduino","ESP32"],correct:2,exp:"Arduino (2005) : licence libre, langage C-like, connexion via câble USB."},
+  {q:"Quelle carte programmable utilise Python et dispose d'un OS intégré ?",opts:["Arduino","Micro:bit","ESP8266","Raspberry Pi"],correct:3,exp:"Raspberry Pi (2012) : Python, sans-fil, OS intégré (Raspbian/Linux)."},
+  {q:"La Micro:bit est principalement destinée à quel usage ?",opts:["Industrie","Éducatif","Médical","Militaire"],correct:1,exp:"Micro:bit (2015) est conçue pour un usage éducatif avec capteurs intégrés et matrice de LEDs."},
+  {q:"Quelle est la contrainte d'un système embarqué liée à la mobilité ?",opts:["Haute consommation","Faible consommation d'énergie","Connexion filaire obligatoire","Grande taille"],correct:1,exp:"Faible consommation : batterie, autonomie maximale. Pas de gaspillage énergétique."},
+  {q:"Quel événement de 1982 est considéré comme le premier objet connecté (IoT) ?",opts:["Premier iPhone","Premier ordinateur portable","Distributeur Coca-Cola connecté","Première tablette"],correct:2,exp:"1982 : distributeur de Coca-Cola aux États-Unis avec interface pour vérifier le stock à distance."},
+  {q:"Qu'est-ce qu'un OS Mobile ?",opts:["Un antivirus pour smartphone","Un logiciel permettant à un terminal mobile de fonctionner","Un protocole réseau","Un type de processeur"],correct:1,exp:"OS Mobile = logiciel gérant la connectivité sans fil, les appels, téléchargement d'apps, énergie, mémoire."},
+  {q:"Quelle est la part de marché d'Android en 2023 ?",opts:["17,29%","28,41%","44,6%","61,3%"],correct:2,exp:"Android : 44,6% — Windows : 28,41% — iOS : 17,29% (source: IDC 2023)."},
+  {q:"Comment classe-t-on les OS mobiles en deux catégories ?",opts:["Gratuits et payants","Propriétaires et Open Source","Rapides et lents","Sécurisés et non sécurisés"],correct:1,exp:"Propriétaires (iOS, code source fermé) et Open Source (Android, code disponible)."},
+  {q:"Quel OS mobile est développé par Apple ?",opts:["Android","Windows Phone","iOS","Bada"],correct:2,exp:"iOS est développé par Apple pour iPhone, iPad, iPod Touch. C'est un OS propriétaire."},
+  {q:"En quelle année l'iPhone a-t-il été lancé ?",opts:["2005","2006","2007","2008"],correct:2,exp:"2007 : sortie de l'iPhone par Apple, emblème du smartphone ultra-connecté."},
+  {q:"Un OS mobile gère la connectivité sans fil. Laquelle de ces technologies n'est PAS gérée ?",opts:["WiFi","Bluetooth","GPS","Ethernet RJ45"],correct:3,exp:"L'Ethernet RJ45 (filaire) n'est pas une technologie sans fil. Un OS mobile gère WiFi, BT, GPS, réseaux mobiles."},
+  {q:"Quelle fonction d'un OS mobile gère la durée de vie de la batterie ?",opts:["Gestion de fichiers","Gestion I/O","Gestion de l'énergie","Gestion de sécurité"],correct:2,exp:"La gestion de l'énergie (power management) optimise l'autonomie de la batterie."},
+  {q:"Qu'est-ce qu'un PDA ?",opts:["Personal Desktop Application","Personal Digital Assistant","Portable Data Array","Processor Digital Architecture"],correct:1,exp:"PDA = Personal Digital Assistant. Appareil de poche avec agenda, contacts, et parfois connectivité."},
+  {q:"Quelle année marque l'invention de la Google Car autonome ?",opts:["2010","2012","2014","2016"],correct:2,exp:"2014 : Google Car avec pilotage automatique, radars, caméras vidéo et GPS."},
+  {q:"Quelle contrainte d'un système embarqué concerne la rapidité de réaction ?",opts:["Faible coût","Faible consommation","Temps réel","Faible encombrement"],correct:2,exp:"Fonctionnement en temps réel : répondre rapidement aux événements internes/externes. Critique en contrôle."},
+  {q:"Airbus A320 (1984) — pourquoi est-il significatif dans l'embarqué ?",opts:["Premier avion électrique","Premier avion avec commandes entièrement électroniques","Premier drone autonome","Premier avion solaire"],correct:1,exp:"A320 (1984) : commandes intégralement contrôlées électroniquement (Fly-By-Wire), remplaçant les câbles manuels."},
+  {q:"Quel composant permanent est présent dans toute architecture embarquée ?",opts:["Écran tactile","CPU + RAM","Connexion internet","GPS"],correct:1,exp:"Équipements permanents : CPU (microprocesseur/microcontrôleur) et RAM (mémoire centrale)."},
+  {q:"Quel type de mémoire de masse est couramment utilisé dans les systèmes embarqués ?",opts:["Disque dur 3.5 pouces","RAM DDR5","Mémoire Flash (SD Card, FlashDisk)","ROM CD-ROM classique"],correct:2,exp:"Mémoire flash (SD Card, FlashDisk, DiskOnChip) est privilégiée pour sa petite taille et robustesse."},
+  {q:"Quelle contrainte environnementale peut affecter un système embarqué dans une voiture ?",opts:["Pression atmosphérique uniquement","Vibrations, chocs, variations de température","Connexion WiFi instable","Manque de RAM"],correct:1,exp:"Embarqué dans un véhicule : vibrations, chocs, variations de température et d'alimentation, humidité."},
+  {q:"Un système embarqué possède-t-il toujours un système de fichiers ?",opts:["Oui, toujours","Non, pas nécessairement","Oui, obligatoirement selon la norme","Seulement si connecté à internet"],correct:1,exp:"Non, un système embarqué n'a pas toujours de système de fichiers. Cela dépend de ses besoins."},
+  {q:"Quelle est la principale différence entre Arduino et Raspberry Pi ?",opts:["Arduino est plus récent","Raspberry Pi est un microcontrôleur simple","Arduino est un microcontrôleur simple; Raspberry Pi est un mini-ordinateur avec OS","Ils sont identiques"],correct:2,exp:"Arduino = microcontrôleur simple pour projets spécifiques. Raspberry Pi = mini-ordinateur avec Linux."},
+  {q:"Quel organisme a standardisé la définition du cloud computing ? (question contexte OS)",opts:["ISO","IEEE","NIST","OHA"],correct:2,exp:"Contexte : l'OHA (Open Handset Alliance) a créé Android. NIST est connu pour d'autres définitions."},
+  {q:"Combien d'applications y avait-il approximativement sur Google Play en 2023 ?",opts:["Moins de 100 000","Environ 500 000","Plus de 2 millions","Exactement 1 million"],correct:2,exp:"Google Play dépasse les 2 millions d'applications. C'est un avantage clé de l'écosystème Android."},
+  {q:"Qu'est-ce qu'un IHM dans un système embarqué ?",opts:["Interface Hardware Mobile","Interface Homme-Machine","Interaction Humaine Maximale","Instruction Hardware Mobile"],correct:1,exp:"IHM = Interface Homme-Machine : permet la communication entre l'humain et le système (ex: écran tactile)."},
+
+  // SET B: ANDROID & COMPOSANTS (28–55)
+  {q:"Sur quel noyau est basé Android ?",opts:["Windows NT","macOS XNU","Linux","BSD"],correct:2,exp:"Android est basé sur le noyau Linux. Il y ajoute : Binder IPC, Ashmem, Wakelock, Alarme."},
+  {q:"En quel langage est écrit le framework applicatif Android (couche 2) ?",opts:["C","C++","Java","Python"],correct:2,exp:"L'Application Framework est écrit en Java. Les librairies sous-jacentes (couche 3) sont en C/C++."},
+  {q:"Quelle bibliothèque Android gère les bases de données ?",opts:["WebKit","SGL","SQLite","FreeType"],correct:2,exp:"SQLite : moteur de BDD relationnelle SQL, stockage dans un fichier unique, taille < 2Mo."},
+  {q:"WebKit est composé de quelles deux librairies ?",opts:["SQLite + SSL","WebCore + JavascriptCore","SGL + OpenGL ES","FreeType + SurfaceManager"],correct:1,exp:"WebKit = WebCore (rendu HTML/CSS) + JavascriptCore (moteur JS). Supporte CSS, JS, DOM, AJAX."},
+  {q:"Que fait le double-buffer de SurfaceManager ?",opts:["Accélère le CPU","Empêche l'affichage de frames incomplètes","Compresse les images","Gère la mémoire RAM"],correct:1,exp:"Double buffer : le buffer 2 n'est affiché que lorsqu'il est entièrement complet → jamais de frame partielle."},
+  {q:"Qu'est-ce que Bionic libc ?",opts:["La bibliothèque C Android remplaçant glibc, optimisée ARM","Un moteur de jeu mobile","Un protocole réseau Android","Un type de cache mémoire"],correct:0,exp:"Bionic libc remplace glibc : moitié de taille, supporte ARM, pthread pour Dalvik. Pas de POSIX complet ni STL."},
+  {q:"Que signifie AOT dans Android Runtime ?",opts:["Automatic Operating Thread","Ahead-Of-Time compilation","Android Operating Tool","Asynchronous Output Transfer"],correct:1,exp:"AOT = Ahead-Of-Time : compilation du code en code machine LORS DE L'INSTALLATION. Introduit avec Android L (5.0)."},
+  {q:"Quel composant est le premier processus Java à s'exécuter sur Android ?",opts:["Zygote","Init","System Server","Activity Manager"],correct:2,exp:"System Server est le premier composant Java. Il lance TOUS les services Android."},
+  {q:"Pourquoi tous les processus Android sont-ils forkés depuis Zygote ?",opts:["Pour des raisons de sécurité uniquement","Car Zygote a préchargé les classes Java → fork rapide sans rechargement","Pour limiter la RAM","Car c'est une exigence Linux"],correct:1,exp:"Zygote précharge les classes Java communes → quand une app est lancée, le fork copie cet état → démarrage rapide."},
+  {q:"Quel est le rôle de l'Activity Manager (App Framework) ?",opts:["Gérer la connectivité réseau","Gérer le cycle de vie des applications","Gérer les permissions","Gérer le rendu graphique"],correct:1,exp:"Activity Manager : gère le cycle de vie des activités et tâches (foreground, background, kill)."},
+  {q:"Qu'est-ce qu'une Activity Android ?",opts:["Une tâche en arrière-plan","Une interface utilisateur visible","Un mécanisme IPC","Un fichier de configuration"],correct:1,exp:"Activity = composant avec une interface utilisateur visible. C'est le seul composant avec une UI."},
+  {q:"Dans quel ordre Android appelle-t-il les callbacks lors d'une rotation ?",opts:["onStop → onCreate","onSaveInstanceState → onDestroy → onCreate → onRestoreInstanceState","onPause → onResume","onRestart → onStart"],correct:1,exp:"Rotation : onSaveInstanceState (avant destroy) → onDestroy → onCreate → onRestoreInstanceState → onResume."},
+  {q:"Qu'est-ce qu'un Intent en Android ?",opts:["Un fichier de configuration","Un objet de messagerie pour demander une action à un composant","Un type de thread","Un mécanisme de chiffrement"],correct:1,exp:"Intent : objet sous-classe de android.content.Intent pour lier deux composants et demander une action."},
+  {q:"Lequel est un attribut d'un Intent ?",opts:["Color","Priority","Action","Size"],correct:2,exp:"Attributs d'un Intent : Nom, Action, Data (URI/MIME), Catégorie, Extras (clé/valeur), Flags."},
+  {q:"Qu'est-ce qu'un IntentFilter ?",opts:["Un filtre de sécurité réseau","Déclaré dans le manifest, spécifie quels intents implicites un composant peut gérer","Un type de permission","Un mécanisme de cache"],correct:1,exp:"IntentFilter : dans AndroidManifest.xml. Spécifie les actions, catégories et types MIME qu'un composant peut gérer."},
+  {q:"Un Service Android peut être de quel type ?",opts:["Local et Remote uniquement","Foreground, Background et Bound","Simple et Complex","UI et non-UI"],correct:1,exp:"3 types : Foreground (notification visible), Background (API 26+ restreint), Bound (client-serveur via Binder)."},
+  {q:"Sur quel thread s'exécute onReceive() d'un BroadcastReceiver ?",opts:["Un thread dédié","Le main thread (UI thread)","Un thread d'arrière-plan","Un thread Zygote"],correct:1,exp:"onReceive() s'exécute sur le MAIN THREAD. C'est pourquoi il doit être court. Blocage = ANR."},
+  {q:"Quelle est la méthode pour accéder à un ContentProvider ?",opts:["Context.getContentManager()","Context.getContentResolver()","Context.getProvider()","Context.queryContent()"],correct:1,exp:"Context.getContentResolver() retourne un ContentResolver qui gère les interactions avec les ContentProviders."},
+  {q:"Qu'est-ce qu'un Cursor en Android ?",opts:["Un type d'Intent","Un itérateur sur les résultats d'une requête ContentProvider","Un composant graphique","Un type de Service"],correct:1,exp:"Cursor = itérateur sur les résultats d'une requête. Méthodes : moveToFirst(), moveToNext(), getString(), etc."},
+  {q:"Comment un BroadcastReceiver s'enregistre-t-il ?",opts:["Statique (manifest) OU dynamique (registerReceiver())","Uniquement statique","Uniquement dynamique","Via un ContentProvider"],correct:0,exp:"Deux méthodes : Statique dans AndroidManifest.xml, ou Dynamique avec Context.registerReceiver()."},
+  {q:"Quelle est l'URI format utilisée par ContentProvider ?",opts:["http://authority/path","file://authority/path","content://authority/path","ftp://authority/path"],correct:2,exp:"Format URI ContentProvider : content://authority/path. Ex: content://com.android.contacts/contacts/"},
+  {q:"Que gère le Package Manager (App Framework) ?",opts:["Les connexions réseau","Les informations sur les applications installées","Le rendu graphique","L'audio"],correct:1,exp:"Package Manager : maintient les informations sur toutes les applications disponibles sur le device."},
+  {q:"Quel est le rôle du Notification Manager ?",opts:["Gérer les notifications push serveur","Permettre aux apps d'afficher alertes et notifications personnalisées","Gérer les SMS","Gérer les emails"],correct:1,exp:"Notification Manager : permet aux applications d'afficher des notifications et alertes dans la barre de statut."},
+  {q:"Comment déclare-t-on une Activity dans Android ?",opts:["Dans un fichier Java uniquement","Dans le fichier AndroidManifest.xml","Dans le fichier build.gradle","Dans le fichier settings.xml"],correct:1,exp:"Toute Activity doit être déclarée dans AndroidManifest.xml avec la balise <activity android:name=...>"},
+  {q:"Quel composant Android est utilisé pour partager des données entre applications ?",opts:["Service","BroadcastReceiver","ContentProvider","Activity"],correct:2,exp:"ContentProvider : partage de données entre applications via URIs. Ex: Contacts, MediaStore, Calendar."},
+  {q:"Que fait le Resource Manager (App Framework) ?",opts:["Gère la RAM","Fournit l'accès aux ressources non-code (chaînes, graphiques, layouts)","Gère les processus","Gère le réseau"],correct:1,exp:"Resource Manager : fournit l'accès aux ressources embarquées non-code : strings.xml, drawables, layouts."},
+  {q:"La librairie FreeType sert à :",opts:["Rendu 3D","Rendu bitmap de polices vectorielles","Compression audio","Gestion réseau"],correct:1,exp:"FreeType : rendu de polices de caractères vectorielles en bitmap. Gère le texte dans Android."},
+  {q:"Qu'est-ce que Binder IPC dans le noyau Linux Android ?",opts:["Un type de base de données","Mécanisme de communication inter-processus basé sur mémoire partagée","Un protocole réseau","Un type de wake lock"],correct:1,exp:"Binder IPC : chaque app tourne dans un processus isolé. Binder permet le partage de ressources entre processus, gère concurrence et synchronisation."},
+
+  // SET C: THREADS & CFS (56–83)
+  {q:"Quel thread est lancé au démarrage d'une application Android ?",opts:["Worker thread","Background thread","Main thread (UI thread)","Zygote thread"],correct:2,exp:"Le main thread (UI thread) est lancé automatiquement. Il exécute les callbacks du cycle de vie et les événements UI."},
+  {q:"Pourquoi ne faut-il pas faire d'opérations réseau sur le main thread ?",opts:["Car le réseau est trop lent","Car cela bloquerait le main thread > 5s → ANR","Car c'est interdit par les permissions","Car le réseau ne fonctionne que sur des threads spéciaux"],correct:1,exp:"Opérations réseau = bloquantes. Si elles durent > 5s sur le main thread → ANR (Application Not Responding)."},
+  {q:"Que fait Activity.runOnUiThread(Runnable) ?",opts:["Lance un thread en arrière-plan","Exécute un Runnable sur le UI thread (immédiatement si déjà sur UI, sinon en file)","Crée un nouveau thread","Arrête le main thread"],correct:1,exp:"runOnUiThread() : si sur UI thread → exécution immédiate. Sinon → ajouté à la file du UI thread."},
+  {q:"Quelle est la différence entre View.post(R) et View.postDelayed(R, long) ?",opts:["Aucune différence","post() ajoute immédiatement; postDelayed() ajoute après un délai spécifié","postDelayed() est plus rapide","post() ne fonctionne que sur main thread"],correct:1,exp:"post(R) : ajout immédiat à la file UI. postDelayed(R, t) : ajout après le délai t (en ms)."},
+  {q:"AsyncTask a été déprécié dans quelle version d'Android ?",opts:["API 26","API 28","API 30","API 33"],correct:2,exp:"AsyncTask a été déprécié en API 30 (Android 11). Remplacé par Coroutines Kotlin ou ExecutorService."},
+  {q:"CFS est un algorithme d'ordonnancement pour quel type de processus ?",opts:["Temps réel (SCHED_FIFO)","Batch uniquement","Processus normaux (SCHED_NORMAL)","Idle uniquement"],correct:2,exp:"CFS (Completely Fair Scheduler) gère les processus SCHED_NORMAL. Il ne préempte pas SCHED_BATCH ni SCHED_IDLE."},
+  {q:"Depuis quelle version de Linux CFS est-il utilisé ?",opts:["Linux 2.4","Linux 2.6.23","Linux 3.0","Linux 4.0"],correct:1,exp:"CFS a été introduit dans Linux 2.6.23 (2007) pour remplacer l'ancien O(1) scheduler."},
+  {q:"Quelle structure de données CFS utilise-t-il à la place d'une file d'attente classique ?",opts:["Liste chaînée","File circulaire","Arbre bicolore (red-black tree)","Table de hachage"],correct:2,exp:"CFS utilise un arbre bicolore (red-black tree) trié par vruntime. Le nœud le plus à gauche = vruntime minimal."},
+  {q:"Que représente TL dans la formule du quantum CFS ?",opts:["Thread Limit","Target Latency (latence cible)","Thread Load","Time Loop"],correct:1,exp:"TL = Target Latency : période garantissant que tous les threads runnable sont exécutés au moins une fois."},
+  {q:"Poids d'un thread avec nice = 0 dans CFS ?",opts:["512","768","1024","2048"],correct:2,exp:"W₀ (nice=0) = 1024. C'est la valeur de référence pour calculer ΔVruntime."},
+  {q:"Comment calculer W(nice) selon CFS ?",opts:["W = nice × 1024","W ≈ 1024 × 1.25^nice","W ≈ 1024 / 1.25^nice","W = 1024 - nice"],correct:2,exp:"W(nice) ≈ 1024 / 1.25^(nice). Plus nice est élevé → poids plus faible → moins de temps CPU."},
+  {q:"Quel thread CFS élit-il pour s'exécuter ?",opts:["Celui avec le vruntime le plus GRAND","Celui arrivé en premier","Celui avec le nice le plus élevé","Celui avec le vruntime le plus PETIT"],correct:3,exp:"CFS élit toujours le nœud le plus à GAUCHE de l'arbre bicolore = vruntime le plus PETIT = thread le moins exécuté."},
+  {q:"Si nice = -5 et ΣW = 4480, TL = 3ms, quel est le quantum approximatif ?",opts:["0.22 ms","0.69 ms","2.09 ms","3.00 ms"],correct:2,exp:"Quantum = (3121/4480) × 3 ≈ 0.697 × 3 ≈ 2.09 ms. (W(-5)=3121 selon la table)"},
+  {q:"Que se passe-t-il au vruntime d'un thread prioritaire (nice=-10) après 1ms d'exécution ?",opts:["Il augmente de 1.000 ms","Il augmente d'environ 0.107 ms","Il reste à 0","Il diminue"],correct:1,exp:"ΔVruntime = 1ms × (1024/9548) ≈ 0.107 ms. Haute priorité → poids élevé → vruntime augmente peu."},
+  {q:"Qu'est-ce que SCHEDTUNE dans Android 7.1+ ?",opts:["Un outil de débogage","Contrôle de processus, sélection CPU, boost dans CFS","Un type de wake lock","Un algorithme de compression"],correct:1,exp:"SCHEDTUNE (depuis Android 7.1) : contrôle les processus dans CFS, permet la sélection de CPU et le déclenchement de boost."},
+  {q:"Qu'est-ce que CPUSET dans Android ?",opts:["Compteur de processeurs","Attache un processus à un CPU spécifique","Liste de permissions CPU","Un type de thread"],correct:1,exp:"CPUSET : permet d'attacher (bind) un processus à un ou plusieurs CPU spécifiques. Contrôle d'affinité CPU."},
+  {q:"L'unité fondamentale d'ordonnancement dans Linux Android est :",opts:["Le processus","Le thread","Le groupe","L'application"],correct:1,exp:"L'unité fondamentale est le THREAD (et non le processus). Le scheduler Linux gère des threads."},
+  {q:"Quelle méthode permet d'exécuter du code après un délai sur le UI thread ?",opts:["Handler.delay()","View.postDelayed(Runnable, long)","Thread.sleep() sur UI","Activity.wait()"],correct:1,exp:"View.postDelayed(Runnable, long) : ajoute le Runnable à la file du UI thread après le délai spécifié."},
+  {q:"Un Handler est attaché à :",opts:["La VM ART","Un thread spécifique avec une file de messages","Le kernel Linux","Le System Server"],correct:1,exp:"Handler : attaché à un thread et sa Looper/MessageQueue. Permet d'envoyer des messages ou Runnables à ce thread."},
+  {q:"AsyncTask hérite de quelle classe et avec quels paramètres génériques ?",opts:["Thread<Void,Integer,String>","AsyncTask<Params, Progress, Result>","Runnable<Input, Output>","Task<Type, Return>"],correct:1,exp:"AsyncTask<Params, Progress, Result> : Params = input, Progress = avancement, Result = résultat final."},
+  {q:"Quelle méthode d'AsyncTask s'exécute sur le UI Thread avant la tâche ?",opts:["doInBackground()","onProgressUpdate()","onPostExecute()","onPreExecute()"],correct:3,exp:"onPreExecute() s'exécute sur le UI Thread avant la tâche → pour préparer l'UI (ex: afficher une ProgressBar)."},
+  {q:"Quelle méthode d'AsyncTask s'exécute en arrière-plan ?",opts:["onPreExecute()","onProgressUpdate()","doInBackground()","onPostExecute()"],correct:2,exp:"doInBackground() s'exécute dans un thread background → c'est ici qu'on fait les tâches longues (réseau, DB)."},
+  {q:"Comment un processus Android est-il identifié ?",opts:["Par son nom uniquement","Par PID, PPID, UID, Pile, Heap","Par son certificat uniquement","Par son intent filter"],correct:1,exp:"Processus Android : lancé par Zygote, identifié par PID (ID processus), PPID (parent), UID (utilisateur), Pile, Heap."},
+  {q:"Deux apps peuvent-elles partager un processus ?",opts:["Non, jamais","Oui, si elles ont le même UID ET le même certificat","Oui, toujours si du même développeur","Non, chaque app a son propre processus obligatoire"],correct:1,exp:"Oui : si android:process est identique ET même UID ET même certificat → les deux apps partagent un processus."},
+  {q:"Qu'est-ce que l'ANR ?",opts:["Android Network Request","Application Not Responding — erreur quand main thread bloqué > 5s","Automatic Null Reference","Android Native Runtime"],correct:1,exp:"ANR = Application Not Responding. Déclenché si le main thread est bloqué plus de 5 secondes."},
+  {q:"Quel est l'avantage principal du fork depuis Zygote pour les apps Android ?",opts:["Moins de mémoire utilisée","Démarrage plus rapide des apps car les classes Java sont déjà chargées","Meilleure sécurité","Moins de permissions nécessaires"],correct:1,exp:"Zygote précharge les classes communes → fork = copie de cet état → app démarre sans rechargement des classes."},
+  {q:"Quelle formule permet de calculer ΔVruntime dans CFS ?",opts:["ΔVruntime = Δt × W_i / W₀","ΔVruntime = Δt × W₀ / W_i","ΔVruntime = Δt + W₀","ΔVruntime = W₀ / (Δt × W_i)"],correct:1,exp:"ΔVruntime = Δt × (W₀/W_i). W₀=1024. Plus W_i est grand (haute priorité), plus ΔVruntime est petit."},
+  {q:"CFS empêche la famine des threads dormants en ajustant leur vruntime. Comment ?",opts:["En réinitialisant vruntime à 0","En lui appliquant max(vruntime, min_vruntime_arbre)","En doublant son poids","En augmentant son quantum"],correct:1,exp:"Au réveil : vruntime ← max(vruntime_thread, min_vruntime_arbre). Évite qu'un thread dormant accapare tout le CPU."},
+
+  // SET D: MÉMOIRE, PERMISSIONS & ÉNERGIE (84–109)
+  {q:"Quelle est la taille d'une page mémoire Android ?",opts:["1 KB","2 KB","4 KB","8 KB"],correct:2,exp:"Pages de 4KB, héritées du kernel Linux. Toute la RAM est structurée en pages de cette taille."},
+  {q:"Qu'est-ce qu'une page 'cached privé originale' dans Android ?",opts:["Peut être libérée directement par kswapd","Doit être écrite en storage avant libération","Est compressée en zRAM","Ne peut jamais être libérée"],correct:0,exp:"Page cached privée originale = copie non modifiée de l'élément stocké → peut être libérée directement (le fichier source est intact)."},
+  {q:"Que fait kswapd avec une page anonyme modifiée ?",opts:["La supprime immédiatement","La compresse en zRAM","La copie en storage","La garde en RAM"],correct:1,exp:"Pages anonymes modifiées (non associées à un fichier) → compressées en zRAM par kswapd."},
+  {q:"Quelle métrique mémoire est la plus précise pour mesurer l'usage réel ?",opts:["RSS","USS","VSS","PSS"],correct:3,exp:"PSS (Proportional Set Size) = pages privées + pages partagées/nombre d'utilisateurs. La plus juste des métriques."},
+  {q:"RSS (Resident Set Size) surestime parce que :",opts:["Il compte deux fois les pages privées","Il compte 100% des pages partagées pour chaque processus","Il ignore les pages modifiées","Il compte aussi le storage"],correct:1,exp:"RSS compte 100% des pages partagées pour CHAQUE processus → surestime car les pages partagées sont comptées plusieurs fois."},
+  {q:"Qu'est-ce que zRAM ?",opts:["Zone de stockage externe","Partition de RAM compressée pour le swap","Zone RAM pour les drivers","RAM dédiée aux services système"],correct:1,exp:"zRAM : partition de RAM compressée utilisée pour le swap. Pages anonymes et modifiées compressées ici."},
+  {q:"Dans quel ordre LMK tue-t-il les processus ?",opts:["Foreground → Service → Background","Background (LRU) → Service → Visible → Foreground","Aléatoire","Par consommation CPU décroissante"],correct:1,exp:"LMK : Background (LRU d'abord) → Service → Visible → Foreground (dernier). Basé sur oom_adj_score."},
+  {q:"Quand kswapd s'arrête-t-il ?",opts:["Quand la RAM est complètement pleine","Quand la RAM libre dépasse le seuil MAXIMUM (high watermark)","Quand le LMK est activé","Jamais, il tourne en permanence"],correct:1,exp:"kswapd s'arrête quand la RAM libre DÉPASSE le seuil MAXIMUM. Il s'active quand elle passe SOUS le seuil minimum."},
+  {q:"GC (Garbage Collector) dans Android : quels types de générations ?",opts:["Young, Middle, Old","Young, Older, Permanent","Recent, Normal, Archive","Heap, Stack, Code"],correct:1,exp:"CMS GC : Young generation (alloués récemment), Older generation (actifs un moment), Permanent generation (longue durée)."},
+  {q:"Quelle est la cascade correcte de récupération mémoire dans Android ?",opts:["LMK → kswapd → GC","GC → LMK → kswapd","kswapd → onTrimMemory() → LMK","onTrimMemory() → GC → LMK"],correct:2,exp:"Ordre : kswapd (libère pages) → onTrimMemory() (demande aux apps de réduire) → LMK (tue des processus)."},
+  {q:"onTrimMemory() est appelé par le système pour :",opts:["Arrêter l'application","Demander à l'app de réduire son allocation mémoire","Vider le cache disque","Libérer les permissions"],correct:1,exp:"onTrimMemory() : le système demande à l'app de réduire son usage mémoire. L'app doit libérer des ressources non essentielles."},
+  {q:"Quel permission niveau est accordé automatiquement à l'installation sans prompt ?",opts:["Dangereuse","Signature","Normale","Toutes les trois"],correct:1,exp:"Permission Normale : accordée automatiquement à l'installation. Risque faible (ex: INTERNET, VIBRATE)."},
+  {q:"À partir de quelle API les permissions dangereuses sont demandées à l'exécution ?",opts:["API 19","API 21","API 23","API 26"],correct:2,exp:"API ≥ 23 (Android 6.0 Marshmallow) : runtime prompt pour les permissions dangereuses."},
+  {q:"Quelle méthode vérifie si un processus appelant a une permission spécifique ?",opts:["PackageManager.hasPermission()","Context.checkCallingPermission()","Activity.verifyPermission()","Manifest.checkPerm()"],correct:1,exp:"Context.checkCallingPermission() : vérifie si le processus qui appelle a la permission requise."},
+  {q:"Doze Mode — quel événement le QUITTE ?",opts:["Réception d'un email","Connexion Bluetooth","Détection de mouvement par le capteur","Notification d'une app"],correct:2,exp:"Doze quitte si : mouvement détecté, écran allumé, ou appareil en charge. La réception d'email ne quitte pas Doze."},
+  {q:"Qu'est-ce que PARTIAL_WAKE_LOCK garantit ?",opts:["Écran ON en permanence","CPU ON même si écran OFF","Connexion WiFi maintenue","Son activé même en veille"],correct:1,exp:"PARTIAL_WAKE_LOCK : le CPU reste actif même si l'écran est éteint. Utilisé par les services arrière-plan."},
+  {q:"App Standby Bucket 'Rare' signifie que l'app :",opts:["Ne s'est jamais lancée","Est utilisée rarement → restrictions strictes sur CPU, réseau, jobs","A été désinstallée","Est en cours d'exécution"],correct:1,exp:"Bucket Rare : app rarement utilisée (ex: app de réservation d'hôtel). Restrictions strictes."},
+  {q:"Que teste la commande 'adb shell dumpsys deviceidle force-idle' ?",opts:["Vide le cache de l'app","Force l'appareil en mode Doze pour tester","Réinitialise la batterie","Liste toutes les apps installées"],correct:1,exp:"Cette commande force l'appareil en mode Idle (Doze) pour tester le comportement de l'app sans attendre."},
+  {q:"Que fait 'goToSleep()' dans le Power Manager Android ?",opts:["Met l'écran en veille doucement","Force la libération de tous les wake locks","Lance le mode Doze","Éteint le WiFi"],correct:1,exp:"goToSleep() force la libération de TOUS les wake locks actifs, mettant l'appareil en veille."},
+  {q:"Quelle est la permission requise pour accéder à Internet dans une app Android ?",opts:["ACCESS_NETWORK_STATE","INTERNET","READ_NETWORK_INFO","USE_INTERNET"],correct:1,exp:"La permission INTERNET (niveau Normal) est requise pour qu'une app puisse faire des requêtes réseau."},
+  {q:"Une permission Signature est accordée quand :",opts:["L'utilisateur l'approuve","L'app a le même certificat que le définisseur de la permission","L'API level est suffisant","L'app est sur le Play Store"],correct:1,exp:"Signature : accordée automatiquement si l'app qui utilise la permission est signée par le MÊME certificat que l'app qui la définit."},
+  {q:"Que se passe-t-il si kswapd libère insuffisamment de mémoire ?",opts:["Android redémarre","Le système appelle onTrimMemory() puis LMK si insuffisant","Android ignore et continue","L'app courante est forcée à quitter"],correct:1,exp:"Si kswapd insuffisant → onTrimMemory() → si toujours insuffisant → LMK tue des processus background."},
+  {q:"Dans quel niveau App Standby Bucket aucune restriction n'est appliquée ?",opts:["Working Set","Frequent","Rare","Active"],correct:3,exp:"Active = app en cours d'exécution (activité, service foreground...). AUCUNE restriction appliquée."},
+  {q:"Une page cached partagée MODIFIÉE — que fait kswapd avec elle ?",opts:["La libère directement","La compresse en zRAM","L'écrit en storage (ou via msync()/munmap())","La supprime immédiatement"],correct:2,exp:"Page cached partagée modifiée → kswapd l'écrit en storage, ou elle est sauvegardée via msync() ou munmap()."},
+  {q:"FULL_WAKE_LOCK garantit :",opts:["CPU ON, écran OFF","Écran tamisé ON, clavier OFF","Tout ON : CPU, écran, clavier","WiFi ON uniquement"],correct:2,exp:"FULL_WAKE_LOCK : tout reste allumé — CPU, écran à pleine luminosité, et clavier backlight."},
+  {q:"Battery Saver (mode économie batterie) — quel effet a-t-il sur les apps background ?",opts:["Aucun effet","Limite leur exécution quelle que soit leur API level","Les arrête définitivement","Les met dans le bucket Active"],correct:1,exp:"Battery Saver : limite l'exécution des apps background pour TOUTES les apps, quelle que soit leur API level."},
+];
+
+const mcqSets = [allMCQ.slice(0,28), allMCQ.slice(28,56), allMCQ.slice(56,84), allMCQ.slice(84,110)];
+let curMCQSet=0, mcqAnswers={}, mcqFeedback={};
+function loadMCQSet(idx,btn){curMCQSet=idx;mcqAnswers={};mcqFeedback={};document.querySelectorAll('#mcqTabs .set-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderMCQ();document.getElementById('mcqResult').classList.remove('show');}
+function renderMCQ(){
+  const qs=mcqSets[curMCQSet];let html='';
+  qs.forEach((q,idx)=>{
+    const gi=curMCQSet*28+idx;
+    html+=`<div class="question-card"><div class="question-number">Q${gi+1}</div><div class="question-text">${q.q}</div><div>`;
+    q.opts.forEach((opt,oi)=>{
+      let cls='';if(mcqFeedback[idx]){if(oi===q.correct)cls='correct';else if(mcqAnswers[idx]===oi&&oi!==q.correct)cls='wrong';}
+      html+=`<button class="option-btn ${cls}" onclick="selectMCQ(${idx},${oi})" ${mcqFeedback[idx]?'disabled':''}><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</button>`;
+    });
+    html+=`</div><div class="feedback-box ${mcqFeedback[idx]?(mcqAnswers[idx]===q.correct?'correct-fb':'wrong-fb')+' show':''}">${mcqFeedback[idx]?'<strong>'+(mcqAnswers[idx]===q.correct?'✓ Correct':'✗ Incorrect')+':</strong> '+q.exp:''}</div></div>`;
+  });
+  document.getElementById('mcqContainer').innerHTML=html;
+  const c=Object.entries(mcqAnswers).filter(([i,a])=>a===qs[i].correct).length;
+  document.getElementById('mcqScoreBadge').textContent=`Score: ${c} / ${qs.length}`;
+}
+function selectMCQ(idx,oi){if(mcqFeedback[idx])return;mcqAnswers[idx]=oi;mcqFeedback[idx]=true;renderMCQ();}
+function checkAllMCQ(){const qs=mcqSets[curMCQSet];qs.forEach((_,i)=>{if(mcqAnswers[i]===undefined)mcqAnswers[i]=-1;mcqFeedback[i]=true;});renderMCQ();const c=Object.entries(mcqAnswers).filter(([i,a])=>+a===qs[+i].correct).length;const pct=Math.round(c/qs.length*100);const r=document.getElementById('mcqResult');r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${c} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Excellent — prêt pour l'examen ! 🎉":pct>=60?"Bon travail ! Revoyez les erreurs.":"Étudiez le cours complet et réessayez."}</div><button class="quiz-btn-primary" onclick="resetMCQ()">Reset</button>`;r.classList.add('show');}
+function resetMCQ(){mcqAnswers={};mcqFeedback={};renderMCQ();document.getElementById('mcqResult').classList.remove('show');}
+renderMCQ();
+
+/* ===================== 110 TRUE/FALSE ===================== */
+const allTF = [
+  // SET A: EMBARQUÉ & OS (0–27)
+  {s:"Un système embarqué est une combinaison matériel+logiciel avec des contraintes sévères (énergie, taille, température).",t:true,e:"Définition exacte selon Kadionik (2004)."},
+  {s:"98% des processeurs vendus sont destinés aux PC grand public.",t:false,e:"FAUX : 98% vont à l'embarqué, seulement 2% aux PC. Prix moyen embarqué : 6$ vs 300$ PC."},
+  {s:"Arduino est sorti en 2005 sous licence libre et se programme en C-like.",t:true,e:"Arduino (2005) : licence libre, langage assez simple (C-like), connexion USB."},
+  {s:"Raspberry Pi sort en 2012 et dispose d'un OS intégré.",t:true,e:"Raspberry Pi (2012) : Python, sans-fil, OS intégré (Raspbian/Linux)."},
+  {s:"Micro:bit est principalement destinée au marché industriel.",t:false,e:"Micro:bit (2015) est destinée à un usage ÉDUCATIF, pas industriel."},
+  {s:"Le premier système embarqué était destiné à la mission lunaire Apollo (1967).",t:true,e:"1967 : premier système embarqué de guidage pour la mission Apollo."},
+  {s:"Le premier microprocesseur Intel a été commercialisé en 1967.",t:false,e:"FAUX : le premier microprocesseur Intel a été commercialisé en 1971."},
+  {s:"Un système embarqué possède toujours un système de fichiers.",t:false,e:"Un système embarqué N'a pas TOUJOURS de système de fichiers. Cela dépend de ses besoins."},
+  {s:"La contrainte 'temps réel' d'un système embarqué signifie qu'il doit répondre rapidement aux événements.",t:true,e:"Fonctionnement en temps réel : réponse rapide aux événements internes/externes. Critique en contrôle."},
+  {s:"Un OS Mobile gère uniquement les appels téléphoniques.",t:false,e:"Un OS Mobile gère : mémoire, CPU/ordonnancement, fichiers, I/O, sécurité, multimédia, énergie, connectivité."},
+  {s:"Android détient 44,6% du marché des OS en 2023.",t:true,e:"Android : 44,6% — Windows : 28,41% — iOS : 17,29% (2023)."},
+  {s:"iOS est un système d'exploitation Open Source.",t:false,e:"iOS est PROPRIÉTAIRE. Code source fermé, développé par Apple pour ses propres appareils."},
+  {s:"Android est un OS propriétaire développé exclusivement par Google.",t:false,e:"Android est Open Source, développé par l'OHA (Open Handset Alliance), dont Google fait partie."},
+  {s:"L'Airbus A320 (1984) est notable car ses commandes sont entièrement électroniques.",t:true,e:"A320 (1984) : premiers commandes entièrement électroniques (Fly-By-Wire), remplaçant les câbles manuels."},
+  {s:"Arduino et Raspberry Pi sont équivalents en termes de puissance et capacités.",t:false,e:"Arduino = microcontrôleur simple. Raspberry Pi = mini-ordinateur avec OS, Python, sans-fil. Très différents."},
+  {s:"Un système embarqué peut fonctionner sans RAM.",t:false,e:"La RAM est un équipement PERMANENT de toute architecture embarquée (avec le CPU)."},
+  {s:"Le premier objet connecté (IoT) était un distributeur de Coca-Cola (1982).",t:true,e:"1982 : distributeur Coca-Cola avec interface réseau pour vérifier le stock à distance."},
+  {s:"Un OS mobile nécessite une gestion avancée de l'énergie car les appareils ont une autonomie réduite.",t:true,e:"Autonomie réduite = gestion avancée de l'énergie indispensable pour les OS mobiles."},
+  {s:"Android est apparu avant iOS.",t:false,e:"iOS (iPhone) : 2007. Android : 2008 (première version). iOS est sorti en premier."},
+  {s:"La Google Car (2014) est un exemple de système embarqué avancé.",t:true,e:"Google Car (2014) : véhicule autonome avec radars, caméras, GPS — système embarqué très sophistiqué."},
+  {s:"La mémoire Flash est couramment utilisée dans les systèmes embarqués comme stockage de masse.",t:true,e:"Mémoire Flash (SD Card, FlashDisk, DiskOnChip) : compacte, robuste, idéale pour l'embarqué."},
+  {s:"Un PDA est un type de dispositif mobile.",t:true,e:"PDA (Personal Digital Assistant) est classé parmi les dispositifs mobiles avec laptop, smartphone, tablet."},
+  {s:"Le faible coût est une contrainte non importante pour les systèmes embarqués.",t:false,e:"Le faible coût est FONDAMENTAL : solution optimale prix/performance. ~6$ par processeur en 2004."},
+  {s:"L'IHM (Interface Homme-Machine) inclut les écrans tactiles.",t:true,e:"IHM = communication humain-machine. Les écrans tactiles (touchScreen) sont un exemple clé."},
+  {s:"Les systèmes embarqués sont soumis à des contraintes environnementales comme les vibrations et la température.",t:true,e:"Contraintes environnementales : température, humidité, vibrations, chocs, variations d'alimentation, RF."},
+  {s:"Micro:bit dispose d'une matrice de LEDs et de capteurs intégrés.",t:true,e:"Micro:bit (2015) : matrice de LEDs 5×5, capteurs de température, accéléromètre, boussole."},
+  {s:"Un système embarqué a généralement une puissance de calcul supérieure à un PC.",t:false,e:"Un système embarqué a des ressources LIMITÉES — puissance de calcul réduite comparée à un PC."},
+  {s:"La classification des OS mobiles inclut les systèmes propriétaires et les systèmes Open Source.",t:true,e:"Deux catégories : propriétaires (iOS, code source fermé) et Open Source (Android, code disponible)."},
+
+  // SET B: ANDROID & COMPOSANTS (28–55)
+  {s:"Android est basé sur un noyau Windows NT.",t:false,e:"Android est basé sur le noyau LINUX (initialement 2.6). Pas Windows."},
+  {s:"Le framework applicatif Android (couche 2) est écrit en Java.",t:true,e:"L'Application Framework est écrit en Java. Les librairies (couche 3) sont en C/C++."},
+  {s:"Bionic libc est identique à glibc.",t:false,e:"Bionic libc est une RÉÉCRITURE de glibc : moitié de taille, optimisé ARM. Pas de POSIX complet, pas de STL."},
+  {s:"SQLite sur Android stocke les données dans un fichier unique de taille < 2Mo.",t:true,e:"SQLite : moteur BDD SQL léger, stockage dans un fichier, taille < 2Mo. Idéal pour mobile."},
+  {s:"WebKit supporte uniquement HTML, pas JavaScript.",t:false,e:"WebKit supporte CSS, JavaScript, DOM et AJAX. Il est composé de WebCore + JavascriptCore."},
+  {s:"Le double-buffer de SurfaceManager permet d'afficher des frames partielles pour plus de fluidité.",t:false,e:"FAUX : le double-buffer EMPÊCHE l'affichage de frames incomplètes. Le buffer 2 n'est affiché que complet."},
+  {s:"ART compile le code à l'installation (AOT) depuis Android L.",t:true,e:"Android L (5.0) : ART avec compilation AOT (Ahead-Of-Time) complète à l'installation."},
+  {s:"Dalvik utilise la compilation JIT (Just-In-Time) à l'exécution.",t:true,e:"Dalvik : JIT = compilation au moment de l'exécution. Plus lent au démarrage mais flexible."},
+  {s:"Android N (7.0) utilise uniquement la compilation AOT.",t:false,e:"Android N+ : hybride JIT+AOT. Les parties les plus utilisées en AOT, le reste en JIT."},
+  {s:"Zygote est le premier composant Java à s'exécuter dans le boot Android.",t:false,e:"FAUX : le System Server est le premier composant JAVA. Zygote lance ART mais n'est pas Java pur."},
+  {s:"Le System Server lance tous les services Android (Activity, Power, Bluetooth, Location, Audio...).",t:true,e:"System Server = premier composant Java, démarre TOUS les services Android."},
+  {s:"Tous les processus d'applications Android sont forkés depuis Zygote.",t:true,e:"Oui — toutes les apps sont forkées depuis Zygote → démarrage rapide grâce aux classes Java préchargées."},
+  {s:"Une Activity Android peut exister sans interface utilisateur.",t:false,e:"L'Activity EST une interface utilisateur. Si pas d'UI → utiliser un Service."},
+  {s:"onSaveInstanceState() est toujours appelé, même quand l'utilisateur appuie sur Back.",t:false,e:"FAUX : onSaveInstanceState() N'EST PAS appelé si l'utilisateur quitte volontairement via Back."},
+  {s:"onSaveInstanceState() est appelé lors d'une rotation d'écran.",t:true,e:"Oui : la rotation détruit et recrée l'Activity → onSaveInstanceState avant destroy, onRestoreInstanceState après."},
+  {s:"Un Intent implicite nomme directement le composant cible.",t:false,e:"L'Intent EXPLICITE nomme directement la cible. L'Intent IMPLICITE décrit une action → système trouve le composant."},
+  {s:"Si plusieurs composants matchent un Intent implicite, le système choisit automatiquement le premier.",t:false,e:"Si plusieurs matchs → dialog 'Ouvrir avec' proposé à l'utilisateur pour choisir."},
+  {s:"onReceive() d'un BroadcastReceiver peut lancer une Activity directement.",t:false,e:"onReceive() NE PEUT PAS lancer une Activity. Doit être court (main thread). Pour tâche longue → Service."},
+  {s:"Un Service Foreground doit afficher une notification visible à l'utilisateur.",t:true,e:"Service Foreground : notification visible obligatoire. Priorité plus haute, moins susceptible d'être tué."},
+  {s:"ContentResolver est utilisé pour accéder aux ContentProviders.",t:true,e:"Context.getContentResolver() retourne un ContentResolver qui gère les interactions avec les ContentProviders."},
+  {s:"Un Cursor est utilisé pour itérer sur les résultats d'une requête ContentProvider.",t:true,e:"Cursor = itérateur sur les résultats. Méthodes : moveToFirst(), moveToNext(), getString(), getColumnIndex()."},
+  {s:"L'enregistrement statique d'un BroadcastReceiver se fait dans le code Java.",t:false,e:"L'enregistrement STATIQUE se fait dans AndroidManifest.xml. Le DYNAMIQUE se fait via registerReceiver()."},
+  {s:"Le format .dex est utilisé par Android Runtime.",t:true,e:".dex (Dalvik Executable) : format bytecode Android. Dalvik l'exécute via JIT, ART le compile en code machine."},
+  {s:"Binder IPC permet la communication entre processus isolés dans Android.",t:true,e:"Binder IPC : driver kernel + mémoire partagée. Gère concurrence et synchronisation entre processus."},
+  {s:"La hiérarchie de priorité la plus haute va aux processus vides (empty process).",t:false,e:"FAUX : les processus FOREGROUND ont la plus HAUTE priorité. Les processus vides ont la priorité la plus BASSE."},
+  {s:"Un ContentProvider utilise des URIs de format content://authority/path.",t:true,e:"Format exact : content://authority/path. Ex: content://com.android.contacts/contacts/"},
+  {s:"Le Location Manager fournit l'accès aux services de localisation GPS.",t:true,e:"Location Manager (App Framework) : fournit l'accès aux services GPS et localisation réseau."},
+  {s:"OpenGL ES est l'implémentation OpenGL complète pour desktop dans Android.",t:false,e:"OpenGL ES est l'implémentation OpenGL pour l'EMBARQUÉ (Embedded Systems), version allégée pour mobile."},
+
+  // SET C: THREADS & CFS (56–83)
+  {s:"Le main thread Android peut être bloqué jusqu'à 10 secondes avant ANR.",t:false,e:"FAUX : la limite est 5 SECONDES. Au-delà → ANR (Application Not Responding)."},
+  {s:"Les opérations réseau doivent être effectuées sur le main thread Android.",t:false,e:"FAUX : les opérations réseau BLOQUENT le thread. Elles doivent être sur un WORKER THREAD."},
+  {s:"View.post(Runnable) ajoute le Runnable à la file du UI thread.",t:true,e:"View.post(R) : ajoute le Runnable à la MessageQueue du UI thread pour exécution ultérieure."},
+  {s:"Activity.runOnUiThread() exécute immédiatement si le thread courant EST le UI thread.",t:true,e:"runOnUiThread() : si déjà sur UI thread → exécution immédiate. Sinon → ajouté à la file UI."},
+  {s:"AsyncTask est recommandé en 2024 pour les tâches longues.",t:false,e:"AsyncTask a été DÉPRÉCIÉ en API 30. Utiliser Coroutines Kotlin, ExecutorService, ou WorkManager."},
+  {s:"CFS utilise un arbre bicolore trié par vruntime.",t:true,e:"CFS : red-black tree (arbre bicolore) avec vruntime comme clé. Nœud gauche = vruntime minimal = élu."},
+  {s:"CFS a été introduit dans Linux 2.6.23.",t:true,e:"CFS (Completely Fair Scheduler) depuis Linux 2.6.23 (2007). Pour processus SCHED_NORMAL."},
+  {s:"Dans CFS, le processus avec le vruntime le plus GRAND est élu en premier.",t:false,e:"FAUX : CFS élit le processus avec le vruntime le plus PETIT (nœud le plus à gauche de l'arbre)."},
+  {s:"Le nice value -20 représente la priorité la plus faible dans CFS.",t:false,e:"FAUX : nice=-20 = priorité la PLUS HAUTE. Nice=+19 = priorité la plus basse."},
+  {s:"W₀ (poids du processus nice=0) = 1024 dans CFS.",t:true,e:"W₀ = 1024 est la valeur de référence. Utilisé dans ΔVruntime = Δt × (W₀/W_i)."},
+  {s:"Un processus avec nice=-10 a un poids plus élevé que nice=0.",t:true,e:"W(-10) ≈ 9548 > W(0) = 1024. Nice plus faible = poids plus élevé = plus de temps CPU."},
+  {s:"ΔVruntime d'un processus haute priorité est plus GRAND que pour basse priorité.",t:false,e:"FAUX : haute priorité → W_i grand → ΔVruntime = Δt×(W₀/W_i) PETIT. Vruntime augmente lentement."},
+  {s:"Quantum_i = (W_i / ΣW) × TL dans CFS.",t:true,e:"Formule exacte du quantum. Plus le poids W_i est grand, plus le quantum (temps alloué) est important."},
+  {s:"TL (Target Latency) est la période pendant laquelle tous les threads runnable s'exécutent au moins une fois.",t:true,e:"TL = latence cible. Garantit qu'en TL ms, tous les threads runnable obtiennent au moins leur quantum."},
+  {s:"CFS élimine complètement la famine des processus.",t:false,e:"CFS prévient la famine avec l'ajustement du vruntime au réveil (max(vruntime, min_vruntime)), mais pas complètement."},
+  {s:"L'unité fondamentale d'ordonnancement dans Android est le processus.",t:false,e:"FAUX : l'unité fondamentale est le THREAD. Le scheduler Linux Android gère des threads."},
+  {s:"CPUSET permet d'attacher un processus à un CPU spécifique.",t:true,e:"CPUSET : bind un processus à un ou plusieurs CPU. Utile pour isoler les threads UI sur des CPU dédiés."},
+  {s:"SCHEDTUNE est disponible depuis Android 7.1.",t:true,e:"SCHEDTUNE depuis Android 7.1 : contrôle les processus, sélection CPU, déclenchement de boost dans CFS."},
+  {s:"Handler est un niveau d'abstraction plus bas que AsyncTask.",t:false,e:"Handler est un niveau SUPÉRIEUR à Thread mais INFÉRIEUR à AsyncTask. AsyncTask encapsule Thread + Handler."},
+  {s:"Deux apps avec le même UID et même certificat peuvent partager un processus.",t:true,e:"Oui, si android:process identique + même UID + même certificat → partage de processus et mémoire VM."},
+  {s:"doInBackground() d'AsyncTask s'exécute sur le UI thread.",t:false,e:"doInBackground() s'exécute dans un thread ARRIÈRE-PLAN. Seuls onPreExecute(), onProgressUpdate() et onPostExecute() sont sur le UI thread."},
+  {s:"View.postDelayed(Runnable, 2000) exécute le Runnable immédiatement.",t:false,e:"postDelayed() exécute le Runnable APRÈS le délai spécifié (2000ms = 2 secondes ici)."},
+  {s:"Pour un processus avec nice=5 et W=335, ΔVruntime pour Δt=1ms est environ 3.057ms.",t:true,e:"ΔVruntime = 1 × (1024/335) ≈ 3.057ms. Basse priorité → poids faible → vruntime augmente vite."},
+  {s:"Un processus Android peut avoir plusieurs threads.",t:true,e:"Un processus peut intégrer un ou plusieurs threads. Le processus est parent au thread (standard POSIX)."},
+  {s:"CFS préempte les processus SCHED_BATCH.",t:false,e:"CFS (pour SCHED_NORMAL) ne préempte PAS les processus SCHED_BATCH ni SCHED_IDLE."},
+  {s:"onPostExecute() d'AsyncTask s'exécute sur le UI thread.",t:true,e:"onPostExecute() : appelé sur le UI Thread après la fin de doInBackground(). Permet de mettre à jour l'UI."},
+  {s:"Le main thread exécute les méthodes du cycle de vie des Services.",t:true,e:"Sur le main thread s'exécutent : méthodes du cycle de vie Activity/Service, onReceive(), méthodes d'événements UI."},
+  {s:"Au réveil d'un thread dormant, CFS lui attribue automatiquement le vruntime minimum.",t:false,e:"CFS applique : vruntime ← max(vruntime_thread, min_vruntime_arbre). Pas directement min_vruntime seul."},
+
+  // SET D: MÉMOIRE, PERMISSIONS & ÉNERGIE (84–109)
+  {s:"La taille d'une page mémoire Android est de 4KB.",t:true,e:"4KB (4 kilooctets). Héritée du kernel Linux. Toute la RAM est structurée en pages de 4KB."},
+  {s:"RSS est la métrique la plus précise pour mesurer l'usage mémoire d'une app.",t:false,e:"FAUX : RSS SURESTIME car il compte 100% des pages partagées pour chaque processus. PSS est plus juste."},
+  {s:"PSS distribue proportionnellement les pages partagées entre les processus qui les utilisent.",t:true,e:"PSS = pages privées + pages partagées / nombre d'utilisateurs. Métrique la plus équitable."},
+  {s:"USS compte à la fois les pages privées et partagées.",t:false,e:"USS = UNIQUEMENT les pages privées. SOUS-estime l'usage réel (ignore les pages partagées)."},
+  {s:"kswapd s'arrête quand la RAM est complètement pleine.",t:false,e:"FAUX : kswapd s'arrête quand la RAM libre DÉPASSE le seuil MAXIMUM. Il s'active sous le seuil minimum."},
+  {s:"Les pages anonymes modifiées peuvent être directement libérées par kswapd.",t:false,e:"FAUX : pages anonymes modifiées → compressées en zRAM (elles ne sont pas associées à un fichier)."},
+  {s:"zRAM est une partition de RAM compressée utilisée pour le swap.",t:true,e:"zRAM : swap sur RAM compressée. Pages anonymes/modifiées compressées ici pour libérer de l'espace."},
+  {s:"LMK tue d'abord les processus foreground.",t:false,e:"FAUX : LMK tue d'abord les processus BACKGROUND (LRU), puis Service, Visible, et foreground EN DERNIER."},
+  {s:"oom_adj_score est utilisé par LMK pour déterminer l'ordre de kill.",t:true,e:"LMK utilise oom_adj_score : score plus élevé = moins prioritaire = tué en premier."},
+  {s:"Le GC (Garbage Collector) Android classe les objets en Young, Older et Permanent generations.",t:true,e:"CMS GC : Young generation (alloués récemment), Older generation (actifs un moment), Permanent (longue durée)."},
+  {s:"onTrimMemory() est la dernière ressource avant le redémarrage du système.",t:false,e:"onTrimMemory() est appelé AVANT LMK. LMK est la dernière ressource (tue des processus). Pas de redémarrage."},
+  {s:"Les permissions Normales sont accordées automatiquement à l'installation.",t:true,e:"Permissions Normales : accordées auto, risque faible. Ex: INTERNET, VIBRATE, ACCESS_WIFI_STATE."},
+  {s:"Avec targetSdkVersion = 22, les permissions dangereuses sont demandées au runtime sur Android 12.",t:false,e:"FAUX : le modèle runtime s'applique selon targetSdkVersion. API cible 22 ≤ 22 → toutes permissions auto à l'install."},
+  {s:"Doze Mode est déclenché si l'appareil est stationnaire, écran OFF et débranché.",t:true,e:"Conditions Doze : stationnaire (capteur mouvement) + écran OFF + débranché depuis un moment."},
+  {s:"Doze Mode autorise l'accès réseau à tout moment.",t:false,e:"FAUX : Doze RESTREINT l'accès réseau. Uniquement autorisé pendant les fenêtres de maintenance."},
+  {s:"PARTIAL_WAKE_LOCK maintient le CPU actif même si l'écran est éteint.",t:true,e:"PARTIAL_WAKE_LOCK : CPU ON, écran peut être OFF. Utilisé par les services arrière-plan."},
+  {s:"FULL_WAKE_LOCK maintient uniquement l'écran allumé.",t:false,e:"FULL_WAKE_LOCK maintient TOUT allumé : CPU, écran pleine luminosité, clavier backlight."},
+  {s:"App Standby Bucket 'Never' s'applique aux apps installées mais jamais utilisées.",t:true,e:"Bucket Never : app installée mais jamais lancée → restrictions sévères (jobs, réseau, alarmes très limités)."},
+  {s:"Les apps quittent le standby mode dès que l'appareil est en charge.",t:true,e:"Toutes les apps quittent le mode standby (Doze inclus) dès que l'appareil est branché en charge."},
+  {s:"La commande 'adb shell dumpsys deviceidle force-idle' force le mode Doze.",t:true,e:"Cette commande ADB force l'appareil en mode idle pour tester le comportement de l'app en Doze."},
+  {s:"Power Manager Service surveille le niveau de la batterie.",t:true,e:"Power Service : monitore le niveau de batterie et température via le Battery Driver."},
+  {s:"Une page cached partagée originale peut être libérée directement par kswapd.",t:true,e:"Page cached partagée originale = copie non modifiée → peut être libérée (le storage contient l'original)."},
+  {s:"Battery Saver mode affecte uniquement les apps ciblant API < 26.",t:false,e:"FAUX : Battery Saver limite les apps background pour TOUTES les apps, quelle que soit leur API level."},
+  {s:"PSS(Within) dans l'exercice TD43 change quand Viber commence à utiliser Location Service.",t:false,e:"FAUX : Within N'utilise PAS Location Service. Son PSS = 3 pages dans TOUS les cas (indépendant)."},
+  {s:"La permission CAMERA est une permission dangereuse.",t:true,e:"CAMERA est une permission DANGEREUSE : accès à l'appareil photo, données privées → runtime prompt API≥23."},
+  {s:"Context.checkCallingPermission() vérifie si l'app courante a une permission.",t:false,e:"checkCallingPermission() vérifie le PROCESSUS APPELANT (IPC), pas l'app courante. Pour l'app courante → checkSelfPermission()."},
+];
+
+const tfSets = [allTF.slice(0,28), allTF.slice(28,56), allTF.slice(56,84), allTF.slice(84,110)];
+let curTFSet=0, tfAnswers={}, tfRevealed={};
+function loadTFSet(idx,btn){curTFSet=idx;tfAnswers={};tfRevealed={};document.querySelectorAll('#tfTabs .set-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTF();document.getElementById('tfResult').classList.remove('show');}
+function renderTF(){
+  const qs=tfSets[curTFSet];let html='';const go=[0,28,56,84][curTFSet];
+  qs.forEach((q,idx)=>{
+    const ans=tfAnswers[idx];const rev=tfRevealed[idx];const correct=(ans===q.t);
+    html+=`<div class="tf-card">
+      <div class="tf-statement"><strong>${go+idx+1}.</strong> ${q.s}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" style="background:${ans===true?(rev?(correct?'var(--green)':'var(--red)'):'rgba(139,92,246,.3)'):'var(--panel2)'};color:${ans===true?'#fff':'var(--text)'}" onclick="setTF(${idx},true)" ${rev?'disabled':''}>✓ VRAI</button>
+        <button class="tf-btn" style="background:${ans===false?(rev?(correct?'var(--green)':'var(--red)'):'rgba(139,92,246,.3)'):'var(--panel2)'};color:${ans===false?'#fff':'var(--text)'}" onclick="setTF(${idx},false)" ${rev?'disabled':''}>✗ FAUX</button>
+      </div>
+      ${rev?`<div class="tf-result show" style="color:${correct?'var(--green)':'var(--red)'}"><strong>${correct?'✓ Correct !':'✗ Incorrect.'}</strong> ${q.e}</div>`:''}
+    </div>`;
+  });
+  document.getElementById('tfContainer').innerHTML=html;
+  const c=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].t).length;
+  document.getElementById('tfScoreBadge').textContent=`Score: ${c} / ${qs.length}`;
+}
+function setTF(idx,val){if(tfRevealed[idx])return;tfAnswers[idx]=val;tfRevealed[idx]=true;renderTF();}
+function checkAllTF(){const qs=tfSets[curTFSet];qs.forEach((_,i)=>{if(tfAnswers[i]===undefined)tfAnswers[i]=null;tfRevealed[i]=true;});renderTF();const c=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].t).length;const pct=Math.round(c/qs.length*100);const r=document.getElementById('tfResult');r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${c} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Excellente maîtrise ! 🎉":pct>=60?"Bon travail ! Révisez les erreurs.":"Étudiez le cours et réessayez."}</div><button class="quiz-btn-primary" onclick="resetTF()">Reset</button>`;r.classList.add('show');}
+function resetTF(){tfAnswers={};tfRevealed={};renderTF();document.getElementById('tfResult').classList.remove('show');}
+renderTF();
+
+/* ===================== SHORT ANSWERS ===================== */
+const shortQs = [
+  {q:"Définir un système embarqué et citer ses 5 contraintes principales.",m:"Système embarqué [Kadionik 2004] : combinaison matériel + logiciel dédiée à des fonctions spécifiques avec contraintes sévères. 5 contraintes : 1. Faible coût (solution optimale prix/performance, ~6$/processeur) 2. Faible consommation (batterie, autonomie max) 3. Faible encombrement (composants sur faible surface) 4. Temps réel (réponse rapide aux événements) 5. Contraintes environnementales (température, humidité, vibrations, RF)."},
+  {q:"Expliquer les 5 couches de l'architecture Android (de haut en bas avec langages).",m:"1. Applications (Java/Kotlin) : Email, SMS, Maps, Navigateur. 2. App Framework (Java) : Activity Mgr, Content Providers, Location Mgr, Notification Mgr, Window Mgr... 3. Librairies (C/C++) : Bionic libc, SQLite, WebKit, OpenGL ES, SurfaceManager... 4. Android Runtime (.dex) : ART (ex-Dalvik), Core Libraries JSE 1.5. 5. Noyau Linux (C) : drivers, Binder IPC, Ashmem, Wakelock, Alarme."},
+  {q:"Décrire la séquence de boot Android complète (8 étapes) avec le rôle de chaque étape.",m:"1. Boot ROM : détecte NAND, charge bootloader en RAM interne. 2. Bootloader 1 : configure RAM externe, charge main bootloader. 3. Bootloader 2 : init fichiers système, pilotes réseau, protections, lance kernel. 4. Linux Kernel : init interruptions, mémoire, cache, scheduler → lance init (PID 1). 5. Init + init.rc : lit script init.rc, lance services système. 6. Zygote : lancé par init, démarre ART VM, précharge classes Java. 7. System Server : 1er composant Java, lance TOUS les services Android. 8. Applications : forkées depuis Zygote."},
+  {q:"Comparer Dalvik et ART sur 4 points : compilation, architecture VM, format, GC.",m:"Dalvik : JIT (à l'exécution), architecture registre-based, format .dex, GC Stop-the-world (pauses longues). ART : AOT (à l'installation, Android L+) + JIT+AOT hybride (Android N+), registre-based, .dex → code machine natif, GC Concurrent Mark & Sweep (pauses courtes, multi-thread)."},
+  {q:"Décrire le cycle de vie complet d'une Activity Android avec tous les callbacks.",m:"onCreate() → onStart() → onResume() → [RUNNING] → onPause() → onStop() → onDestroy(). Plus onRestart() (depuis stopped vers started). Pour la rotation : onSaveInstanceState (avant destroy) → onDestroy → onCreate → onRestoreInstanceState → onResume. IMPORTANT : onSaveInstanceState NON appelé si Back volontaire."},
+  {q:"Expliquer PSS vs RSS vs USS avec formules. Lequel utiliser et pourquoi ?",m:"RSS = pages_privées + TOUTES pages_partagées → SURESTIME. USS = pages_privées seulement → SOUS-ESTIME. PSS = pages_privées + (pages_partagées / nb_utilisateurs) → MEILLEUR. Formule : PSS(app) = privé + Σ(partagé_i / n_i). Utiliser PSS car il distribue équitablement les pages partagées entre tous les processus qui les utilisent."},
+  {q:"Expliquer le CFS Completely Fair Scheduler : structure de données, critère d'élection, formules.",m:"CFS : arbre bicolore (red-black tree) trié par vruntime. ÉLECTION : nœud le plus à GAUCHE (vruntime le plus petit = thread le moins exécuté). FORMULES : W(nice) ≈ 1024/1.25^nice. Quantum_i = (W_i/ΣW)×TL. ΔVruntime = Δt×(W₀/W_i) avec W₀=1024. Au réveil : vruntime ← max(vruntime, min_vruntime_arbre) pour éviter famine."},
+  {q:"Expliquer la cascade de récupération mémoire Android (kswapd → onTrimMemory → LMK).",m:"1. kswapd : démon kernel, s'active si RAM libre < seuil min, libère pages non-modifiées directement, compresse pages modifiées en zRAM, s'arrête si RAM libre > seuil max. 2. onTrimMemory() : si kswapd insuffisant, demande aux apps de réduire leur allocation. 3. LMK (Last resort) : tue des processus par ordre de oom_adj_score : Background (LRU d'abord) → Service → Visible → Foreground (dernier)."},
+  {q:"Décrire les 3 niveaux de permissions Android et leur comportement selon l'API level.",m:"1. Normale : accordée auto à l'installation, risque faible (ex: INTERNET). 2. Signature : accordée auto si même certificat que le définisseur. 3. Dangereuse : accès données privées → API ≥ 23 : runtime prompt à l'exécution. API ≤ 22 : accordée AUTO à l'installation même si dangereuse. IMPORTANT : c'est le targetSdkVersion qui compte, pas la version Android du device."},
+  {q:"Décrire le Doze Mode et les App Standby Buckets.",m:"Doze Mode : déclenché si stationnaire + écran OFF + débranché. Restreint : réseau, CPU intensif, jobs, alarmes, syncs, wakelocks. Fenêtres de maintenance à intervalles décroissants. Quitte si mouvement, écran ON, ou charge. App Standby Buckets (API 28+) : Active (aucune restriction) → Working Set (restriction moyenne) → Frequent (forte) → Rare (stricte) → Never (sévère). Quittent le mode dès que l'appareil est en charge."},
+];
+function renderShort(){document.getElementById('shortContainer').innerHTML=shortQs.map((q,i)=>`<div class="question-card"><div class="question-number">RÉPONSE COURTE ${i+1}</div><div class="question-text">${q.q}</div><textarea class="short-input" id="sa-${i}" rows="3" placeholder="Écrivez votre réponse ici..."></textarea><button class="fc-btn" onclick="revealShort(${i})" id="sa-btn-${i}">Révéler la réponse modèle</button><div class="def-box" id="sa-ans-${i}" style="display:none;margin-top:.6rem;"><strong>Réponse modèle :</strong><br>${q.m}</div></div>`).join('');}
+function revealShort(i){const d=document.getElementById(`sa-ans-${i}`);d.style.display=d.style.display==='none'?'block':'none';document.getElementById(`sa-btn-${i}`).textContent=d.style.display==='block'?'Masquer':'Révéler la réponse modèle';}
+renderShort();
+
+/* ===================== SCENARIOS & CALCULS ===================== */
+const scenarios = [
+  {q:"Un développeur veut effectuer une requête réseau (API REST) dans son app Android. Il hésite entre le main thread et un worker thread. Que faut-il faire ?",opts:["Utiliser le main thread car c'est plus simple","Utiliser un worker thread (AsyncTask, Coroutine, ExecutorService)","Utiliser un BroadcastReceiver","Utiliser un ContentProvider"],correct:1,exp:"Le main thread NE DOIT PAS être bloqué > 5s (ANR). Les requêtes réseau sont bloquantes → WORKER THREAD obligatoire. Exemples : Coroutines Kotlin, ExecutorService, ou ancien AsyncTask."},
+  {q:"CALCUL PSS : GMaps (2 pages privées), Viber (1 page privée), Within (3 pages privées). Location Service : 4 pages partagées. Seulement GMaps utilise Location Service. Quel est PSS(GMaps) ?",opts:["2 pages","4 pages","6 pages","3 pages"],correct:2,exp:"PSS(GMaps) = pages privées + Location partagée / 1 utilisateur = 2 + 4/1 = 6 pages. Quand GMaps est seul utilisateur du service, il supporte tout le coût PSS."},
+  {q:"CALCUL PSS : GMaps (2 pages privées) ET Viber (1 page privée) partagent Location Service (4 pages). Quel est PSS(Viber) ?",opts:["1 page","2 pages","3 pages","5 pages"],correct:2,exp:"PSS(Viber) = 1 page privée + 4 pages Location / 2 utilisateurs = 1 + 2 = 3 pages. La charge est distribuée équitablement entre GMaps et Viber."},
+  {q:"CALCUL CFS : Thread T1 (nice=-5, W=3121), T2 (nice=0, W=1024), T3 (nice=+5, W=335). ΣW=4480, TL=3ms. Quel est le quantum de T2 (nice=0) ?",opts:["0.22 ms","0.69 ms","2.09 ms","1.50 ms"],correct:1,exp:"Quantum(T2) = (W2/ΣW) × TL = (1024/4480) × 3 ≈ 0.229 × 3 ≈ 0.686 ≈ 0.69 ms. T2 reçoit moins de temps que T1 car priorité plus basse."},
+  {q:"CALCUL CFS : ΔVruntime de T1 (nice=-5, W=3121) pour Δt=1ms, W₀=1024. Quelle est la valeur ?",opts:["0.107 ms","0.328 ms","1.000 ms","3.057 ms"],correct:1,exp:"ΔVruntime(T1) = 1ms × (1024/3121) ≈ 0.328 ms. Haute priorité (nice=-5) → vruntime augmente lentement = thread reste compétitif dans l'arbre CFS."},
+  {q:"MÉMOIRE : RAM = 50KB, pages utilisées = 40KB, seuil minimum = 12KB. RAM libre = 10KB. Que fait le système ?",opts:["Lance l'app normalement","Active uniquement kswapd","Active kswapd ET si insuffisant → LMK tue Background d'abord","Redémarre l'appareil immédiatement"],correct:2,exp:"RAM libre (10KB) < seuil (12KB) → kswapd activé. Si kswapd insuffisant → onTrimMemory() → LMK tue d'abord les processus Background (LRU) comme Within dans notre exemple."},
+  {q:"Un hôpital développe une app qui doit lire les contacts ET accéder à la caméra. L'app cible API 25. Comment les permissions sont-elles accordées ?",opts:["Toutes au runtime (prompt utilisateur)","READ_CONTACTS et CAMERA accordées automatiquement à l'installation","Seulement CAMERA demandée au runtime","L'app ne peut pas utiliser ces permissions"],correct:1,exp:"PIÈGE : targetSdkVersion = 25 ≤ 22? NON, 25 > 22. Donc pour API target 25 (≥23) → RUNTIME PROMPT pour permissions dangereuses (READ_CONTACTS, CAMERA). Réponse correcte : toutes au runtime."},
+  {q:"Un processus Android se réveille après un long sommeil. Son vruntime = 50ms, min_vruntime de l'arbre = 80ms. Quel vruntime lui est attribué ?",opts:["50ms (inchangé)","80ms (min_vruntime)","65ms (moyenne)","0ms (réinitialisation)"],correct:1,exp:"Au réveil : vruntime ← max(vruntime_thread, min_vruntime_arbre) = max(50, 80) = 80ms. Cela empêche le thread de monopoliser le CPU après un long sommeil."},
+  {q:"Une app en Bucket 'Rare' reçoit une notification urgente. L'appareil est en Doze Mode. Peut-elle accéder au réseau ?",opts:["Oui, toujours","Non, jamais en Doze","Uniquement pendant les fenêtres de maintenance","Oui si haute priorité FCM"],correct:3,exp:"En Doze, le réseau est restreint mais des fenêtres de maintenance existent. Les messages FCM haute priorité peuvent réveiller l'app brièvement. Les restrictions Bucket Rare + Doze se cumulent."},
+  {q:"CALCUL PSS — Within (3p), GMaps (2p), Viber (1p) partagent TOUS Location Service (4p). Quel est PSS(Within) si tous partagent le service ?",opts:["3 pages","4.33 pages","5 pages","7 pages"],correct:1,exp:"PSS(Within) = 3 + 4/3 ≈ 3 + 1.33 ≈ 4.33 pages. Quand les 3 apps partagent Location Service, chacune supporte 4/3 ≈ 1.33 pages de pages partagées."},
+];
+
+let sAnswers=new Array(scenarios.length).fill(null);
+function renderScenario(){
+  document.getElementById('scenarioContainer').innerHTML=scenarios.map((s,i)=>`
+    <div class="question-card">
+      <div class="question-number">SCÉNARIO ${i+1}</div>
+      <div class="question-text">${s.q}</div>
+      <div>
+        ${s.opts.map((opt,oi)=>{let cls='';if(sAnswers[i]!==null&&oi===s.correct)cls='correct';else if(sAnswers[i]===oi&&oi!==s.correct)cls='wrong';return`<button class="option-btn ${cls}" onclick="selScenario(${i},${oi})" ${sAnswers[i]!==null?'disabled':''}><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</button>`}).join('')}
+      </div>
+      <div class="feedback-box ${sAnswers[i]!==null?(sAnswers[i]===s.correct?'correct-fb':'wrong-fb')+' show':''}">
+        ${sAnswers[i]!==null?'<strong>'+(sAnswers[i]===s.correct?'✓ Correct !':'✗ Incorrect.')+' </strong>'+s.exp:''}
+      </div>
+    </div>`).join('');
+}
+function selScenario(i,oi){if(sAnswers[i]!==null)return;sAnswers[i]=oi;renderScenario();}
+function checkScenario(){const c=sAnswers.filter((a,i)=>a===scenarios[i].correct).length;const pct=Math.round(c/scenarios.length*100);const r=document.getElementById('scenarioResult');r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${c}/${scenarios.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=75?"Excellent raisonnement ! 🎉":"Révisez les formules et les règles Android."}</div><button class="quiz-btn-primary" onclick="resetScenario()">Reset</button>`;r.classList.add('show');}
+function resetScenario(){sAnswers.fill(null);renderScenario();document.getElementById('scenarioResult').classList.remove('show');}
+renderScenario();
+
+/* ===================== NAVIGATION ===================== */
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');const ids=['brain','flashcards','mcq','tf','short','scenario'];document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('active',ids[i]===id));}
+</script>
+</body>
+</html>

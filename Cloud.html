@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Computing — 200+ Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--bg2:#0f1628;--panel:#141c30;--panel2:#1a2440;--border:#1e2e50;--accent:#3b82f6;--accent2:#06b6d4;--accent3:#8b5cf6;--gold:#f59e0b;--green:#10b981;--red:#ef4444;--text:#e2e8f0;--muted:#64748b;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+header{background:linear-gradient(135deg,#0a0e1a 0%,#0f1e40 50%,#0a0e1a 100%);border-bottom:1px solid var(--border);padding:2rem;text-align:center}
+.course-tag{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;color:var(--accent2);background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);display:inline-block;padding:.3rem 1rem;border-radius:2px;margin-bottom:1rem}
+header h1{font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:var(--white);letter-spacing:-.02em;margin-bottom:.4rem}
+header h1 span{color:var(--accent)}
+header p{color:var(--muted);font-size:.85rem}
+.badge{background:var(--accent3);font-size:.7rem;padding:.2rem .8rem;border-radius:20px;margin-left:.5rem;font-family:monospace;vertical-align:middle}
+nav{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;padding:1rem 2rem;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+nav button{font-family:'Space Mono',monospace;font-size:.7rem;padding:.5rem 1.1rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+nav button:hover,nav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.section{display:none;padding:2rem;max-width:1200px;margin:0 auto}
+.section.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Fraunces',serif;font-size:2rem;color:var(--white);margin-bottom:.3rem;font-weight:700}
+.section-sub{color:var(--muted);font-size:.85rem;margin-bottom:2rem;font-family:'Space Mono',monospace}
+/* brain */
+.brain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem;margin-bottom:2rem}
+.brain-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:1.4rem;transition:.2s;position:relative;overflow:hidden}
+.brain-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.brain-card.blue::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.brain-card.purple::before{background:linear-gradient(90deg,var(--accent3),var(--accent))}
+.brain-card.gold::before{background:linear-gradient(90deg,var(--gold),#f97316)}
+.brain-card.green::before{background:linear-gradient(90deg,var(--green),var(--accent2))}
+.brain-card.red::before{background:linear-gradient(90deg,var(--red),var(--gold))}
+.brain-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.brain-card h3{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--accent2);letter-spacing:.2em;margin-bottom:.5rem}
+.brain-card h2{font-family:'Fraunces',serif;font-size:1.25rem;margin-bottom:.7rem;color:var(--white)}
+.def-box{background:rgba(59,130,246,.08);border-left:3px solid var(--accent);padding:.7rem 1rem;border-radius:5px;margin:.5rem 0;font-size:.84rem;line-height:1.6}
+.def-box strong{color:var(--accent2)}
+.tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.tag{font-family:'Space Mono',monospace;font-size:.6rem;padding:.2rem .7rem;border-radius:3px;background:rgba(59,130,246,.15);color:var(--accent);border:1px solid rgba(59,130,246,.3)}
+.tag.green{background:rgba(16,185,129,.15);color:var(--green);border-color:rgba(16,185,129,.3)}
+.tag.red{background:rgba(239,68,68,.15);color:var(--red);border-color:rgba(239,68,68,.3)}
+.tag.purple{background:rgba(139,92,246,.15);color:var(--accent3);border-color:rgba(139,92,246,.3)}
+.tag.gold{background:rgba(245,158,11,.15);color:var(--gold);border-color:rgba(245,158,11,.3)}
+.comparison-table{width:100%;border-collapse:collapse;font-size:.8rem;background:var(--panel);border-radius:8px;overflow:hidden;margin:1.5rem 0;border:1px solid var(--border)}
+.comparison-table th,.comparison-table td{padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.comparison-table th{background:var(--panel2);color:var(--accent2);font-family:'Space Mono',monospace;letter-spacing:.08em;font-size:.7rem}
+.comparison-table tr:hover td{background:rgba(59,130,246,.04)}
+/* flashcard */
+.flashcard-scene{perspective:1000px;margin-bottom:1rem}
+.flashcard{width:100%;max-width:640px;height:260px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);margin:0 auto}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:1.8rem;display:flex;flex-direction:column;justify-content:center;text-align:center;background:var(--panel);border:1px solid var(--border)}
+.fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#0f1e40,#1a2440);border-color:var(--accent)}
+.fc-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--accent2);margin-bottom:1rem}
+.fc-question{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--white)}
+.fc-answer{font-size:.9rem;line-height:1.6;color:#cbd5e1}
+.fc-hint{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);margin-top:1rem}
+.fc-nav{display:flex;justify-content:center;align-items:center;gap:.8rem;margin:.8rem 0}
+.fc-btn{font-family:'Space Mono',monospace;background:var(--panel2);border:1px solid var(--border);padding:.5rem 1.1rem;border-radius:5px;color:var(--text);cursor:pointer;font-size:.7rem;transition:.2s}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fc-progress{width:100%;max-width:640px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin:0 auto .8rem}
+.fc-progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s}
+/* quiz */
+.score-badge{background:var(--panel2);border:1px solid var(--border);padding:.35rem 1rem;border-radius:20px;font-family:'Space Mono',monospace;font-size:.75rem;color:var(--accent2);margin-bottom:1rem;display:inline-block}
+.set-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.set-tab{font-family:'Space Mono',monospace;font-size:.65rem;padding:.35rem .9rem;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:3px;cursor:pointer;transition:.2s}
+.set-tab.active{background:var(--accent3);border-color:var(--accent3);color:#fff}
+.question-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1.3rem;margin-bottom:.8rem}
+.question-number{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent);letter-spacing:.15em;margin-bottom:.4rem}
+.question-text{font-size:.92rem;color:var(--white);margin-bottom:.9rem;line-height:1.5}
+.option-btn{background:var(--panel2);border:1px solid var(--border);padding:.65rem 1rem;border-radius:6px;cursor:pointer;margin:.25rem 0;width:100%;text-align:left;display:flex;align-items:center;gap:.8rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.87rem;transition:.15s}
+.option-btn:hover:not(:disabled){border-color:var(--accent2);background:rgba(6,182,212,.07)}
+.option-btn.correct{border-color:var(--green);background:rgba(16,185,129,.12);color:var(--green)}
+.option-btn.wrong{border-color:var(--red);background:rgba(239,68,68,.12);color:#fca5a5}
+.option-letter{font-family:'Space Mono',monospace;font-size:.62rem;width:20px;height:20px;border-radius:3px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feedback-box{margin-top:.5rem;padding:.6rem .9rem;border-radius:5px;font-size:.78rem;line-height:1.4;display:none}
+.feedback-box.show{display:block}
+.correct-fb{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.wrong-fb{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+/* tf */
+.tf-container{display:flex;flex-direction:column;gap:.7rem}
+.tf-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:1rem 1.3rem}
+.tf-statement{font-size:.9rem;color:var(--text);margin-bottom:.7rem;line-height:1.5}
+.tf-buttons{display:flex;gap:.5rem}
+.tf-btn{font-family:'Space Mono',monospace;border:1px solid var(--border);background:var(--panel2);padding:.3rem .9rem;border-radius:4px;cursor:pointer;font-size:.68rem;transition:.2s;color:var(--text)}
+.tf-btn:hover{border-color:var(--accent2)}
+.tf-result{font-size:.78rem;margin-top:.5rem;display:none}
+.tf-result.show{display:block}
+.quiz-actions{display:flex;gap:.8rem;margin-top:1.5rem;flex-wrap:wrap}
+.quiz-btn-primary{font-family:'Space Mono',monospace;padding:.65rem 1.5rem;border-radius:5px;cursor:pointer;background:var(--accent);border:none;color:#fff;font-size:.7rem;transition:opacity .2s}
+.quiz-btn-primary:hover{opacity:.85}
+.quiz-btn-secondary{font-family:'Space Mono',monospace;padding:.65rem 1.5rem;border-radius:5px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.7rem;transition:.2s}
+.quiz-btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.result-panel{background:var(--panel);border:1px solid var(--accent);border-radius:12px;padding:2.5rem;text-align:center;margin-top:2rem;display:none}
+.result-panel.show{display:block;animation:fadeIn .4s}
+.result-score{font-family:'Fraunces',serif;font-size:3.5rem;color:var(--accent);font-weight:700}
+.result-label{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--muted);margin:.3rem 0 1rem}
+/* short */
+.short-input{width:100%;background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:.7rem 1rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;margin-bottom:.5rem}
+.short-input:focus{border-color:var(--accent)}
+/* pdf */
+.pdf-bar{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200}
+.pdf-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;padding:.7rem 1.2rem;border-radius:40px;color:#fff;font-family:'Space Mono',monospace;font-size:.7rem;cursor:pointer;box-shadow:0 4px 20px rgba(59,130,246,.3)}
+@media print{nav,.pdf-bar,.quiz-actions,.set-tabs,.fc-nav{display:none!important}.section{display:block!important}body{background:#fff;color:#111}}
+</style>
+</head>
+<body>
+<header>
+  <div class="course-tag">USTHB · AI&DS · 2025/2026</div>
+  <h1>Cloud <span>Computing</span> <span class="badge">200+ Questions</span></h1>
+  <p>Definitions · History · Models · Services · Virtualization · Containers · Security · Management</p>
+</header>
+<nav>
+  <button class="active" onclick="showSection('brain')">🧠 Brain Refresher</button>
+  <button onclick="showSection('flashcards')">⚡ Flashcards</button>
+  <button onclick="showSection('mcq')">📝 MCQ (100+)</button>
+  <button onclick="showSection('tf')">✅ True/False (100+)</button>
+  <button onclick="showSection('short')">✏️ Short Answer</button>
+  <button onclick="showSection('scenario')">🔍 Scenarios</button>
+</nav>
+
+<!-- ===== BRAIN REFRESHER ===== -->
+<div id="brain" class="section active">
+  <h2 class="section-title">Complete Refresher</h2>
+  <p class="section-sub">// All key concepts — definitions, models, services, virtualization, containers, security, tools</p>
+  <div class="brain-grid">
+    <div class="brain-card blue">
+      <h3>📖 CORE DEFINITION</h3>
+      <h2>Cloud Computing</h2>
+      <div class="def-box"><strong>Cloud Computing (CC)</strong> is the on-demand delivery of computing resources (storage, processing, apps) over the internet, allowing users to scale and pay only for what they use — without owning physical infrastructure.</div>
+      <div class="tag-row"><span class="tag">On-Demand</span><span class="tag">Scalable</span><span class="tag gold">Pay-as-you-go</span><span class="tag green">Elastic</span></div>
+    </div>
+    <div class="brain-card green">
+      <h3>⏳ HISTORY</h3>
+      <h2>Evolution Timeline</h2>
+      <div class="def-box">
+        <strong>1950s:</strong> Mainframes + Time-Sharing (users take turns).<br>
+        <strong>1972:</strong> IBM VM/370 — first VM-supporting OS.<br>
+        <strong>1999:</strong> Salesforce — first SaaS.<br>
+        <strong>2006:</strong> AWS EC2 — true cloud era begins.<br>
+        <strong>2008:</strong> Google App Engine (PaaS) + Azure launch.
+      </div>
+    </div>
+    <div class="brain-card purple">
+      <h3>🚌 DEPLOYMENT MODELS</h3>
+      <h2>Cloud Models</h2>
+      <div class="def-box">
+        <strong>Public</strong> 🚌 Bus — shared, low cost, high scale.<br>
+        <strong>Private</strong> 🚗 Car — dedicated, full control, secure.<br>
+        <strong>Hybrid</strong> 🚖 Taxi — public + private combined.<br>
+        <strong>Community</strong> 🚐 Carpool — shared between similar orgs.
+      </div>
+    </div>
+    <div class="brain-card gold">
+      <h3>🛠️ SERVICE MODELS</h3>
+      <h2>IaaS / PaaS / SaaS</h2>
+      <div class="def-box">
+        <strong>IaaS</strong> — user manages OS, middleware, apps, data.<br>
+        <strong>PaaS</strong> — user manages only apps and data.<br>
+        <strong>SaaS</strong> — vendor manages everything.<br>
+        <strong>On-Prem</strong> — you own/manage all 9 layers.
+      </div>
+      <div class="tag-row"><span class="tag">AWS EC2</span><span class="tag">Heroku</span><span class="tag green">Gmail</span></div>
+    </div>
+    <div class="brain-card blue">
+      <h3>🖥️ HYPERVISOR & VIRTUALIZATION</h3>
+      <h2>Hypervisors</h2>
+      <div class="def-box">
+        <strong>Hypervisor</strong>: manages multiple VMs on one physical host.<br>
+        <strong>Type 1 (bare-metal)</strong>: runs directly on hardware. VMware ESXi, Hyper-V, Xen.<br>
+        <strong>Type 2 (hosted)</strong>: runs on top of an OS. VirtualBox, VMware Workstation.<br>
+        <strong>VM</strong>: isolated, full OS, strong security. Slow start (minutes).
+      </div>
+    </div>
+    <div class="brain-card green">
+      <h3>📦 CONTAINERS</h3>
+      <h2>Docker & Kubernetes</h2>
+      <div class="def-box">
+        <strong>Container</strong>: lightweight, shares host kernel, starts in seconds.<br>
+        <strong>Docker</strong>: build/run containers. Dockerfile defines image. Docker Hub = registry.<br>
+        <strong>Kubernetes (K8s)</strong>: orchestrates containers — scaling, rolling updates, self-healing. Pod = group of containers.
+      </div>
+      <div class="tag-row"><span class="tag">Faster than VMs</span><span class="tag green">Lightweight</span><span class="tag purple">K8s by Google</span></div>
+    </div>
+    <div class="brain-card red">
+      <h3>🔒 SECURITY</h3>
+      <h2>Cloud Security</h2>
+      <div class="def-box">
+        <strong>Shared Responsibility</strong>: provider secures physical infra; customer secures data, OS, apps.<br>
+        <strong>Zero Trust</strong>: "Never trust, always verify." Every request authenticated.<br>
+        <strong>MFA</strong>: Multi-Factor Authentication — extra security layer.<br>
+        <strong>Encryption</strong>: protects data confidentiality in transit and at rest.<br>
+        <strong>DoS</strong>: Denial-of-Service — aims to disrupt, NOT steal data.
+      </div>
+    </div>
+    <div class="brain-card purple">
+      <h3>⚙️ MANAGEMENT TOOLS</h3>
+      <h2>Config & Monitoring</h2>
+      <div class="def-box">
+        <strong>Ansible</strong>: YAML playbooks, agentless, SSH-based config management.<br>
+        <strong>Chef</strong>: Ruby DSL, uses agents (chef-client), recipes & cookbooks.<br>
+        <strong>Puppet</strong>: declarative language, agent-based, master-agent model.<br>
+        <strong>Nagios</strong>: monitoring/alerting tool.<br>
+        <strong>Zabbix</strong>: all-in-one monitoring — metrics, alerts, dashboards.
+      </div>
+    </div>
+    <div class="brain-card gold">
+      <h3>🌐 ARCHITECTURE</h3>
+      <h2>Edge, Fog, CDN, SOA</h2>
+      <div class="def-box">
+        <strong>Edge Computing</strong>: process data near the source (low latency).<br>
+        <strong>Fog Computing</strong>: intermediate layer (routers/gateways) between edge and cloud.<br>
+        <strong>CDN</strong>: Content Delivery Network — caches and accelerates content delivery.<br>
+        <strong>SOA</strong>: Service-Oriented Architecture — loosely coupled services via APIs (REST).<br>
+        <strong>FaaS</strong>: Function as a Service = serverless (AWS Lambda). No idle charges.
+      </div>
+    </div>
+    <div class="brain-card blue">
+      <h3>🏗️ DATA CENTER HARDWARE</h3>
+      <h2>Servers & Infrastructure</h2>
+      <div class="def-box">
+        <strong>Tower</strong>: standalone, ideal for small offices.<br>
+        <strong>Rack</strong>: 1U = 1.75 inches. Mounted in cabinets.<br>
+        <strong>Blade</strong>: requires chassis/enclosure, high density.<br>
+        <strong>PDU</strong>: Power Distribution Unit — distributes electricity to racks.<br>
+        <strong>UPS</strong>: Uninterruptible Power Supply — backup power.<br>
+        <strong>Cold/Hot Aisle</strong>: data center cooling design for efficiency.
+      </div>
+    </div>
+    <div class="brain-card green">
+      <h3>💾 STORAGE TYPES</h3>
+      <h2>Block / File / Object</h2>
+      <div class="def-box">
+        <strong>Block Storage</strong>: raw volumes, like hard drives. Fast. (AWS EBS, Cinder).<br>
+        <strong>File Storage</strong>: shared file system (NFS, EFS).<br>
+        <strong>Object Storage</strong>: unstructured data with metadata. (AWS S3, Swift). Best for large scale.<br>
+        <strong>Snapshot</strong>: point-in-time copy — revert VM/disk state.
+      </div>
+    </div>
+    <div class="brain-card red">
+      <h3>🔧 OPENSTACK</h3>
+      <h2>Private Cloud Platform</h2>
+      <div class="def-box">
+        <strong>Nova</strong>: compute (VMs).<br>
+        <strong>Neutron</strong>: networking.<br>
+        <strong>Cinder</strong>: block storage.<br>
+        <strong>Swift</strong>: object storage.<br>
+        <strong>Glance</strong>: VM image management.<br>
+        <strong>Keystone</strong>: identity/authentication.<br>
+        OpenStack is open-source software for <em>private</em> clouds — NOT a public cloud provider.
+      </div>
+    </div>
+  </div>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;color:var(--white);margin-bottom:1rem;">Service Models — Who manages what?</h3>
+  <table class="comparison-table">
+    <thead><tr><th>Layer</th><th>On-Prem</th><th>IaaS</th><th>PaaS</th><th>SaaS</th></tr></thead>
+    <tbody>
+      <tr><td>Applications</td><td style="color:var(--accent)">YOU</td><td style="color:var(--accent)">YOU</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>Data</td><td style="color:var(--accent)">YOU</td><td style="color:var(--accent)">YOU</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>Runtime</td><td style="color:var(--accent)">YOU</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>Middleware</td><td style="color:var(--accent)">YOU</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>OS</td><td style="color:var(--accent)">YOU</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>Virtualization</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>Servers</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>Storage</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td></tr>
+      <tr><td>Networking</td><td style="color:var(--accent)">YOU</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td><td style="color:var(--muted)">VENDOR</td></tr>
+    </tbody>
+  </table>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;color:var(--white);margin:1.5rem 0 1rem;">Deployment Models Comparison</h3>
+  <table class="comparison-table">
+    <thead><tr><th>Model</th><th>Analogy</th><th>Cost</th><th>Control</th><th>Scalability</th><th>Security</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Public</td><td>🚌 Bus</td><td style="color:var(--green)">Low</td><td style="color:var(--red)">Low</td><td style="color:var(--green)">High</td><td style="color:var(--red)">Lower</td><td>AWS, Azure, GCP</td></tr>
+      <tr><td>Private</td><td>🚗 Car</td><td style="color:var(--red)">High</td><td style="color:var(--green)">Full</td><td style="color:var(--red)">Low</td><td style="color:var(--green)">High</td><td>VMware, OpenStack</td></tr>
+      <tr><td>Hybrid</td><td>🚖 Taxi</td><td>Medium</td><td>Medium</td><td style="color:var(--green)">High</td><td>Medium</td><td>AWS Outposts</td></tr>
+      <tr><td>Community</td><td>🚐 Carpool</td><td>Medium</td><td>Medium</td><td style="color:var(--red)">Low</td><td>Medium</td><td>Gov clouds</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== FLASHCARDS ===== -->
+<div id="flashcards" class="section">
+  <h2 class="section-title">Flashcards</h2>
+  <p class="section-sub">// Click to flip — covers all chapters</p>
+  <div class="fc-progress"><div class="fc-progress-bar" id="fcProgressBar" style="width:0%"></div></div>
+  <div class="flashcard-scene">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-face">
+        <div class="fc-label" id="fcCategory"></div>
+        <div class="fc-question" id="fcQuestion"></div>
+        <div class="fc-hint">↕ Click to reveal answer</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-label">ANSWER</div>
+        <div class="fc-answer" id="fcAnswer"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()">← PREV</button>
+    <span id="fcCounter" style="font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted)">1/1</span>
+    <button class="fc-btn" onclick="nextCard()">NEXT →</button>
+    <button class="fc-btn" onclick="shuffleCards()">🔀 Shuffle</button>
+  </div>
+</div>
+
+<!-- ===== MCQ ===== -->
+<div id="mcq" class="section">
+  <h2 class="section-title">MCQ Quiz</h2>
+  <p class="section-sub">// 110 unique questions — use tabs to navigate sets</p>
+  <div class="set-tabs" id="mcqTabs">
+    <button class="set-tab active" onclick="loadMCQSet(0,this)">Set A: Fundamentals (1–25)</button>
+    <button class="set-tab" onclick="loadMCQSet(1,this)">Set B: Services & Models (26–50)</button>
+    <button class="set-tab" onclick="loadMCQSet(2,this)">Set C: Virtualization & Containers (51–75)</button>
+    <button class="set-tab" onclick="loadMCQSet(3,this)">Set D: Security, Tools & Arch (76–110)</button>
+  </div>
+  <div class="score-badge" id="mcqScoreBadge">Score: 0 / 25</div>
+  <div id="mcqContainer"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllMCQ()">✅ Check Answers</button>
+    <button class="quiz-btn-secondary" onclick="resetMCQ()">🔄 Reset</button>
+  </div>
+  <div id="mcqResult" class="result-panel"></div>
+</div>
+
+<!-- ===== TRUE/FALSE ===== -->
+<div id="tf" class="section">
+  <h2 class="section-title">True / False</h2>
+  <p class="section-sub">// 110 unique statements — use tabs to navigate sets</p>
+  <div class="set-tabs" id="tfTabs">
+    <button class="set-tab active" onclick="loadTFSet(0,this)">Set A: Basics (1–28)</button>
+    <button class="set-tab" onclick="loadTFSet(1,this)">Set B: Services & Models (29–56)</button>
+    <button class="set-tab" onclick="loadTFSet(2,this)">Set C: Virtualization & Infra (57–84)</button>
+    <button class="set-tab" onclick="loadTFSet(3,this)">Set D: Security, Tools & Tricky (85–110)</button>
+  </div>
+  <div class="score-badge" id="tfScoreBadge">Score: 0 / 28</div>
+  <div id="tfContainer" class="tf-container"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkAllTF()">✅ Submit All</button>
+    <button class="quiz-btn-secondary" onclick="resetTF()">🔄 Reset</button>
+  </div>
+  <div id="tfResult" class="result-panel"></div>
+</div>
+
+<!-- ===== SHORT ANSWER ===== -->
+<div id="short" class="section">
+  <h2 class="section-title">Short Answer Questions</h2>
+  <p class="section-sub">// Write your answer, then reveal the model answer</p>
+  <div id="shortContainer"></div>
+</div>
+
+<!-- ===== SCENARIO ===== -->
+<div id="scenario" class="section">
+  <h2 class="section-title">Scenario-Based Quiz</h2>
+  <p class="section-sub">// Real-world situations — pick the best cloud solution</p>
+  <div id="scenarioContainer"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn-primary" onclick="checkScenario()">Check Answers</button>
+    <button class="quiz-btn-secondary" onclick="resetScenario()">Reset</button>
+  </div>
+  <div id="scenarioResult" class="result-panel"></div>
+</div>
+
+<div class="pdf-bar"><button class="pdf-btn" onclick="window.print()">📄 Save PDF</button></div>
+
+<script>
+/* ===================== FLASHCARDS ===================== */
+const allCards = [
+  {cat:"Definition",q:"What is Cloud Computing?",a:"On-demand delivery of computing resources over the internet — storage, processing, apps — without owning hardware. Pay only for what you use."},
+  {cat:"History",q:"What was time-sharing (1950s)?",a:"Multiple users sharing one mainframe CPU and storage in turns — a precursor to cloud multi-tenancy."},
+  {cat:"History",q:"What was IBM VM/370 (1972)?",a:"One of the first OS to support virtual machines — allowed multiple VMs on one physical machine."},
+  {cat:"History",q:"Why is 2006 significant in cloud history?",a:"Amazon launched AWS EC2 — the first modern cloud infrastructure service. Marks the true cloud era."},
+  {cat:"Models",q:"Public Cloud analogy?",a:"Public Bus 🚌 — shared by many users, low cost, managed by provider, high scalability, lower security control."},
+  {cat:"Models",q:"Private Cloud analogy?",a:"Personal Car 🚗 — dedicated to one organization, full control, high security, expensive, low scalability."},
+  {cat:"Models",q:"Hybrid Cloud analogy?",a:"Taxi 🚖 — combines private (own car) with public cloud (on-demand rides). Best of both worlds."},
+  {cat:"Models",q:"Community Cloud?",a:"Carpool 🚐 — shared by organizations with similar needs (e.g. gov agencies, hospitals). Split cost, medium control."},
+  {cat:"Services",q:"In IaaS, what does the customer manage?",a:"Applications, Data, Runtime, Middleware, OS. Provider manages Virtualization, Servers, Storage, Networking."},
+  {cat:"Services",q:"In PaaS, what does the customer manage?",a:"Only Applications and Data. Provider manages everything else (Runtime, Middleware, OS, infra)."},
+  {cat:"Services",q:"In SaaS, what does the customer manage?",a:"Nothing from the 9 layers — the vendor manages everything. Customer just uses the application via browser."},
+  {cat:"Services",q:"Is On-Premises a cloud service model?",a:"NO. On-Premises is a general (traditional) service model where you own and manage all 9 layers in-house."},
+  {cat:"Virtualization",q:"What is a Type 1 Hypervisor?",a:"Runs directly on physical hardware (bare-metal). Examples: VMware ESXi, Microsoft Hyper-V, Xen. Faster and more efficient."},
+  {cat:"Virtualization",q:"What is a Type 2 Hypervisor?",a:"Runs on top of a host OS. Examples: VirtualBox, VMware Workstation. Easier to set up, used for development/testing."},
+  {cat:"Virtualization",q:"VMs vs Containers: key differences?",a:"VMs: full OS, strong isolation, start in minutes. Containers: share host kernel, lightweight, start in seconds. Containers faster but less isolated."},
+  {cat:"Containers",q:"What is Docker?",a:"Platform to build and run containers. Dockerfile defines image. Docker Hub is the public image registry."},
+  {cat:"Containers",q:"What is Kubernetes?",a:"Container orchestration system (originally by Google). Manages scaling, rolling updates, self-healing, load balancing across container clusters."},
+  {cat:"Containers",q:"What is a Kubernetes Pod?",a:"The smallest deployable unit in K8s — a group of one or more containers sharing network/storage."},
+  {cat:"Security",q:"What is the Shared Responsibility Model?",a:"Provider secures physical infrastructure (hardware, network, data center). Customer secures data, OS, applications, access control."},
+  {cat:"Security",q:"What is Zero Trust?",a:"Security model: 'Never trust, always verify.' Every access request must be authenticated regardless of network location."},
+  {cat:"Security",q:"What is Multi-Factor Authentication (MFA)?",a:"Requiring multiple verification methods (password + phone code + biometric) before granting access. Adds security layers."},
+  {cat:"Security",q:"What does a DoS attack aim to do?",a:"Denial-of-Service: overwhelm a system to make it unavailable. Aims to DISRUPT, not steal data."},
+  {cat:"Tools",q:"What is Ansible?",a:"Agentless configuration management tool. Uses YAML playbooks, connects via SSH. Simpler than Chef/Puppet."},
+  {cat:"Tools",q:"What is Chef?",a:"Configuration management tool using Ruby DSL. Requires agents (chef-client) on managed nodes. Uses recipes and cookbooks."},
+  {cat:"Tools",q:"Ansible vs Chef — key difference?",a:"Ansible: agentless (SSH). Chef: agent-based (chef-client installed on nodes). Ansible uses YAML; Chef uses Ruby DSL."},
+  {cat:"Tools",q:"What is Nagios used for?",a:"Open-source monitoring and alerting tool — monitors servers, network, services and sends alerts on failures."},
+  {cat:"Tools",q:"What is Zabbix?",a:"All-in-one enterprise monitoring platform — collects metrics, triggers alerts, provides dashboards for infrastructure."},
+  {cat:"Architecture",q:"What is Edge Computing?",a:"Processing data close to where it's generated (near the source) — reduces latency vs sending everything to central cloud."},
+  {cat:"Architecture",q:"What is Fog Computing?",a:"Intermediate layer between edge devices and the central cloud, using routers/gateways to process data locally."},
+  {cat:"Architecture",q:"What is a CDN?",a:"Content Delivery Network — distributes cached content across geographically distributed servers to accelerate delivery."},
+  {cat:"Architecture",q:"What is FaaS / Serverless?",a:"Function as a Service — run code without managing servers. Charged only during execution. Example: AWS Lambda."},
+  {cat:"Architecture",q:"What is SOA?",a:"Service-Oriented Architecture — application built as loosely coupled, interoperable services communicating via APIs (REST, SOAP)."},
+  {cat:"Hardware",q:"What is 1U?",a:"One Rack Unit = 1.75 inches of vertical space in a server rack. Rack servers are measured in U (e.g., 2U, 4U)."},
+  {cat:"Hardware",q:"What is a Blade Server?",a:"A thin, modular server that slides into a chassis/enclosure. High-density computing but requires shared power/cooling chassis."},
+  {cat:"Hardware",q:"What is a UPS?",a:"Uninterruptible Power Supply — provides backup power immediately when main power fails, protecting servers from shutdown."},
+  {cat:"Hardware",q:"What is a PDU?",a:"Power Distribution Unit — distributes electrical power from the main supply to multiple servers in a rack."},
+  {cat:"Storage",q:"What is Object Storage?",a:"Stores data as objects with metadata and unique IDs. Best for large unstructured data. Examples: AWS S3, OpenStack Swift."},
+  {cat:"Storage",q:"Block vs File vs Object storage?",a:"Block: raw fast volumes (EBS). File: shared file system (NFS, EFS). Object: scalable, unstructured, with metadata (S3, Swift)."},
+  {cat:"OpenStack",q:"What is OpenStack Nova?",a:"Compute service in OpenStack — manages virtual machines (creates, schedules, deletes VMs)."},
+  {cat:"OpenStack",q:"What is OpenStack Keystone?",a:"Identity service — provides authentication and authorization for all OpenStack services."},
+];
+let filtered=[...allCards],fcIdx=0;
+function updateFlashcard(){let c=filtered[fcIdx];document.getElementById('fcCategory').innerText=c.cat;document.getElementById('fcQuestion').innerText=c.q;document.getElementById('fcAnswer').innerText=c.a;document.getElementById('fcCounter').innerText=`${fcIdx+1} / ${filtered.length}`;document.getElementById('fcProgressBar').style.width=((fcIdx+1)/filtered.length)*100+'%';document.getElementById('flashcard').classList.remove('flipped');}
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');}
+function nextCard(){fcIdx=(fcIdx+1)%filtered.length;updateFlashcard();}
+function prevCard(){fcIdx=(fcIdx-1+filtered.length)%filtered.length;updateFlashcard();}
+function shuffleCards(){for(let i=filtered.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[filtered[i],filtered[j]]=[filtered[j],filtered[i]];}fcIdx=0;updateFlashcard();}
+updateFlashcard();
+
+/* ===================== 110 UNIQUE MCQ ===================== */
+const allMCQ = [
+  // SET A: FUNDAMENTALS (0–24)
+  {q:"What is the primary economic benefit of cloud computing?",opts:["Own physical hardware","Pay only for resources consumed","Fixed monthly IT budget","Free unlimited storage"],correct:1,exp:"Pay-as-you-go means you're billed only for what you use — no upfront hardware investment."},
+  {q:"Which term describes automatic scaling up AND down based on real-time demand?",opts:["Scalability","Availability","Elasticity","Redundancy"],correct:2,exp:"Elasticity = dynamic bidirectional scaling. Scalability = ability to grow (can be planned)."},
+  {q:"Time-sharing (1950s) allowed multiple users to:",opts:["Own separate mainframes","Share one mainframe CPU in turns","Run separate cloud apps","Access the internet"],correct:1,exp:"Time-sharing divided mainframe time among users — precursor to multi-tenancy in cloud."},
+  {q:"In which year did Salesforce launch the first SaaS product?",opts:["1985","1995","1999","2006"],correct:2,exp:"Salesforce.com launched in 1999, pioneering the delivery of software over the internet."},
+  {q:"What year did Amazon launch EC2?",opts:["2003","2004","2006","2010"],correct:2,exp:"AWS EC2 (Elastic Compute Cloud) launched in 2006 — marking the modern cloud era."},
+  {q:"Which statement BEST defines cloud computing?",opts:["Buying servers and hosting them locally","On-demand internet delivery of computing resources","Using only physical hardware you own","Storing files on a USB drive"],correct:1,exp:"Cloud = on-demand, internet-delivered computing resources without owning hardware."},
+  {q:"What does 'pay-as-you-go' mean in cloud?",opts:["Pay a fixed yearly fee","Pay only for resources consumed","Get resources for free","Pay per user account only"],correct:1,exp:"Usage-based billing — you pay for what you actually consume (compute hours, GB stored, etc.)."},
+  {q:"Community Cloud is shared by:",opts:["The general public","A single company","Organizations with similar interests/needs","All government agencies worldwide"],correct:2,exp:"Community Cloud is shared by a specific group of organizations with common concerns (e.g., compliance)."},
+  {q:"Which cloud deployment model offers the LOWEST cost for an early-stage startup with unpredictable traffic?",opts:["On-Premises","Private Cloud","Community Cloud","Public Cloud"],correct:3,exp:"Public Cloud pay-as-you-go is ideal for startups — no upfront cost, scales on demand."},
+  {q:"What was IBM VM/370?",opts:["First web server","First hypervisor supporting VMs (1972)","First CDN","First SaaS product"],correct:1,exp:"IBM VM/370 (1972) was one of the first OS to formally support virtual machines."},
+  {q:"Which cloud model gives the organization FULL CONTROL over its infrastructure?",opts:["Public Cloud","SaaS","Community Cloud","Private Cloud"],correct:3,exp:"Private Cloud is dedicated to one organization, giving complete control and customization."},
+  {q:"What is 'vendor lock-in'?",opts:["A security feature","Difficulty migrating away from a specific cloud provider","A type of encryption","A SLA guarantee"],correct:1,exp:"Vendor lock-in = dependency on proprietary tools that make switching providers costly."},
+  {q:"What does SLA stand for?",opts:["System Load Average","Service Level Agreement","Secure Login Access","Software Licensing Agreement"],correct:1,exp:"SLA = contract defining guaranteed uptime, performance, and support levels from a provider."},
+  {q:"Which of the following is NOT a characteristic of cloud computing?",opts:["On-demand self-service","Broad network access","Fixed physical location","Resource pooling"],correct:2,exp:"Cloud computing is location-independent — resources can be accessed from anywhere."},
+  {q:"'On-premises' computing means:",opts:["Hosted on a public cloud","Infrastructure managed in the company's own physical location","Stored in a CDN","Shared between multiple companies"],correct:1,exp:"On-premises = company owns and manages all hardware and software in its own facility."},
+  {q:"Which cloud provider has the largest global market share?",opts:["Microsoft Azure","Google Cloud","IBM Cloud","Amazon Web Services (AWS)"],correct:3,exp:"AWS has been the market leader in cloud infrastructure since 2006."},
+  {q:"What is a VPC?",opts:["Very Powerful Computer","Virtual Private Cloud — isolated network in a public cloud","Video Processing Core","Virtual PC Connection"],correct:1,exp:"VPC = Virtual Private Cloud — a logically isolated section of a public cloud (e.g., AWS VPC)."},
+  {q:"Google Cloud Platform (GCP) is especially known for:",opts:["Mainframe hosting","Kubernetes Engine (GKE) and data analytics","Physical server rental","SMS services"],correct:1,exp:"GCP originally created Kubernetes and leads in managed Kubernetes (GKE) and data analytics."},
+  {q:"Which of the following best describes 'resource pooling' in cloud?",opts:["Each client gets dedicated hardware always","Provider serves multiple clients from shared resources","Resources are never shared","Only one VM per server"],correct:1,exp:"Resource pooling = multi-tenancy. Multiple clients share physical resources while remaining logically isolated."},
+  {q:"What does 'broad network access' mean in cloud computing?",opts:["Only accessible from headquarters","Accessible from any device via internet","Requires special hardware","No internet needed"],correct:1,exp:"Cloud services must be accessible over the network from various devices (laptop, phone, tablet)."},
+  {q:"Which analogy BEST represents Hybrid Cloud?",opts:["Public bus","Personal car","Taxi (own car + on-demand rides)","Bicycle"],correct:2,exp:"Hybrid Cloud combines private infrastructure with public cloud — like using your own car plus taxis when needed."},
+  {q:"A company's cloud infrastructure is shared with similar government agencies. This is:",opts:["Public Cloud","Private Cloud","Hybrid Cloud","Community Cloud"],correct:3,exp:"Community Cloud is shared by organizations with similar regulatory or security needs."},
+  {q:"What is the main disadvantage of Private Cloud?",opts:["Poor security","No customization","High cost and limited scalability","Shared infrastructure"],correct:2,exp:"Private Cloud requires significant capital investment and is harder to scale than public cloud."},
+  {q:"Which is an example of a content delivery network (CDN)?",opts:["AWS EC2","Cloudflare","OpenStack","Kubernetes"],correct:1,exp:"Cloudflare is a major CDN. Others include Akamai, AWS CloudFront. CDNs cache/serve content from distributed nodes."},
+  {q:"What does 'measured service' mean in NIST's cloud definition?",opts:["Slow performance","Metered usage monitored and reported","Fixed pricing","Manual resource allocation"],correct:1,exp:"Measured service = cloud systems automatically control and optimize resources, reporting usage transparently."},
+
+  // SET B: SERVICES & MODELS (25–49)
+  {q:"In IaaS, which layers does the VENDOR manage?",opts:["Applications and Data","OS and Runtime","Virtualization, Servers, Storage, Networking","Middleware and Runtime"],correct:2,exp:"IaaS vendor manages the bottom 4 layers: Virtualization, Servers, Storage, Networking."},
+  {q:"A developer wants to deploy a Python app without configuring servers or OS. Which model?",opts:["IaaS","On-Premises","SaaS","PaaS"],correct:3,exp:"PaaS provides a ready runtime environment — developer writes code, platform handles infrastructure."},
+  {q:"Microsoft 365 (Word, Excel, Outlook online) is an example of:",opts:["IaaS","PaaS","SaaS","On-Premises"],correct:2,exp:"Microsoft 365 is SaaS — accessible via browser with no installation, fully managed by Microsoft."},
+  {q:"Which service model is best for a company that wants to run its own database on a cloud VM with custom configurations?",opts:["SaaS","PaaS","FaaS","IaaS"],correct:3,exp:"IaaS provides virtual machines where customers install and configure their own OS, database, and apps."},
+  {q:"Heroku is an example of which service model?",opts:["IaaS","SaaS","FaaS","PaaS"],correct:3,exp:"Heroku is PaaS — developers push code and the platform handles deployment, scaling, and runtime."},
+  {q:"AWS S3 is primarily which type of service?",opts:["Object Storage as a Service","Compute IaaS","SaaS application","PaaS runtime"],correct:0,exp:"S3 (Simple Storage Service) is object storage — stores files/data as objects with metadata."},
+  {q:"What is FaaS?",opts:["File as a Service","Function as a Service — run code without managing servers","Framework as a Service","Fixed as a Service"],correct:1,exp:"FaaS = serverless computing. Write functions, cloud runs them on-demand. AWS Lambda is the prime example."},
+  {q:"In serverless computing, you are charged:",opts:["Per server rented","For idle server time","Only during code execution","Fixed monthly fee"],correct:2,exp:"Serverless = pay only when your code runs. No charge for idle time."},
+  {q:"What distinguishes Horizontal SaaS from Vertical SaaS?",opts:["Horizontal = industry-specific","Horizontal = broad audience; Vertical = specific industry niche","Vertical = more expensive","Horizontal = open-source"],correct:1,exp:"Horizontal SaaS targets all industries (Slack, Office365). Vertical targets a specific niche (restaurant POS, healthcare)."},
+  {q:"ClearCare (healthcare management software) is an example of:",opts:["Horizontal SaaS","IaaS","Vertical SaaS","PaaS"],correct:2,exp:"Vertical SaaS targets specific industry niches. Healthcare software = vertical market."},
+  {q:"In PaaS, the vendor manages Runtime. What does Runtime mean?",opts:["Physical servers","Execution environment for code (JVM, .NET)","Data storage","User interface"],correct:1,exp:"Runtime = the environment that executes application code (Java Virtual Machine, .NET CLR, Node.js runtime)."},
+  {q:"What is middleware in the 9-layer stack?",opts:["Physical hardware","Software bridging OS and applications (message queues, APIs)","User interface","Power supply"],correct:1,exp:"Middleware enables communication between different applications/services (e.g., message brokers, API gateways)."},
+  {q:"Which service model gives developers the LEAST infrastructure responsibility?",opts:["IaaS","On-Premises","PaaS","FaaS/Serverless"],correct:3,exp:"FaaS (serverless) — developers write only functions. Everything else (servers, OS, runtime) is abstracted away."},
+  {q:"A company uses AWS EC2 to host its own custom database. This is:",opts:["SaaS","PaaS","IaaS","FaaS"],correct:2,exp:"IaaS — they rent the virtual machine (EC2) and manage the database software themselves."},
+  {q:"What is the main risk of using PaaS?",opts:["Too much infrastructure work","Vendor lock-in from platform-specific tools","Poor performance","No scalability"],correct:1,exp:"PaaS uses platform-specific APIs and tools — building on them makes it hard to migrate to another provider."},
+  {q:"AWS Lambda is an example of:",opts:["IaaS","PaaS","SaaS","FaaS"],correct:3,exp:"AWS Lambda is Function as a Service (FaaS) — you upload code and AWS runs it in response to events."},
+  {q:"Dropbox is an example of which service model?",opts:["IaaS","PaaS","SaaS","On-Premises"],correct:2,exp:"Dropbox is SaaS — cloud storage software managed entirely by Dropbox, accessed via browser or app."},
+  {q:"Which service model requires the MOST customer management?",opts:["SaaS","FaaS","PaaS","IaaS"],correct:3,exp:"IaaS requires customers to manage OS, runtime, middleware, applications, and data — the most responsibility."},
+  {q:"Google App Engine is an example of:",opts:["IaaS","SaaS","PaaS","On-Premises"],correct:2,exp:"Google App Engine is PaaS — deploy apps without managing servers or OS."},
+  {q:"A startup wants to offer CRM software to businesses worldwide as a subscription. This is:",opts:["IaaS product","PaaS product","SaaS product","On-Premises product"],correct:2,exp:"Delivering software via subscription over the internet = SaaS model (like Salesforce)."},
+  {q:"Azure Virtual Machines is an example of:",opts:["SaaS","PaaS","FaaS","IaaS"],correct:3,exp:"Azure VMs = IaaS. You get virtual machines to configure and manage as you wish."},
+  {q:"What are the 9 managed layers in cloud service models (from top to bottom)?",opts:["Apps, Data, Runtime, Middleware, OS, Virtualization, Servers, Storage, Networking","CPU, RAM, Disk, GPU, NIC, Switch, Router, Firewall, Monitor","Code, Test, Build, Deploy, Monitor, Scale, Secure, Backup, Archive","User, Admin, Developer, Network, Storage, DB, Web, App, Infra"],correct:0,exp:"The standard 9 layers: Applications → Data → Runtime → Middleware → OS → Virtualization → Servers → Storage → Networking."},
+  {q:"What does 'multi-tenancy' mean in cloud?",opts:["Only one client per server","Multiple clients share physical resources while isolated logically","One OS per VM","Physical servers rented exclusively"],correct:1,exp:"Multi-tenancy = multiple customers share the same physical infrastructure, isolated at the software level."},
+  {q:"A research hospital needs software only other hospitals use. Costs split equally. Best model?",opts:["Public Cloud SaaS","IaaS only","Community Cloud","Private Cloud"],correct:2,exp:"Community Cloud — shared infrastructure for organizations with similar needs (healthcare compliance)."},
+  {q:"In On-Premises, the organization manages:",opts:["Nothing — vendor handles all","Only applications","Only data","All 9 layers from apps to physical hardware"],correct:3,exp:"On-Premises = full responsibility for all 9 layers: hardware, networking, storage, OS, middleware, runtime, apps, data."},
+
+  // SET C: VIRTUALIZATION & CONTAINERS (50–74)
+  {q:"What is the primary purpose of a hypervisor?",opts:["Manage network traffic","Run multiple VMs on one physical machine","Compress storage","Monitor applications"],correct:1,exp:"Hypervisor abstracts physical hardware to run multiple isolated Virtual Machines on a single host."},
+  {q:"VMware ESXi is which type of hypervisor?",opts:["Type 2","Type 3","Type 1 (bare-metal)","Type 0"],correct:2,exp:"ESXi runs directly on hardware — Type 1 (bare-metal) hypervisor. No host OS required."},
+  {q:"VirtualBox is which type of hypervisor?",opts:["Type 1","Type 3","Bare-metal","Type 2 (hosted)"],correct:3,exp:"VirtualBox runs on top of a host OS (Windows/macOS/Linux) — Type 2 hypervisor."},
+  {q:"Why do containers start faster than VMs?",opts:["They have more CPU","They don't need network","They share the host OS kernel — no full OS to boot","They use SSDs"],correct:2,exp:"Containers share the host OS kernel, so there's no OS boot process. VMs need to boot a full guest OS."},
+  {q:"Which provides stronger isolation: VMs or Containers?",opts:["Containers always","VMs — hardware-level isolation via hypervisor","Same level","Depends on RAM"],correct:1,exp:"VMs have hardware-level isolation through hypervisors — stronger security boundaries. Containers share the kernel."},
+  {q:"What is a Dockerfile?",opts:["Kubernetes config file","Script to define a container image","VM snapshot","Network policy"],correct:1,exp:"Dockerfile = text file with instructions to build a Docker image. Defines OS, dependencies, and app code."},
+  {q:"What is Docker Hub?",opts:["Docker's headquarters","Public registry for container images","Kubernetes cluster","A CDN"],correct:1,exp:"Docker Hub is the default public registry where you can push and pull Docker images."},
+  {q:"What is a Kubernetes Pod?",opts:["A single physical server","The smallest deployable unit — one or more containers sharing network/storage","A container image","A storage volume"],correct:1,exp:"Pod = K8s smallest unit. Groups containers that share network namespace and storage volumes."},
+  {q:"What does Kubernetes handle automatically?",opts:["Writing application code","Scaling containers, rolling updates, self-healing failed pods","Compiling source code","Database design"],correct:1,exp:"K8s automates: scaling, load balancing, rolling updates, restarting failed containers (self-healing)."},
+  {q:"Who originally developed Kubernetes?",opts:["Amazon","Microsoft","Google","IBM"],correct:2,exp:"Kubernetes was originally developed by Google, based on their internal Borg system. Now open-source under CNCF."},
+  {q:"What is a VM snapshot?",opts:["Live backup to cloud","Point-in-time copy of VM state — allows reverting","Container image","Network topology diagram"],correct:1,exp:"Snapshot = saved state of a VM at a specific moment. Can be used to restore the VM to that state."},
+  {q:"In a virtual machine setup, what does the guest OS run on?",opts:["Physical hardware directly","On top of the hypervisor","Inside a container","In a CDN"],correct:1,exp:"Guest OS runs on the hypervisor layer, which manages access to physical hardware resources."},
+  {q:"What is a Kubernetes cluster?",opts:["Single container","Group of nodes (machines) running K8s and managed containers","A Docker image","A VM pool"],correct:1,exp:"K8s cluster = set of worker nodes running containerized apps, managed by the control plane."},
+  {q:"What is live migration in virtualization?",opts:["Copying files between servers","Moving a running VM from one host to another without downtime","Deleting old VMs","Cloning a VM"],correct:1,exp:"Live migration = transferring a running VM between physical hosts with zero (or minimal) downtime."},
+  {q:"Container orchestration is needed when:",opts:["You have one container","You run many containers across multiple hosts that need coordination","Containers are idle","You use VMs only"],correct:1,exp:"At scale, containers need automated deployment, scaling, networking, and failure recovery — that's orchestration."},
+  {q:"A hyperconverged infrastructure (HCI) combines:",opts:["Only storage","Compute, storage, and networking in one integrated system","Only networking","Virtual machines only"],correct:1,exp:"HCI integrates compute, storage, networking (and virtualization) into a single, software-defined system."},
+  {q:"What is hardware virtualization?",opts:["Running software on physical machines directly","Creating multiple virtual machines from one physical machine's resources","Sharing files between users","Cloud storage only"],correct:1,exp:"Hardware virtualization uses a hypervisor to create and manage multiple VMs on a single physical host."},
+  {q:"Which is an advantage of containers over VMs for microservices?",opts:["Better security isolation","Faster startup, lighter resources, easier to deploy many small services","Dedicated OS per service","Works without internet"],correct:1,exp:"Containers are ideal for microservices: fast start, small footprint, easy CI/CD, and rapid scaling per service."},
+  {q:"What is container orchestration?",opts:["Writing Dockerfiles","Automated management of container lifecycle: deploy, scale, network, heal","Container image building","Manual container restarts"],correct:1,exp:"Orchestration automates: deploying containers, scaling them, load balancing, and restarting failures."},
+  {q:"What command in Docker runs a container from an image?",opts:["docker build","docker run","docker push","docker pull"],correct:1,exp:"'docker run <image>' creates and starts a container from the specified image."},
+  {q:"What is the key difference between VM templates and container images?",opts:["No difference","VM templates include full OS; container images include only app + dependencies (share host kernel)","Container images are larger","VM templates are faster"],correct:1,exp:"VM templates bundle a full OS + app. Container images are lightweight — app + libs, no full OS."},
+  {q:"What is OpenStack Nova?",opts:["Object storage service","Identity service","Compute service — manages VM creation and scheduling","Networking service"],correct:2,exp:"Nova is OpenStack's compute service — it manages the lifecycle of virtual machine instances."},
+  {q:"What does OpenStack Neutron manage?",opts:["VM images","Block storage","Identity/auth","Networking (virtual networks, routers, IPs)"],correct:3,exp:"Neutron = OpenStack networking service. Manages virtual networks, subnets, routers, floating IPs."},
+  {q:"OpenStack Swift is used for:",opts:["Compute","Networking","Object storage","Block storage"],correct:2,exp:"Swift = OpenStack object storage. Stores large unstructured data (files, backups, media) as objects."},
+  {q:"Which OpenStack component manages VM images?",opts:["Cinder","Keystone","Nova","Glance"],correct:3,exp:"Glance = OpenStack image service. Stores, discovers, and retrieves VM disk images."},
+
+  // SET D: SECURITY, TOOLS & ADVANCED (75–109)
+  {q:"In the shared responsibility model, who secures the physical data center?",opts:["Customer","Both equally","Third-party auditor","Cloud provider"],correct:3,exp:"Provider secures physical infrastructure (building, hardware, network). Customer secures what they deploy on it."},
+  {q:"What is Zero Trust architecture?",opts:["Trust all internal traffic","'Never trust, always verify' — authenticate every request regardless of origin","Allow VPN users full access","Only verify external users"],correct:1,exp:"Zero Trust = no implicit trust, even inside the network. Every access request must be authenticated and authorized."},
+  {q:"What does MFA stand for?",opts:["Multi-Factor Authentication","Main Firewall Access","Managed File Architecture","Multi-Function App"],correct:0,exp:"MFA = Multi-Factor Authentication. Requires 2+ verification factors (password + code + biometric)."},
+  {q:"Encryption protects data:",opts:["From hardware failures","By hiding its content — only authorized parties with keys can read it","From network outages","By compressing files"],correct:1,exp:"Encryption scrambles data so only those with the correct decryption key can read it — protects confidentiality."},
+  {q:"What is a DDoS attack?",opts:["Direct Database of Servers","Distributed Denial-of-Service — overwhelm target with traffic from many sources","Data Deletion on Servers","Dynamic Deployment of Software"],correct:1,exp:"DDoS = Distributed Denial-of-Service. Uses many compromised machines to flood a target until it's unavailable."},
+  {q:"In cloud security, 'defense in depth' means:",opts:["One strong firewall","Multiple overlapping security layers so one breach doesn't compromise everything","No encryption needed","Trust internal users only"],correct:1,exp:"Defense in depth = layered security strategy. Multiple controls (firewall, encryption, MFA, monitoring) at every level."},
+  {q:"What is a firewall in cloud context?",opts:["Physical barrier","Software/hardware filtering incoming and outgoing network traffic based on rules","Load balancer","CDN node"],correct:1,exp:"Firewall = network security system controlling traffic based on rules. In cloud, often implemented as security groups."},
+  {q:"What is Ansible used for?",opts:["Container orchestration","Monitoring only","Configuration management — automate server setup using YAML playbooks, agentless","Database administration"],correct:2,exp:"Ansible = agentless config management. Uses YAML playbooks over SSH to automate provisioning and configuration."},
+  {q:"How does Puppet differ from Ansible?",opts:["Puppet uses YAML; Ansible uses Ruby","Puppet is agentless; Ansible uses agents","Puppet is agent-based with master-agent model; Ansible is agentless","They are identical"],correct:2,exp:"Puppet uses master-agent model (agent installed on each node). Ansible is agentless (uses SSH)."},
+  {q:"What is Nagios primarily used for?",opts:["Container orchestration","Infrastructure monitoring and alerting","Code deployment","Load balancing"],correct:1,exp:"Nagios = open-source monitoring tool. Checks server health, services, network devices, and sends alerts."},
+  {q:"What is Infrastructure as Code (IaC)?",opts:["Writing apps in cloud","Managing and provisioning infrastructure via code/config files instead of manual processes","IaaS documentation","A type of container"],correct:1,exp:"IaC = define infrastructure (servers, networks, databases) in code (Terraform, Ansible) for automated, repeatable deployments."},
+  {q:"What is Terraform?",opts:["A monitoring tool","A container runtime","An IaC tool for provisioning multi-cloud infrastructure","A hypervisor"],correct:2,exp:"Terraform by HashiCorp = declarative IaC tool. Define cloud resources in HCL files — works across AWS, Azure, GCP."},
+  {q:"What is a load balancer?",opts:["Stores data","Monitors CPU usage","Distributes incoming network traffic across multiple servers","Encrypts data"],correct:2,exp:"Load balancer distributes client requests across multiple servers — improves availability and prevents overload."},
+  {q:"What does horizontal scaling mean?",opts:["Upgrading CPU of one server","Adding more machines/instances to distribute load","Increasing RAM","Using faster storage"],correct:1,exp:"Horizontal scaling (scale out) = add more servers. Opposite: vertical scaling (scale up) = upgrade one server."},
+  {q:"What is a Service Level Agreement (SLA)?",opts:["Software license terms","Contract defining guaranteed uptime, performance, and support from a cloud provider","Security audit report","API documentation"],correct:1,exp:"SLA = formal contract. Typically guarantees uptime (e.g., 99.99%), response times, and penalties for violations."},
+  {q:"What does 'high availability' mean in cloud?",opts:["Very fast internet","System remains operational despite failures — minimal downtime","Unlimited storage","Free tier access"],correct:1,exp:"High availability = system designed to be continuously operational. Achieved via redundancy, failover, and replication."},
+  {q:"What is a disaster recovery plan in cloud?",opts:["PR plan for breaches","Strategy and tools to restore services after major failures (data recovery, failover regions)","Daily maintenance","Security audit"],correct:1,exp:"Disaster Recovery (DR) = plans and tools to recover IT systems quickly after catastrophic events."},
+  {q:"What is auto-scaling?",opts:["Manual server provisioning","Automated adjustment of compute resources based on current demand","Scheduled maintenance","Container image building"],correct:1,exp:"Auto-scaling = cloud automatically adds/removes resources in response to demand — enables elasticity."},
+  {q:"What is a private Docker registry?",opts:["Public image repository","Internal registry to store and distribute container images within an organization","K8s cluster","A CDN"],correct:1,exp:"Private registry (e.g., AWS ECR, GitLab Registry) = internal storage for container images with access control."},
+  {q:"What is N-Tier architecture?",opts:["One monolithic server","Single database","Logical separation into layers: presentation, business logic, data — deployed independently","Only 2 servers"],correct:2,exp:"N-Tier (or multi-tier) = separates application into layers (UI, logic, data) for maintainability and scalability."},
+  {q:"What is the cold aisle/hot aisle concept in data centers?",opts:["Server temperature settings","Aisle arrangement directing cold air to server fronts, hot exhaust to backs — improves cooling efficiency","Network cable management","Power distribution method"],correct:1,exp:"Cold/hot aisle layout positions server racks so cold air enters from the cold aisle and hot exhaust exits to the hot aisle."},
+  {q:"What is a rack unit (U)?",opts:["Power measurement","1.75 inches — standard unit of server height in a rack cabinet","Network bandwidth unit","Storage capacity unit"],correct:1,exp:"1U = 1.75 inches. Rack cabinets are measured in U (e.g., 42U rack). Blade servers may be 0.5U; tower servers vary."},
+  {q:"What is a blade server?",opts:["A tower server with extra drives","Thin modular server that slots into a shared chassis for power, cooling, and networking","A standalone desktop server","A Kubernetes node"],correct:1,exp:"Blade servers are slim modules (blades) that share a chassis providing power, networking, and cooling infrastructure."},
+  {q:"What does a UPS protect against?",opts:["Data theft","Power outages — provides battery backup to keep servers running during power failures","DDoS attacks","Hardware overheating"],correct:1,exp:"UPS (Uninterruptible Power Supply) provides immediate battery power when main power fails, allowing graceful shutdown or continuous operation."},
+  {q:"What is Zabbix?",opts:["Container orchestration","IaC tool","Open-source all-in-one monitoring platform — metrics, alerts, dashboards for infrastructure","SaaS CRM"],correct:2,exp:"Zabbix = enterprise-grade monitoring platform covering servers, network, VMs, containers — collects metrics and triggers alerts."},
+  {q:"Which OpenStack service provides identity and authentication?",opts:["Nova","Neutron","Glance","Keystone"],correct:3,exp:"Keystone = OpenStack's identity service. Manages users, roles, tokens, and auth for all other OpenStack services."},
+  {q:"What is edge computing primarily designed to reduce?",opts:["Cost of cloud storage","Network latency by processing data close to its source","Number of VMs","Data center size"],correct:1,exp:"Edge computing moves processing to the network edge (near IoT devices, sensors) — dramatically reduces round-trip latency."},
+  {q:"What is OpenStack Cinder?",opts:["Object storage","Compute service","Block storage — provides persistent volumes for VMs","Networking service"],correct:2,exp:"Cinder = OpenStack block storage. Provides persistent block storage volumes that can be attached to Nova VMs."},
+  {q:"REST APIs are most associated with which architecture?",opts:["Mainframe","Batch processing","SOA / Microservices","On-Premises only"],correct:2,exp:"REST (Representational State Transfer) APIs are the standard for SOA and microservices communication over HTTP."},
+  {q:"What is fog computing's main role?",opts:["Replace edge computing","Intermediate layer between edge devices and central cloud — processes/filters data locally before cloud","Replace all cloud storage","Manage VMs"],correct:1,exp:"Fog = distributed computing at the network edge (routers, gateways) — filters/processes data before sending to cloud."},
+  {q:"What is multi-cloud strategy?",opts:["Using many VMs in one cloud","Using services from multiple cloud providers simultaneously","Running cloud on multiple devices","A type of private cloud"],correct:1,exp:"Multi-cloud = using AWS + Azure + GCP etc. simultaneously to avoid lock-in, improve resilience, and optimize cost."},
+  {q:"What is the difference between backup and replication?",opts:["They are the same","Backup = periodic copy for recovery; Replication = real-time continuous sync for high availability","Backup is faster","Replication only for storage"],correct:1,exp:"Backup = scheduled copies stored for restore. Replication = real-time sync to another location for near-zero RTO (recovery time)."},
+];
+
+// MCQ sets: indices into allMCQ
+const mcqSets = [
+  allMCQ.slice(0,25),
+  allMCQ.slice(25,50),
+  allMCQ.slice(50,75),
+  allMCQ.slice(75,110)
+];
+let curMCQSet=0, mcqAnswers={}, mcqFeedback={};
+function loadMCQSet(idx,btn){
+  curMCQSet=idx;
+  mcqAnswers={};mcqFeedback={};
+  document.querySelectorAll('.set-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMCQ();
+  document.getElementById('mcqResult').classList.remove('show');
+}
+function renderMCQ(){
+  const qs=mcqSets[curMCQSet];
+  let html='';
+  qs.forEach((q,idx)=>{
+    const globalIdx=curMCQSet*25+idx;
+    html+=`<div class="question-card"><div class="question-number">Q${globalIdx+1}</div><div class="question-text">${q.q}</div><div class="options-grid">`;
+    q.opts.forEach((opt,oi)=>{
+      let cls='';
+      if(mcqFeedback[idx]){if(oi===q.correct)cls='correct';else if(mcqAnswers[idx]===oi&&oi!==q.correct)cls='wrong';}
+      else if(mcqAnswers[idx]===oi)cls='selected';
+      html+=`<button class="option-btn ${cls}" onclick="selectMCQ(${idx},${oi})" ${mcqFeedback[idx]?'disabled':''}><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</button>`;
+    });
+    html+=`</div><div class="feedback-box ${mcqFeedback[idx]?(mcqAnswers[idx]===q.correct?'correct-fb':'wrong-fb')+' show':''}">${mcqFeedback[idx]?'<strong>'+(mcqAnswers[idx]===q.correct?'✓ Correct':'✗ Incorrect')+':</strong> '+q.exp:''}</div></div>`;
+  });
+  document.getElementById('mcqContainer').innerHTML=html;
+  const correct=Object.entries(mcqAnswers).filter(([i,a])=>a===qs[i].correct).length;
+  document.getElementById('mcqScoreBadge').textContent=`Score: ${correct} / ${qs.length}`;
+}
+function selectMCQ(idx,oi){
+  if(mcqFeedback[idx])return;
+  mcqAnswers[idx]=oi;
+  mcqFeedback[idx]=true;
+  renderMCQ();
+}
+function checkAllMCQ(){
+  const qs=mcqSets[curMCQSet];
+  qs.forEach((_,i)=>{if(mcqAnswers[i]===undefined){mcqAnswers[i]=-1;}mcqFeedback[i]=true;});
+  renderMCQ();
+  const correct=Object.entries(mcqAnswers).filter(([i,a])=>+a===qs[+i].correct).length;
+  const pct=Math.round(correct/qs.length*100);
+  const res=document.getElementById('mcqResult');
+  res.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${correct} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Excellent — exam ready! 🎉":pct>=60?"Good effort! Review wrong answers.":"Keep studying — revisit the brain refresher."}</div><button class="quiz-btn-primary" onclick="resetMCQ()">Reset This Set</button>`;
+  res.classList.add('show');
+}
+function resetMCQ(){mcqAnswers={};mcqFeedback={};renderMCQ();document.getElementById('mcqResult').classList.remove('show');}
+renderMCQ();
+
+/* ===================== 110 UNIQUE TRUE/FALSE ===================== */
+const allTF = [
+  // SET A: BASICS (0–27)
+  {s:"Cloud computing delivers resources on-demand over the internet without requiring hardware ownership.",t:true,e:"Core definition — on-demand, internet-delivered, no physical ownership required."},
+  {s:"Pay-as-you-go means you pay a fixed monthly fee regardless of usage.",t:false,e:"Pay-as-you-go = usage-based billing. You pay only for what you actually consume."},
+  {s:"Time-sharing in the 1950s allowed multiple users to share one mainframe computer.",t:true,e:"Time-sharing divided CPU time among multiple users — precursor to cloud multi-tenancy."},
+  {s:"Salesforce launched the first SaaS product in 2006.",t:false,e:"Salesforce launched in 1999. AWS EC2 launched in 2006."},
+  {s:"AWS EC2 (2006) is considered the start of the modern cloud computing era.",t:true,e:"EC2 was the first scalable, rentable cloud infrastructure — the true beginning of modern cloud."},
+  {s:"IBM VM/370 (1972) was one of the first operating systems to support virtual machines.",t:true,e:"IBM VM/370 is historically significant as an early VM-supporting OS."},
+  {s:"Community Cloud is exclusive to a single organization.",t:false,e:"Community Cloud is shared among multiple organizations with similar needs — not a single org (that's Private Cloud)."},
+  {s:"Public Cloud is analogous to a personal car — dedicated and private.",t:false,e:"Public Cloud = Public Bus (shared). Personal Car = Private Cloud (dedicated)."},
+  {s:"Hybrid Cloud combines public and private cloud environments.",t:true,e:"Hybrid Cloud = integrated use of both public and private cloud resources."},
+  {s:"The main advantage of Private Cloud is its very low cost.",t:false,e:"Private Cloud is expensive (high CapEx). Its advantages are control, security, and customization."},
+  {s:"Vendor lock-in refers to the difficulty of migrating from one cloud provider to another.",t:true,e:"Lock-in occurs when using proprietary APIs/tools makes switching providers costly."},
+  {s:"Broad network access means cloud services can only be accessed from headquarters.",t:false,e:"Broad network access = accessible from any device (laptop, phone) via internet from any location."},
+  {s:"Resource pooling in cloud means each client gets dedicated physical hardware.",t:false,e:"Resource pooling = physical resources are shared (multi-tenancy), isolated logically per client."},
+  {s:"On-premises IT infrastructure is managed in the organization's own physical facility.",t:true,e:"On-premises = company owns and operates all hardware/software in-house."},
+  {s:"A VPC (Virtual Private Cloud) is a logically isolated network segment in a public cloud.",t:true,e:"VPC provides network isolation within public cloud — your own private network segment."},
+  {s:"AWS has the largest global cloud market share.",t:true,e:"AWS has been the market leader in cloud infrastructure services since 2006."},
+  {s:"GCP (Google Cloud) is known for its strong leadership in managed Kubernetes (GKE).",t:true,e:"Google originally created Kubernetes. GKE (Google Kubernetes Engine) is a market leader."},
+  {s:"Elasticity and scalability are identical concepts.",t:false,e:"Elasticity = automatic real-time scale up AND down. Scalability = ability to grow (can be planned/manual)."},
+  {s:"Cloud computing requires stable internet access for all cloud-based services.",t:true,e:"Broad network access is a core characteristic — stable internet is required to use cloud services."},
+  {s:"A Service Level Agreement (SLA) defines guaranteed uptime and support from a cloud provider.",t:true,e:"SLA = contract specifying uptime guarantees (e.g., 99.99%), response times, and penalties."},
+  {s:"'Measured service' means cloud usage is metered and reported to users.",t:true,e:"NIST's 5th cloud characteristic: resource usage is monitored, controlled, and reported transparently."},
+  {s:"High availability means a system is completely immune to all hardware failures.",t:false,e:"High availability minimizes downtime via redundancy and failover — but no system is 100% immune."},
+  {s:"A CDN (Content Delivery Network) stores and delivers content from distributed servers near users.",t:true,e:"CDN caches content at geographically distributed nodes to reduce latency and accelerate delivery."},
+  {s:"Cloudflare is a well-known CDN provider.",t:true,e:"Cloudflare is a major CDN. Others include Akamai, AWS CloudFront, Fastly."},
+  {s:"Multi-cloud strategy means using multiple VMs in one cloud provider.",t:false,e:"Multi-cloud = using services from multiple different providers (AWS + Azure + GCP) simultaneously."},
+  {s:"Auto-scaling automatically adds or removes resources based on current demand.",t:true,e:"Auto-scaling is how cloud achieves elasticity — resources scale in/out in response to load."},
+  {s:"Edge computing sends all data to a central cloud for processing.",t:false,e:"Edge computing processes data near its source to reduce latency — opposite of central cloud processing."},
+  {s:"An SLA penalty means the cloud provider compensates the customer for failing to meet guarantees.",t:true,e:"SLA violations typically trigger credits or refunds — incentivizing providers to meet commitments."},
+
+  // SET B: SERVICES & MODELS (28–55)
+  {s:"In IaaS, the customer manages the physical servers.",t:false,e:"In IaaS, the provider manages physical servers. Customer manages OS, middleware, apps, data."},
+  {s:"In PaaS, the customer manages only applications and data.",t:true,e:"PaaS: vendor manages runtime, middleware, OS and below. Customer manages apps + data only."},
+  {s:"In SaaS, the vendor manages all 9 infrastructure layers.",t:true,e:"SaaS: vendor manages everything — all 9 layers from apps to hardware. Customer just uses the app."},
+  {s:"On-Premises is classified as a cloud service model alongside IaaS, PaaS, and SaaS.",t:false,e:"On-Premises is a traditional/general service model — NOT a cloud service model."},
+  {s:"AWS Lambda is an example of Function as a Service (FaaS).",t:true,e:"Lambda runs code without managing servers — you pay only during execution. Classic FaaS."},
+  {s:"In FaaS (serverless), you are charged for idle server time.",t:false,e:"FaaS charges only during code execution. No idle charges — a key advantage over traditional servers."},
+  {s:"Heroku is an IaaS platform.",t:false,e:"Heroku is PaaS. Developers deploy code; Heroku manages runtime, scaling, and infrastructure."},
+  {s:"Google App Engine is an example of PaaS.",t:true,e:"App Engine is PaaS — developers deploy apps without configuring servers or OS."},
+  {s:"Microsoft 365 (Word, Excel, Outlook) is an example of SaaS.",t:true,e:"Microsoft 365 is SaaS — accessed via browser with no local installation, fully managed by Microsoft."},
+  {s:"SaaS requires installation on each user's computer.",t:false,e:"SaaS is browser-based — no installation required. That's one of its key benefits."},
+  {s:"IaaS gives the customer the most control among cloud service models.",t:true,e:"IaaS gives customers control over OS, middleware, runtime, apps, data — the most of any cloud model."},
+  {s:"PaaS eliminates vendor lock-in risk.",t:false,e:"PaaS increases vendor lock-in risk — platform-specific tools and APIs make migration costly."},
+  {s:"Horizontal SaaS targets specific industry niches like healthcare.",t:false,e:"Horizontal SaaS targets broad audiences (all industries). Vertical SaaS targets specific niches."},
+  {s:"ClearCare (healthcare software) is an example of Vertical SaaS.",t:true,e:"Vertical SaaS = industry-specific. ClearCare targets home care/healthcare management specifically."},
+  {s:"AWS S3 is primarily block storage.",t:false,e:"S3 is object storage. Block storage on AWS is EBS (Elastic Block Store). Cinder = OpenStack block storage."},
+  {s:"AWS EC2 is an example of IaaS.",t:true,e:"EC2 provides virtual machines — IaaS. Customers manage OS and above; AWS manages hardware."},
+  {s:"In the 9-layer model, Runtime is managed by the vendor in both PaaS and SaaS.",t:true,e:"PaaS: vendor manages Runtime and below. SaaS: vendor manages everything. Runtime = VENDOR in both."},
+  {s:"Middleware sits between the OS and the application layer.",t:true,e:"Middleware enables app communication (message queues, API gateways, authentication middleware)."},
+  {s:"Dropbox is an example of IaaS.",t:false,e:"Dropbox is SaaS — cloud file storage service managed entirely by Dropbox, accessed via app/browser."},
+  {s:"Azure Virtual Machines is an example of PaaS.",t:false,e:"Azure VMs = IaaS. You get a virtual machine to configure yourself. Azure App Service = PaaS."},
+  {s:"FaaS (serverless) requires developers to manage server provisioning.",t:false,e:"Serverless abstraction means developers write only functions — server management is completely handled by the provider."},
+  {s:"A startup using Google App Engine to deploy their web app uses PaaS.",t:true,e:"App Engine is PaaS — the startup manages code; Google manages runtime, OS, infrastructure."},
+  {s:"In IaaS, the customer is responsible for OS security patches.",t:true,e:"IaaS customer manages OS — including updates, patches, and security hardening of the OS."},
+  {s:"Object storage is best for large-scale unstructured data like media files.",t:true,e:"Object storage (S3, Swift) is designed for massive amounts of unstructured data with metadata tagging."},
+  {s:"Block storage provides persistent raw disk volumes for databases.",t:true,e:"Block storage (EBS, Cinder) = raw volumes. Fast, low-latency — ideal for databases and file systems."},
+  {s:"Community Cloud has higher scalability than Public Cloud.",t:false,e:"Public Cloud has the highest scalability. Community Cloud has medium-to-low scalability (shared by a limited group)."},
+  {s:"Multi-tenancy means multiple customers are logically isolated on shared physical infrastructure.",t:true,e:"Multi-tenancy = shared hardware, but each tenant's data is logically isolated from others."},
+  {s:"A company running core banking on private cloud and its mobile app on public cloud uses hybrid cloud.",t:true,e:"Classic hybrid cloud use case — sensitive workloads on private, public-facing services on public cloud."},
+
+  // SET C: VIRTUALIZATION & INFRASTRUCTURE (56–83)
+  {s:"A hypervisor allows multiple virtual machines to run on a single physical host.",t:true,e:"Core function of a hypervisor — abstracts hardware to run many isolated VMs simultaneously."},
+  {s:"VMware ESXi is a Type 2 (hosted) hypervisor.",t:false,e:"ESXi is Type 1 (bare-metal) — runs directly on hardware, no host OS required. Type 2 example: VirtualBox."},
+  {s:"VirtualBox runs on top of a host OS, making it a Type 2 hypervisor.",t:true,e:"Type 2 hypervisors require a host OS. VirtualBox, VMware Workstation, Parallels are Type 2."},
+  {s:"Containers include a full guest operating system.",t:false,e:"Containers share the host OS kernel — they include only the app + dependencies. Much lighter than VMs."},
+  {s:"Containers start faster than VMs because they share the host kernel.",t:true,e:"No OS boot needed for containers — they start in seconds. VMs boot a full OS (minutes)."},
+  {s:"VMs provide stronger security isolation than containers.",t:true,e:"VMs have hardware-level isolation via hypervisor. Containers share the kernel — if kernel is compromised, all containers are at risk."},
+  {s:"A Dockerfile is used to define a container image.",t:true,e:"Dockerfile = set of instructions to build a Docker image (base OS, dependencies, app code, commands)."},
+  {s:"Docker Hub is a private registry for enterprise use only.",t:false,e:"Docker Hub is a PUBLIC registry. Anyone can push/pull images. Private registries (ECR, GitLab) are for internal use."},
+  {s:"Kubernetes was originally developed by Microsoft.",t:false,e:"Kubernetes was created by Google (based on Borg). Now maintained by CNCF (Cloud Native Computing Foundation)."},
+  {s:"A Kubernetes Pod is the smallest deployable unit.",t:true,e:"Pod = K8s atomic unit. Groups one or more containers sharing network namespace and storage volumes."},
+  {s:"Kubernetes automatically restarts failed containers (self-healing).",t:true,e:"K8s monitors container health and restarts failed pods automatically — a key self-healing feature."},
+  {s:"A VM snapshot captures the state of a VM at a point in time.",t:true,e:"Snapshots save VM state (memory, disk, settings) — can be used to revert or clone the VM."},
+  {s:"Live migration allows moving a running VM to another host without any downtime.",t:true,e:"Live migration (VMotion in VMware) transfers running VMs with minimal to zero service interruption."},
+  {s:"OpenStack is a public cloud provider like AWS.",t:false,e:"OpenStack is open-source SOFTWARE for building private/public clouds — not a cloud provider itself."},
+  {s:"OpenStack Nova manages compute (virtual machine) resources.",t:true,e:"Nova = OpenStack compute service. Creates, schedules, and manages VMs across the cluster."},
+  {s:"OpenStack Cinder provides object storage.",t:false,e:"Cinder = block storage. Swift = object storage. Cinder provides persistent volumes for VMs."},
+  {s:"OpenStack Keystone provides identity and authentication.",t:true,e:"Keystone = OpenStack identity service. Manages users, tokens, roles, auth for all OpenStack services."},
+  {s:"OpenStack Glance manages VM disk images.",t:true,e:"Glance = image service. Stores, discovers, retrieves VM images for Nova to use when creating instances."},
+  {s:"A hyperconverged infrastructure (HCI) separates compute, storage, and networking into distinct silos.",t:false,e:"HCI INTEGRATES compute, storage, networking, and virtualization into a single software-defined system."},
+  {s:"Container orchestration is unnecessary when running fewer than 5 containers on one host.",t:true,e:"At small scale, manual management is feasible. Orchestration becomes essential at larger scale across multiple hosts."},
+  {s:"A blade server can function independently without a chassis.",t:false,e:"Blade servers require a chassis/enclosure that provides power, cooling, and network connectivity."},
+  {s:"1U rack unit equals 1.75 inches of vertical space.",t:true,e:"Standard rack unit (U or RU) = 1.75 inches (44.45mm). Most rack cabinets are 42U tall."},
+  {s:"Tower servers are suitable for large data centers requiring high density.",t:false,e:"Tower servers are standalone units — good for small offices. Rack or blade servers are used for high-density data centers."},
+  {s:"Cold aisle/hot aisle design improves data center cooling efficiency.",t:true,e:"Servers face cold aisle (intake), exhaust to hot aisle — separating airflows reduces cooling costs significantly."},
+  {s:"A PDU (Power Distribution Unit) distributes electricity to rack-mounted equipment.",t:true,e:"PDU = managed power strip for server racks. Distributes power from UPS/breaker to multiple servers."},
+  {s:"A UPS provides backup power only for storage devices.",t:false,e:"UPS provides backup power to ALL connected equipment (servers, networking, storage) during power failure."},
+  {s:"Microservices architecture is a modern alternative to monolithic applications.",t:true,e:"Microservices = app split into small, independently deployable services. Replaces large monolithic codebases."},
+  {s:"N-Tier architecture separates application concerns into logical layers.",t:true,e:"N-Tier (3-tier most common) = Presentation + Business Logic + Data layers — improves scalability and maintainability."},
+
+  // SET D: SECURITY, TOOLS & TRICKY (84–109)
+  {s:"In the shared responsibility model, the cloud provider secures customer data.",t:false,e:"Customer is responsible for their data. Provider secures physical infrastructure and hypervisor."},
+  {s:"Zero Trust assumes users inside the corporate network are always trustworthy.",t:false,e:"Zero Trust assumes NO implicit trust — 'never trust, always verify.' Even internal users must authenticate."},
+  {s:"MFA (Multi-Factor Authentication) uses only a password for security.",t:false,e:"MFA requires 2+ factors: something you know (password) + something you have (phone) + biometric."},
+  {s:"A DoS attack aims to steal sensitive data from servers.",t:false,e:"DoS/DDoS aims to DISRUPT availability by overwhelming servers — not to steal data."},
+  {s:"Encryption ensures that only authorized parties with decryption keys can read data.",t:true,e:"Encryption scrambles data into ciphertext — only the keyholder can decrypt and read it."},
+  {s:"Defense in depth uses a single strong security measure to protect systems.",t:false,e:"Defense in depth = MULTIPLE overlapping layers of security. One layer failing doesn't compromise all."},
+  {s:"Ansible requires an agent to be installed on each managed server.",t:false,e:"Ansible is AGENTLESS — uses SSH to connect and run playbooks. No client software needed on nodes."},
+  {s:"Chef uses YAML-based playbooks for configuration management.",t:false,e:"Chef uses Ruby DSL (recipes/cookbooks). Ansible uses YAML playbooks. They are different tools."},
+  {s:"Puppet uses a master-agent model for configuration management.",t:true,e:"Puppet = master-agent: Puppet master pushes configs; agents (puppet-client) pull/apply them on nodes."},
+  {s:"Nagios is a container orchestration tool.",t:false,e:"Nagios is a monitoring/alerting tool. Container orchestration = Kubernetes, Docker Swarm."},
+  {s:"Infrastructure as Code (IaC) means manually clicking to create servers in a cloud console.",t:false,e:"IaC = defining infrastructure in code/config files (Terraform, Ansible) for automated, repeatable deployments."},
+  {s:"Terraform can provision infrastructure across AWS, Azure, and GCP.",t:true,e:"Terraform is multi-cloud — uses provider plugins to manage resources on any major cloud platform."},
+  {s:"A load balancer can improve both performance and availability of an application.",t:true,e:"Load balancer distributes traffic — prevents single server overload (performance) and routes around failures (availability)."},
+  {s:"Horizontal scaling means upgrading the CPU and RAM of an existing server.",t:false,e:"Horizontal scaling = adding more servers (scale out). Vertical scaling = upgrading one server (scale up)."},
+  {s:"Vertical scaling (scale up) has a theoretical upper limit on a single machine.",t:true,e:"You can only add so much CPU/RAM to one machine. Horizontal scaling overcomes this by adding more nodes."},
+  {s:"Disaster recovery in cloud typically involves replicating workloads to a secondary region.",t:true,e:"DR often uses multi-region replication so if one region fails, traffic fails over to the backup region automatically."},
+  {s:"A private Docker registry stores images internally with access control.",t:true,e:"Private registries (AWS ECR, Harbor, GitLab Registry) restrict image access to authorized users/teams."},
+  {s:"Fog computing is the same as edge computing.",t:false,e:"Fog is an intermediate layer BETWEEN edge and cloud (uses routers/gateways). Edge = processing at the device itself."},
+  {s:"SOA (Service-Oriented Architecture) promotes tightly coupled services.",t:false,e:"SOA promotes LOOSELY coupled services communicating via standard interfaces (REST, SOAP APIs)."},
+  {s:"REST APIs use HTTP methods like GET, POST, PUT, DELETE.",t:true,e:"REST (Representational State Transfer) uses HTTP methods to perform CRUD operations on resources."},
+  {s:"OpenStack is open-source software for building both private and public clouds.",t:true,e:"OpenStack is open-source. Primarily used for private clouds but can be used to build public cloud infrastructure."},
+  {s:"Zabbix requires a paid license for enterprise use.",t:false,e:"Zabbix is 100% open-source and free — no licensing costs. Enterprise support contracts are optional."},
+  {s:"A VPC allows cloud customers to create isolated virtual networks in a public cloud.",t:true,e:"VPC = logically isolated network in public cloud. Define subnets, route tables, security groups, and gateways."},
+  {s:"High availability and fault tolerance are identical terms.",t:false,e:"HA = minimize downtime with failover. Fault tolerance = system continues operating despite failures with zero interruption. FT is stronger."},
+  {s:"In PaaS, the Runtime layer is managed by the customer.",t:false,e:"In PaaS, the vendor manages Runtime, Middleware, OS and below. Customer only manages Apps + Data."},
+  {s:"Backup and replication serve the same purpose in cloud.",t:false,e:"Backup = periodic copies for recovery (higher RTO). Replication = real-time sync for high availability (near-zero RTO)."},
+];
+
+const tfSets = [
+  allTF.slice(0,28),
+  allTF.slice(28,56),
+  allTF.slice(56,84),
+  allTF.slice(84,110)
+];
+let curTFSet=0, tfAnswers={}, tfRevealed={};
+function loadTFSet(idx,btn){
+  curTFSet=idx;tfAnswers={};tfRevealed={};
+  document.querySelectorAll('#tfTabs .set-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTF();
+  document.getElementById('tfResult').classList.remove('show');
+}
+function renderTF(){
+  const qs=tfSets[curTFSet];
+  let html='';
+  const globalOffset=[0,28,56,84][curTFSet];
+  qs.forEach((q,idx)=>{
+    const ans=tfAnswers[idx];
+    const rev=tfRevealed[idx];
+    let correct=(ans===q.t);
+    html+=`<div class="tf-card">
+      <div class="tf-statement"><strong>${globalOffset+idx+1}.</strong> ${q.s}</div>
+      <div class="tf-buttons">
+        <button class="tf-btn" style="background:${ans===true?(rev?(correct?'var(--green)':'var(--red)'):'rgba(59,130,246,0.3)'):'var(--panel2)'};color:${ans===true?'white':'var(--text)'}" onclick="setTF(${idx},true)" ${rev?'disabled':''}>✓ TRUE</button>
+        <button class="tf-btn" style="background:${ans===false?(rev?(correct?'var(--green)':'var(--red)'):'rgba(59,130,246,0.3)'):'var(--panel2)'};color:${ans===false?'white':'var(--text)'}" onclick="setTF(${idx},false)" ${rev?'disabled':''}>✗ FALSE</button>
+      </div>
+      ${rev?`<div class="tf-result show" style="color:${correct?'var(--green)':'var(--red)'}"><strong>${correct?'✓ Correct!':'✗ Incorrect.'}</strong> ${q.e}</div>`:''}
+    </div>`;
+  });
+  document.getElementById('tfContainer').innerHTML=html;
+  const correct=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].t).length;
+  document.getElementById('tfScoreBadge').textContent=`Score: ${correct} / ${qs.length}`;
+}
+function setTF(idx,val){
+  if(tfRevealed[idx])return;
+  tfAnswers[idx]=val;tfRevealed[idx]=true;
+  renderTF();
+}
+function checkAllTF(){
+  const qs=tfSets[curTFSet];
+  qs.forEach((_,i)=>{if(tfAnswers[i]===undefined)tfAnswers[i]=null;tfRevealed[i]=true;});
+  renderTF();
+  const correct=Object.entries(tfAnswers).filter(([i,a])=>a===qs[+i].t).length;
+  const pct=Math.round(correct/qs.length*100);
+  const res=document.getElementById('tfResult');
+  res.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${correct} / ${qs.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=80?"Great mastery! 🎉":pct>=60?"Good work! Review incorrect answers.":"Study the brain refresher and retry."}</div><button class="quiz-btn-primary" onclick="resetTF()">Reset This Set</button>`;
+  res.classList.add('show');
+}
+function resetTF(){tfAnswers={};tfRevealed={};renderTF();document.getElementById('tfResult').classList.remove('show');}
+renderTF();
+
+/* ===================== SHORT ANSWER ===================== */
+const shortQs=[
+  {q:"Explain the difference between Public, Private, and Hybrid cloud using the transport analogies.",ideal:"Public Cloud = Public Bus: shared by many, low cost, managed by provider. Private Cloud = Personal Car: dedicated to one org, full control, expensive. Hybrid Cloud = Taxi: combines private resources with on-demand public cloud access."},
+  {q:"List and explain the 9 managed layers from top to bottom, and state who manages each in IaaS.",ideal:"Applications (YOU), Data (YOU), Runtime (YOU), Middleware (YOU), OS (YOU), Virtualization (VENDOR), Servers (VENDOR), Storage (VENDOR), Networking (VENDOR). In IaaS the customer manages the top 5; vendor manages the bottom 4."},
+  {q:"What is the difference between a Type 1 and Type 2 hypervisor? Give one example of each.",ideal:"Type 1 (bare-metal): runs directly on physical hardware — faster and more efficient. Example: VMware ESXi, Hyper-V. Type 2 (hosted): runs on top of a host OS — easier to set up, used for dev/testing. Example: VirtualBox, VMware Workstation."},
+  {q:"Compare VMs and Containers on: isolation, startup time, and resource usage.",ideal:"VMs: hardware-level isolation (strong security), boot in minutes, include full OS (heavy). Containers: share host kernel (lighter isolation), start in seconds, lightweight (only app + deps). Containers better for microservices; VMs for strong isolation."},
+  {q:"Explain the Shared Responsibility Model in cloud security.",ideal:"Cloud provider secures physical infrastructure: hardware, data centers, networking, hypervisor. Customer secures: data, OS (in IaaS), applications, access control (IAM), encryption of their content."},
+  {q:"What is Zero Trust and why is it important in cloud environments?",ideal:"Zero Trust = 'Never trust, always verify.' Every access request must be authenticated/authorized regardless of network location. Important in cloud because perimeters are blurred — employees access from anywhere, making traditional network trust models obsolete."},
+  {q:"Compare Ansible and Chef as configuration management tools.",ideal:"Ansible: agentless (SSH-based), uses YAML playbooks, simpler, less scalable at massive scale. Chef: agent-based (chef-client on nodes), uses Ruby DSL (recipes/cookbooks), more powerful for complex configurations, steeper learning curve."},
+  {q:"What is the difference between elasticity and scalability?",ideal:"Elasticity = automatic, real-time bidirectional scaling (up AND down) based on demand. Scalability = the ability to grow capacity (can be planned and manual). Elasticity is a dynamic runtime property; scalability is a design-time property."},
+  {q:"What is FaaS/Serverless computing? What are its main benefits and drawbacks?",ideal:"FaaS = run code functions without managing servers (AWS Lambda). Benefits: no server management, pay only during execution, auto-scales instantly. Drawbacks: cold start latency, vendor lock-in, limited execution time, harder to debug/monitor."},
+  {q:"Describe the role of the following OpenStack services: Nova, Neutron, Cinder, Swift, Keystone.",ideal:"Nova: compute — manages VM lifecycle. Neutron: networking — virtual networks, subnets, routers. Cinder: block storage — persistent volumes for VMs. Swift: object storage — large unstructured data. Keystone: identity/auth — authentication for all services."}
+];
+function renderShort(){
+  document.getElementById('shortContainer').innerHTML=shortQs.map((q,i)=>`
+    <div class="question-card">
+      <div class="question-number">SHORT ANSWER ${i+1}</div>
+      <div class="question-text">${q.q}</div>
+      <textarea class="short-input" id="sa-${i}" rows="3" placeholder="Write your answer here..."></textarea>
+      <button class="fc-btn" onclick="revealShort(${i})" id="sa-btn-${i}">Reveal Model Answer</button>
+      <div class="def-box" id="sa-ans-${i}" style="display:none;margin-top:.6rem;"><strong>Model Answer:</strong><br>${q.ideal}</div>
+    </div>`).join('');
+}
+function revealShort(i){
+  const d=document.getElementById(`sa-ans-${i}`);
+  d.style.display=d.style.display==='none'?'block':'none';
+  document.getElementById(`sa-btn-${i}`).textContent=d.style.display==='block'?'Hide Answer':'Reveal Model Answer';
+}
+renderShort();
+
+/* ===================== SCENARIO ===================== */
+const scenarios=[
+  {text:"A university wants students to access licensed design software from any computer without installation. Which service model?",opts:["On-Premises","IaaS","PaaS","SaaS"],correct:3,exp:"SaaS — software delivered via browser. No installation, accessible from anywhere."},
+  {text:"A bank must comply with strict regulations and cannot share infrastructure with any other organization.",opts:["Public Cloud","Community Cloud","Hybrid Cloud","Private Cloud"],correct:3,exp:"Private Cloud — dedicated to one organization, full control, maximum regulatory compliance."},
+  {text:"A startup needs to deploy a Node.js web app quickly without configuring any servers.",opts:["IaaS","On-Premises","SaaS","PaaS"],correct:3,exp:"PaaS — push code and the platform handles runtime, scaling, OS. Ideal for developers who want to focus on code."},
+  {text:"A company runs HR data on its private servers but uses AWS for seasonal website traffic spikes. This is:",opts:["Pure Private Cloud","Public Cloud","Hybrid Cloud","Community Cloud"],correct:2,exp:"Hybrid Cloud — combines private (HR data) with public cloud (elastic burst capacity for seasonal spikes)."},
+  {text:"A hospital consortium of 6 hospitals wants shared cloud with split costs for patient record compliance.",opts:["Public Cloud","Private Cloud per hospital","Community Cloud","SaaS only"],correct:2,exp:"Community Cloud — shared by organizations with similar regulatory needs (HIPAA), costs distributed."},
+  {text:"A developer needs a Linux server for 3 hours to test a script — no permanent infrastructure needed.",opts:["Buy physical server","Private Cloud subscription","Rent an IaaS VM (e.g., AWS EC2)","Use SaaS"],correct:2,exp:"IaaS — rent a VM for exactly 3 hours, pay only for that time, then terminate. Maximum flexibility."},
+  {text:"A mobile game company needs servers that auto-scale from 100 to 100,000 concurrent users instantly.",opts:["On-Premises","Private Cloud","Public Cloud with auto-scaling","Manual server rental"],correct:2,exp:"Public Cloud with auto-scaling — elastic IaaS can provision thousands of instances in minutes based on demand."},
+  {text:"A food delivery company wants scheduling/dispatch software built specifically for restaurants. This is:",opts:["Horizontal SaaS","IaaS","PaaS","Vertical SaaS"],correct:3,exp:"Vertical SaaS — industry-specific software targeting the restaurant/food service niche."},
+];
+let sAnswers=new Array(scenarios.length).fill(null);
+function renderScenario(){
+  document.getElementById('scenarioContainer').innerHTML=scenarios.map((s,i)=>`
+    <div class="question-card">
+      <div class="question-number">SCENARIO ${i+1}</div>
+      <div class="question-text">${s.text}</div>
+      <div>
+        ${s.opts.map((opt,oi)=>{
+          let cls='';
+          if(sAnswers[i]!==null&&oi===s.correct)cls='correct';
+          else if(sAnswers[i]===oi&&oi!==s.correct)cls='wrong';
+          return `<button class="option-btn ${cls}" onclick="selScenario(${i},${oi})" ${sAnswers[i]!==null?'disabled':''}><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</button>`;
+        }).join('')}
+      </div>
+      <div class="feedback-box ${sAnswers[i]!==null?(sAnswers[i]===s.correct?'correct-fb':'wrong-fb')+' show':''}">
+        ${sAnswers[i]!==null?'<strong>'+(sAnswers[i]===s.correct?'✓ Correct!':'✗ Incorrect.')+' </strong>'+s.exp:''}
+      </div>
+    </div>`).join('');
+}
+function selScenario(i,oi){if(sAnswers[i]!==null)return;sAnswers[i]=oi;renderScenario();}
+function checkScenario(){
+  const correct=sAnswers.filter((a,i)=>a===scenarios[i].correct).length;
+  const pct=Math.round(correct/scenarios.length*100);
+  const r=document.getElementById('scenarioResult');
+  r.innerHTML=`<div class="result-score">${pct}%</div><div class="result-label">${correct}/${scenarios.length} correct</div><div style="color:var(--muted);margin-bottom:1rem">${pct>=75?"Excellent real-world judgment! 🎉":"Review cloud model selection principles."}</div><button class="quiz-btn-primary" onclick="resetScenario()">Retry</button>`;
+  r.classList.add('show');
+}
+function resetScenario(){sAnswers.fill(null);renderScenario();document.getElementById('scenarioResult').classList.remove('show');}
+renderScenario();
+
+/* ===================== NAVIGATION ===================== */
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids=['brain','flashcards','mcq','tf','short','scenario'];
+  document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('active',ids[i]===id));
+}
+</script>
+</body>
+</html>

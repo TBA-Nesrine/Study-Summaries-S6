@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Computing & Virtualization Commands Cheat Sheet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #004080;
+    }
+    .command-block {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #eef;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+    }
+    .comment {
+      color: #555;
+      font-style: italic;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cloud Computing & Virtualization Commands Cheat Sheet</h1>
+  <p>This file collects <strong>all commands</strong> from TP1–TP7 (VMware, Codespaces, Docker, Docker Compose, Kubernetes) with short explanations.</p>
+
+  <!-- TP1 VMware -->
+  <div class="command-block">
+    <h2>TP1 - VMware Network Modes</h2>
+    <code>Ping VM -> Host</code>
+    <div class="comment">Tests connectivity from VM to host machine.</div>
+    <code>Ping Host -> VM</code>
+    <div class="comment">Tests connectivity from host to VM.</div>
+    <code>Ping Gateway</code>
+    <div class="comment">Checks if VM can reach its gateway.</div>
+    <code>Ping 8.8.8.8</code>
+    <div class="comment">Tests external connectivity (Google DNS).</div>
+    <code>Ping google.com</code>
+    <div class="comment">Tests DNS resolution and external connectivity.</div>
+  </div>
+
+  <!-- TP2 VMware + SSH -->
+  <div class="command-block">
+    <h2>TP2 - VM Deployment & SSH</h2>
+    <code>sudo apt update && sudo apt install openssh-server</code>
+    <div class="comment">Installs OpenSSH server inside VM.</div>
+    <code>systemctl status ssh</code>
+    <div class="comment">Checks if SSH service is running.</div>
+    <code>ssh localhost</code>
+    <div class="comment">Tests SSH connection to self.</div>
+    <code>ping &lt;VM_IP&gt;</code>
+    <div class="comment">Ping between host and VM interfaces.</div>
+    <code>ssh user@LinuxLite-01</code>
+    <div class="comment">SSH into VM from host.</div>
+    <code>ssh user@LinuxLite-02</code>
+    <div class="comment">SSH from one VM into another.</div>
+  </div>
+
+  <!-- TP3 Codespaces -->
+  <div class="command-block">
+    <h2>TP3 - GitHub Codespaces & Apache</h2>
+    <code>sudo apt update</code>
+    <div class="comment">Updates package list.</div>
+    <code>sudo apt install apache2 -y</code>
+    <div class="comment">Installs Apache web server.</div>
+    <code>sudo service apache2 start</code>
+    <div class="comment">Starts Apache service.</div>
+    <code>sudo service apache2 status</code>
+    <div class="comment">Checks Apache status.</div>
+    <code>sudo nano /etc/apache2/apache2.conf</code>
+    <div class="comment">Edits Apache config file.</div>
+    <code>ServerName localhost</code>
+    <div class="comment">Fixes ServerName warning.</div>
+    <code>cd /var/www/html</code>
+    <div class="comment">Navigates to web root.</div>
+    <code>sudo nano index.html</code>
+    <div class="comment">Edits default web page.</div>
+    <code>sudo service apache2 restart</code>
+    <div class="comment">Restarts Apache after changes.</div>
+  </div>
+
+  <!-- TP4 Docker Basics -->
+  <div class="command-block">
+    <h2>TP4 - Docker Basics</h2>
+    <code>mkdir hello-docker && cd hello-docker</code>
+    <div class="comment">Creates project directory.</div>
+    <code>docker build -t hello-docker .</code>
+    <div class="comment">Builds Docker image.</div>
+    <code>docker run hello-docker</code>
+    <div class="comment">Runs container from image.</div>
+    <code>docker images</code>
+    <div class="comment">Lists Docker images.</div>
+    <code>docker ps -a</code>
+    <div class="comment">Lists all containers (running + stopped).</div>
+    <code>docker login</code>
+    <div class="comment">Logs into Docker Hub.</div>
+    <code>docker tag hello-docker user/hello-docker</code>
+    <div class="comment">Tags image for Docker Hub.</div>
+    <code>docker push user/hello-docker</code>
+    <div class="comment">Pushes image to Docker Hub.</div>
+  </div>
+
+  <!-- TP6 Docker Compose -->
+  <div class="command-block">
+    <h2>TP6 - Docker Compose</h2>
+    <code>docker-compose up --build</code>
+    <div class="comment">Builds and starts services.</div>
+    <code>docker-compose ps</code>
+    <div class="comment">Shows running services.</div>
+    <code>docker-compose down</code>
+    <div class="comment">Stops and removes containers, networks.</div>
+  </div>
+
+  <!-- TP7 Volumes + Kubernetes -->
+  <div class="command-block">
+    <h2>TP7 - Docker Volumes & Kubernetes</h2>
+    <code>docker volume ls</code>
+    <div class="comment">Lists volumes.</div>
+    <code>docker volume create my_data</code>
+    <div class="comment">Creates named volume.</div>
+    <code>docker volume inspect my_data</code>
+    <div class="comment">Shows volume details.</div>
+    <code>docker run -d --name my_container -v my_data:/app/data ubuntu sleep infinity</code>
+    <div class="comment">Runs container with mounted volume.</div>
+    <code>docker exec my_container sh -c "echo 'Hello from Docker volume' > /app/data/test.txt"</code>
+    <div class="comment">Writes file into volume.</div>
+    <code>docker exec my_container cat /app/data/test.txt</code>
+    <div class="comment">Reads file from volume.</div>
+    <code>docker run -d --name another_container -v my_data:/app/shared_data ubuntu sleep infinity</code>
+    <div class="comment">Shares volume with another container.</div>
+    <code>docker stop my_container another_container</code>
+    <div class="comment">Stops containers.</div>
+    <code>docker rm my_container another_container</code>
+    <div class="comment">Removes containers.</div>
+    <code>docker run --rm -v my_data:/source:ro -v $(pwd):/backup ubuntu tar cvf /backup/my_data_backup.tar -C /source .</code>
+    <div class="comment">Backs up volume.</div>
+    <code>docker volume rm my_data</code>
+    <div class="comment">Deletes volume.</div>
+    <code>docker volume create my_restored_data</code>
+    <div class="comment">Creates new volume.</div>
+    <code>docker run --rm -v my_restored_data:/dest -v $(pwd):/backup ubuntu bash -c "tar xvf /backup/my_data_backup.tar -C /dest"</code>
+    <div class="comment">Restores backup into new volume.</div>
+    <code>kubectl apply -f pv.yaml</code>
+    <div class="comment">Creates PersistentVolume in Kubernetes.</div>
+    <code>kubectl apply -f pvc.yaml</code>
+    <div class="comment">Creates PersistentVolumeClaim.</div>
+    <code>kubectl apply -f pod.yaml</code>
+    <div class="comment">Deploys pod using PVC.</div>
+    <code>kubectl exec pod-demo -- cat /data/test.txt</code>
+    <div class="comment">Verifies data inside pod.</div>
+  </div>
+</body>
+</html>
